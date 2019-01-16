@@ -19,6 +19,8 @@ requirements = [
 
 test_requirements = [
     "pytest",
+    "Pillow",
+    "scipy",
 ]
 
 setup(
