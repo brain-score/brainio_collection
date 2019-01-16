@@ -8,44 +8,33 @@ with open('README.md') as readme_file:
 
 requirements = [
     "numpy",
-    "pandas",
-    "xarray",
+    "brainio_base @ git+https://github.com/brain-score/brainio_base",
     "six",
     "requests",
     "boto3",
     "tqdm",
     "netcdf4",
     "peewee",
-    "networkx",
-    "pathos",
-    "result_caching",
-    "matplotlib",
 ]
 
 test_requirements = [
     "pytest",
-    "Pillow",
-]
-
-dependency_links = [
-    "git+https://github.com/mschrimpf/result_caching.git@master#egg=result_caching-0",
 ]
 
 setup(
-    name='brain-score',
+    name='brainio_collection',
     version='0.1.0',
-    description="A framework for the quantitative comparison of mindlike systems.",
+    description="BrainIO Collection of brain data.",
     long_description=readme,
     author="Jon Prescott-Roy, Martin Schrimpf",
     author_email='jjpr@mit.edu, mschrimpf@mit.edu',
-    url='https://github.com/dicarlolab/brain-score',
+    url='https://github.com/brain-score/brainio_collection',
     packages=find_packages(exclude=['tests']),
     include_package_data=True,
     install_requires=requirements,
-    dependency_links=dependency_links,
     license="MIT license",
     zip_safe=False,
-    keywords='brain-score',
+    keywords='BrainIO',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',

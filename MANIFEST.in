@@ -1,5 +1,5 @@
 include LICENSE
-include README.rst
+include README.md
 
 recursive-include tests *
 recursive-exclude * __pycache__
@@ -7,4 +7,4 @@ recursive-exclude * *.py[co]
 
 recursive-include docs *.rst conf.py Makefile make.bat *.jpg *.png *.gif
 
-include brainscore/lookup.db
+include brainio_collection/lookup.db
