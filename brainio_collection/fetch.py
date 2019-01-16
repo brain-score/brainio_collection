@@ -10,6 +10,7 @@ import pandas as pd
 import xarray as xr
 from botocore import UNSIGNED
 from botocore.config import Config
+from brainio_base import assemblies as assemblies_base
 from brainio_base.assemblies import coords_for_dim
 from brainio_base.stimuli import StimulusSet
 from six.moves.urllib.parse import urlparse
@@ -129,7 +130,7 @@ class AssemblyLoader(object):
         stimulus_set_name = self.assy_model.stimulus_set.name
         stimulus_set = get_stimulus_set(stimulus_set_name)
         merged = self.merge(concatenated, stimulus_set)
-        class_object = getattr(assemblies, self.assy_model.assembly_class)
+        class_object = getattr(assemblies_base, self.assy_model.assembly_class)
         result = class_object(data=merged)
         result.attrs["stimulus_set_name"] = stimulus_set_name
         result.attrs["stimulus_set"] = stimulus_set
@@ -141,7 +142,6 @@ class AssemblyLoader(object):
         merged = df_of_coords.merge(stimulus_set, on="image_id", how="left")
         for col in stimulus_set.columns:
             assy[col] = (axis_name, merged[col])
-            # assy.set_index(append=True, inplace=True, **{axis_name: [col]})
         return assy
 
 
