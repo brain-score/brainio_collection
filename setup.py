@@ -15,9 +15,7 @@ requirements = [
     "tqdm",
     "netcdf4",
     "peewee",
-]
-
-test_requirements = [
+    # test_requirements
     "pytest",
     "Pillow",
     "scipy",
@@ -46,5 +44,4 @@ setup(
         'Programming Language :: Python :: 3.7',
     ],
     test_suite='tests',
-    tests_require=test_requirements
 )
