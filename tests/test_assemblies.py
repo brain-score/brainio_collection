@@ -1,35 +1,37 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
-
 import os
 
 import numpy as np
 import pytest
 import xarray as xr
-from brainio_base import assemblies
-from brainio_base.assemblies import DataAssembly
 from pytest import approx
 
 import brainio_collection
+from brainio_base import assemblies
+from brainio_base.assemblies import DataAssembly
 from brainio_collection import fetch, assemblies
 
-_hvm_s3_url = "https://mkgu-dicarlolab-hvm.s3.amazonaws.com/hvm_neuronal_features.nc"
+private_access = pytest.mark.skipif(
+    pytest.config.getoption("--skip-private"),
+    reason="set --skip-private option to not run tests that require private s3 access")
 
 
 class TestExistence:
+    @private_access
     def test_gallant(self):
         assert brainio_collection.get_assembly("gallant.David2004") is not None
 
     def test_hvm(self):
         assert brainio_collection.get_assembly("dicarlo.Majaj2015") is not None
 
+    @private_access
     def test_hvm_temporal(self):
         assert brainio_collection.get_assembly("dicarlo.Majaj2015.temporal") is not None
 
+    @private_access
     def test_tolias(self):
         assert brainio_collection.get_assembly("tolias.Cadena2017") is not None
 
+    @private_access
     def test_movshon(self):
         assert brainio_collection.get_assembly("movshon.FreemanZiemba2013") is not None
 
@@ -69,7 +71,8 @@ def test_lookup():
     store = assy.assembly_store_maps[0]
     assert store.role == "dicarlo.Majaj2015"
     assert store.assembly_store_model.location_type == "S3"
-    assert store.assembly_store_model.location == _hvm_s3_url
+    hvm_s3_url = "https://mkgu-dicarlolab-hvm.s3.amazonaws.com/hvm_neuronal_features.nc"
+    assert store.assembly_store_model.location == hvm_s3_url
 
 
 def test_lookup_bad_name():

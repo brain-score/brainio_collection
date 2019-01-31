@@ -1,23 +1,20 @@
 language: python
-python:
-- 3.6
-matrix:  # python 3.7 workaround: https://github.com/travis-ci/travis-ci/issues/9815
+matrix:
   include:
-  - python: 3.7
+  - python: "3.7" # python 3.7 workaround: https://github.com/travis-ci/travis-ci/issues/9815
     dist: xenial
     sudo: true
-before_install:
-- pip install awscli
-- aws configure list
-- aws s3 ls s3://
+  - name: "3.6 public"
+    python: "3.6"
+  - name: "3.6 private"
+    python: "3.6"
+    env:
+    - PRIVATE_ACCESS=1
+    - secure: gV1/ZuSZ/zc8stBJRfRyxb05+AMMyzc6DWwEznelF9xgQnCIWGeVNBZbxbpb6oYieUd5C2SZCil/Vqr5x56OnJfLExSIC5qzjEnQz16hEpQa3nNWBoXFgsk6TdlDW35HYMJoplsRDy8T9CM3qvd+sG8BK9WEqMAb2ChqTZdSifuGRaPaVA0mJDICt9zalWJaXA+WxOJoN233jgFr+KvWdQ2P1pjLcWoJ8VD1Y4CGGbCYRjXhvazM+SUvQFSLv/Si3YTulweJ4tCUn/IVhYSuNJVhmtyIKYiEsiqpxlE02ktowEG2S53wFgWbbCxat8sf/ZXNud8eiVGe85B1xvVGRMcYRBirdo+3PZoM8qlN2rzBY3w+8YjTmrJYBIXuwv2NNgiK7pCfUBdIqX2srYqpvPB7wPuVv9kr6MKiBY3+5UAvpM/aegkBW6l2UIrOgFhX5tYG0YvJsEN/kYzm8KcYSSzUIlC1jf1zDHG+ohxz0eBZSF0wKL/PhMYMPF3//MBjclOAjHwnSAlDrUveS59+rl5dZ33rfYQurcNTKzKsDCjnpSKJ/wbX4jd9+scPwkWhPck5pWRcSurMcJ170cXCteSKS61733mUSPQnWzAL5oTn3bWNvVxqJREP5Lv/YLgqAfkBHqq89nbO51GOYK83izlr9uepN3je2183ZqLJGDc=
+    - secure: L49yaEhfC30D7PMeRNSrqNwX+bmsPVcWSq6L5PG8V0ZFGnUHQ4UDBGD6Rs1JfKnr+X+CizxXyWdLDijQXOXBjQxtr4k5GCgrEcLUCaxqtBbdae+vFUxyIEALElTp0Kr0dxi8TbxW8NVNN3NDTLOF+2uQREctQccMpmt9SNIGi+7xRMzERQmwFAc4+A9erf8MG7cX3NEWkqlPfrGjsaiI6SjKqqh2OwKSLtozoggLwI3UHHzCgPUMuosYxvufkvxHTB8g1khhh0XrEdqGRxNYxyZtOMapTDzlkI4B4SYmY/X/oqosyZ+iiVM6lGh5HxyWccPKl7qCwvH7oHARA3x5o6dNjYudvLxiJa+jmFP36lmEXiBSxw3ATIeMnM4ZkqxnRAw2iEP99JoCWWHBSHAzmDOrxLlqVn7zbGuGmJu4gBrkr4ingRZ2wfVZPLltM4oJS0x/cQdcZDmE1yl1olHLbXZmZLUqSVZnZLSGbRR1jWPxdhr6C1SOh9eVv+S83VpcP1qQDsvMV6uPZTxtROUp/43mwXQtZ/P8/fd0OTREX9NEyP7clFfP2zr4m0QRghlAbpmM5MpP7kjz7oW7sERPAkA+iVuyAVthH55QbUiqileqbOtgc63d1rA98OW4jG2IwWYJCZDBqvDv1Zng8ABWsFDpYoLVAI8IiaLnmd7qREI=
+    - AWS_DEFAULT_REGION=us-east-1
 install:
 - pip install .
-before_script:
-- echo "id= $AWS_ACCESS_KEY_ID | key= $AWS_SECRET_ACCESS_KEY | region= $AWS_DEFAULT_REGION"
 script:
-- pytest
-env:
-  global:
-  - secure: gV1/ZuSZ/zc8stBJRfRyxb05+AMMyzc6DWwEznelF9xgQnCIWGeVNBZbxbpb6oYieUd5C2SZCil/Vqr5x56OnJfLExSIC5qzjEnQz16hEpQa3nNWBoXFgsk6TdlDW35HYMJoplsRDy8T9CM3qvd+sG8BK9WEqMAb2ChqTZdSifuGRaPaVA0mJDICt9zalWJaXA+WxOJoN233jgFr+KvWdQ2P1pjLcWoJ8VD1Y4CGGbCYRjXhvazM+SUvQFSLv/Si3YTulweJ4tCUn/IVhYSuNJVhmtyIKYiEsiqpxlE02ktowEG2S53wFgWbbCxat8sf/ZXNud8eiVGe85B1xvVGRMcYRBirdo+3PZoM8qlN2rzBY3w+8YjTmrJYBIXuwv2NNgiK7pCfUBdIqX2srYqpvPB7wPuVv9kr6MKiBY3+5UAvpM/aegkBW6l2UIrOgFhX5tYG0YvJsEN/kYzm8KcYSSzUIlC1jf1zDHG+ohxz0eBZSF0wKL/PhMYMPF3//MBjclOAjHwnSAlDrUveS59+rl5dZ33rfYQurcNTKzKsDCjnpSKJ/wbX4jd9+scPwkWhPck5pWRcSurMcJ170cXCteSKS61733mUSPQnWzAL5oTn3bWNvVxqJREP5Lv/YLgqAfkBHqq89nbO51GOYK83izlr9uepN3je2183ZqLJGDc=
-  - secure: L49yaEhfC30D7PMeRNSrqNwX+bmsPVcWSq6L5PG8V0ZFGnUHQ4UDBGD6Rs1JfKnr+X+CizxXyWdLDijQXOXBjQxtr4k5GCgrEcLUCaxqtBbdae+vFUxyIEALElTp0Kr0dxi8TbxW8NVNN3NDTLOF+2uQREctQccMpmt9SNIGi+7xRMzERQmwFAc4+A9erf8MG7cX3NEWkqlPfrGjsaiI6SjKqqh2OwKSLtozoggLwI3UHHzCgPUMuosYxvufkvxHTB8g1khhh0XrEdqGRxNYxyZtOMapTDzlkI4B4SYmY/X/oqosyZ+iiVM6lGh5HxyWccPKl7qCwvH7oHARA3x5o6dNjYudvLxiJa+jmFP36lmEXiBSxw3ATIeMnM4ZkqxnRAw2iEP99JoCWWHBSHAzmDOrxLlqVn7zbGuGmJu4gBrkr4ingRZ2wfVZPLltM4oJS0x/cQdcZDmE1yl1olHLbXZmZLUqSVZnZLSGbRR1jWPxdhr6C1SOh9eVv+S83VpcP1qQDsvMV6uPZTxtROUp/43mwXQtZ/P8/fd0OTREX9NEyP7clFfP2zr4m0QRghlAbpmM5MpP7kjz7oW7sERPAkA+iVuyAVthH55QbUiqileqbOtgc63d1rA98OW4jG2IwWYJCZDBqvDv1Zng8ABWsFDpYoLVAI8IiaLnmd7qREI=
-  - AWS_DEFAULT_REGION=us-east-1
+- if [ "$PRIVATE_ACCESS" = 1 ]; then pytest; fi
+- if [ "$PRIVATE_ACCESS" != 1 ]; then pytest --skip-private; fi
