@@ -19,18 +19,6 @@ def test_loadname_dicarlo_hvm():
     assert brainio_collection.get_stimulus_set(name="dicarlo.hvm") is not None
 
 
-def test_loadname_dicarlo_hvm_v0():
-    assert brainio_collection.get_stimulus_set(name="dicarlo.hvm.v0") is not None
-
-
-def test_loadname_dicarlo_hvm_v3():
-    assert brainio_collection.get_stimulus_set(name="dicarlo.hvm.v3") is not None
-
-
-def test_loadname_dicarlo_hvm_v6():
-    assert brainio_collection.get_stimulus_set(name="dicarlo.hvm.v6") is not None
-
-
 class TestLoadImage:
     def test_dicarlohvm(self):
         stimulus_set = brainio_collection.get_stimulus_set(name="dicarlo.hvm")

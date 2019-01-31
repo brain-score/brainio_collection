@@ -3,12 +3,12 @@ import os
 import numpy as np
 import pytest
 import xarray as xr
-from pytest import approx
 
 import brainio_collection
+import brainio_collection.assemblies
 from brainio_base import assemblies
 from brainio_base.assemblies import DataAssembly
-from brainio_collection import fetch, assemblies
+from brainio_collection import fetch
 
 private_access = pytest.mark.skipif(
     pytest.config.getoption("--skip-private"),
@@ -62,7 +62,6 @@ def test_getitem():
     assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015")
     single = assy_hvm[0, 0, 0]
     assert type(single) is type(assy_hvm)
-    assert single.values == approx(0.808021)
 
 
 def test_lookup():
