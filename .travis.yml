@@ -18,5 +18,5 @@ before_install:
 install:
 - pip install .
 script:
-- if [ "$PRIVATE_ACCESS" = 1 ]; then pytest; fi
-- if [ "$PRIVATE_ACCESS" != 1 ]; then pytest --skip-private; fi
+- if [ "$PRIVATE_ACCESS" = 1 ]; then pytest --skip-memory-intense; fi
+- if [ "$PRIVATE_ACCESS" != 1 ]; then pytest --skip-private --skip-memory-intense; fi

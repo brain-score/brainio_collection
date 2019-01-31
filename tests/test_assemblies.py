@@ -13,6 +13,9 @@ from brainio_collection import fetch
 private_access = pytest.mark.skipif(
     pytest.config.getoption("--skip-private"),
     reason="set --skip-private option to not run tests that require private s3 access")
+memory_intense = pytest.mark.skipif(
+    pytest.config.getoption("--skip-memory-intense"),
+    reason="set --skip-memory-intense option to not run memory intense tests")
 
 
 class TestExistence:
@@ -23,6 +26,7 @@ class TestExistence:
     def test_hvm(self):
         assert brainio_collection.get_assembly("dicarlo.Majaj2015") is not None
 
+    @memory_intense
     @private_access
     def test_hvm_temporal(self):
         assert brainio_collection.get_assembly("dicarlo.Majaj2015.temporal") is not None
@@ -31,6 +35,7 @@ class TestExistence:
     def test_tolias(self):
         assert brainio_collection.get_assembly("tolias.Cadena2017") is not None
 
+    @memory_intense
     @private_access
     def test_movshon(self):
         assert brainio_collection.get_assembly("movshon.FreemanZiemba2013") is not None
