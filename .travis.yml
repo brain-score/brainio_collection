@@ -1,17 +1,17 @@
 language: python
 matrix:
   include:
-  - python: "3.7" # python 3.7 workaround: https://github.com/travis-ci/travis-ci/issues/9815
+  - python: '3.7'
     dist: xenial
     sudo: true
-  - name: "3.6 public"
-    python: "3.6"
-  - name: "3.6 private"
-    python: "3.6"
+  - name: 3.6 public
+    python: '3.6'
+  - name: 3.6 private
+    python: '3.6'
     env:
     - PRIVATE_ACCESS=1
-    - secure: gV1/ZuSZ/zc8stBJRfRyxb05+AMMyzc6DWwEznelF9xgQnCIWGeVNBZbxbpb6oYieUd5C2SZCil/Vqr5x56OnJfLExSIC5qzjEnQz16hEpQa3nNWBoXFgsk6TdlDW35HYMJoplsRDy8T9CM3qvd+sG8BK9WEqMAb2ChqTZdSifuGRaPaVA0mJDICt9zalWJaXA+WxOJoN233jgFr+KvWdQ2P1pjLcWoJ8VD1Y4CGGbCYRjXhvazM+SUvQFSLv/Si3YTulweJ4tCUn/IVhYSuNJVhmtyIKYiEsiqpxlE02ktowEG2S53wFgWbbCxat8sf/ZXNud8eiVGe85B1xvVGRMcYRBirdo+3PZoM8qlN2rzBY3w+8YjTmrJYBIXuwv2NNgiK7pCfUBdIqX2srYqpvPB7wPuVv9kr6MKiBY3+5UAvpM/aegkBW6l2UIrOgFhX5tYG0YvJsEN/kYzm8KcYSSzUIlC1jf1zDHG+ohxz0eBZSF0wKL/PhMYMPF3//MBjclOAjHwnSAlDrUveS59+rl5dZ33rfYQurcNTKzKsDCjnpSKJ/wbX4jd9+scPwkWhPck5pWRcSurMcJ170cXCteSKS61733mUSPQnWzAL5oTn3bWNvVxqJREP5Lv/YLgqAfkBHqq89nbO51GOYK83izlr9uepN3je2183ZqLJGDc=
-    - secure: L49yaEhfC30D7PMeRNSrqNwX+bmsPVcWSq6L5PG8V0ZFGnUHQ4UDBGD6Rs1JfKnr+X+CizxXyWdLDijQXOXBjQxtr4k5GCgrEcLUCaxqtBbdae+vFUxyIEALElTp0Kr0dxi8TbxW8NVNN3NDTLOF+2uQREctQccMpmt9SNIGi+7xRMzERQmwFAc4+A9erf8MG7cX3NEWkqlPfrGjsaiI6SjKqqh2OwKSLtozoggLwI3UHHzCgPUMuosYxvufkvxHTB8g1khhh0XrEdqGRxNYxyZtOMapTDzlkI4B4SYmY/X/oqosyZ+iiVM6lGh5HxyWccPKl7qCwvH7oHARA3x5o6dNjYudvLxiJa+jmFP36lmEXiBSxw3ATIeMnM4ZkqxnRAw2iEP99JoCWWHBSHAzmDOrxLlqVn7zbGuGmJu4gBrkr4ingRZ2wfVZPLltM4oJS0x/cQdcZDmE1yl1olHLbXZmZLUqSVZnZLSGbRR1jWPxdhr6C1SOh9eVv+S83VpcP1qQDsvMV6uPZTxtROUp/43mwXQtZ/P8/fd0OTREX9NEyP7clFfP2zr4m0QRghlAbpmM5MpP7kjz7oW7sERPAkA+iVuyAVthH55QbUiqileqbOtgc63d1rA98OW4jG2IwWYJCZDBqvDv1Zng8ABWsFDpYoLVAI8IiaLnmd7qREI=
+    - secure: qvjB9qw/hgNcgwZB2BwmYue7f89Xn1uMgh0PQgPGZvB/ZmIkBeGJdEUByxXLGxOF27LuZa/+AMvr8P8S7OXAXCR7K9ty1IfazD1MbZJe57RbEPYZqzBTCK26KuMTVDjeBB/hCxji8z3TfKvVn7aJU4HNHtr7gT0CWppBWoebORsKomDUuvtkzRtekLs/WUgJigNemmFR/u90BoP94eYMzY4ClPzwL1o0a+PTEX9zA74qzeAOWiUEs4mb7bUSQ3EL9eSkEg8y3jiUpfj0OcwQvGeslSKjC0gi3rJnfyfNdsBua4Sllo0vxDDrPaITdIAtvPY13LYhguMQ8GJwFKS+/WPkBHgDtSEkUxMuFFeKRU3xfQtqc8Cbu1+HYnUnTDS6XBK2gPJlWEK8uMbzo6rMLmrFv62GEQCWI9mY4ZfKjHK4q1Xj45Xa1QBeyZDuWgUttMXfehmya+1ABl3gN964FFtNTj2dsKkNv8VtMRzC/sxHQWiuzvfpGQLWJ+eWvcWMPROebD1c9ZtDbrL48EkDvD1Qi4f1cTdY7eXXVNT41B7ZyOAJiQqR9VhWVnOipIlMXpJl2ixcvSxeGaBQ1EqOzBb5THDvQk3SgbnNL0DzP7hiOwXA+Mn5tmf/7t2RbFehLaDUjRU+LdYzWzuohnOkV6/B94UNQ//zXJddYWjkjY4=
+    - secure: lpgw+9QYuT12E61y1wqdf9ypa2liMFNkVPFKtlTl9X8Xy7CBmINWi5WHBpFIPHr1GiIwN+Ht0S5Ua3hBdlAqcYQOpKIizqlMv/NrEK0UzwSmVuEM+NejTW8jjdOQ4spNY8xKxwd2VERHYfjET0keo6VlTAwFcFUHQuSPa/gYE5QdwvCp8WskyWdmWKovciCl33uZIWqPMHN+P/ESnzclQ+rPie3kteMpD4xzXjvn/nGQ0gZqRpJAxzu5Sg1gkM9T+DeCP0mokjQOnfgkwGzr7n8cEWVK1jy1VoDIG1w75alfmoCuGULvICBXPHj4nw8FLR2jQkfUBo5NJGV9KDqFSjGu3wTbEsEigXLKT6NrwJJxhXhN6x/P3flIB3T2w0nW2+SXokwENe9gBYjfoVnBq+vNPsZOie+5r04Xr7NqatbNlJ4erE6I1pHq/kSi26XMzKHvQ1YVmXPYsBzbjzJTDWmEYZD24FcG7lSj/PvEdyQ7yqbVdBq96tbwJXI42ARPefT24KkPjC5IHasJHq1tJ5cm/gOL3o6xdc5xvliVpIB7ruJVg4aHWPWKk6NixEO4iEg+Jv/mYRzgK5aMdNLdc4xXUv9GBirCOJUdvJRhyGFJfac4p6KHIJdp+p3C82+S5QHSZWw6RnX/y3OOX1zG+4HQwrCqIF3OK0n7bUGXHAs=
     - AWS_DEFAULT_REGION=us-east-1
 install:
 - pip install .
