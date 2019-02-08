@@ -234,6 +234,7 @@ def get_stimulus_set(name):
         df_reconstructed[a.name] = merged["value"].astype(a.type)
     stimulus_set = StimulusSet(df_reconstructed)
     stimulus_set.image_paths = image_paths
+    stimulus_set.name = name
     return stimulus_set
 
 
