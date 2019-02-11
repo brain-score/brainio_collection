@@ -84,7 +84,8 @@ class BotoFetcher(Fetcher):
         # show progress. see https://gist.github.com/wy193777/e7607d12fad13459e8992d4f69b53586
         with tqdm(total=obj.content_length, unit='B', unit_scale=True, desc=self.relative_path) as progress_bar:
             def progress_hook(bytes_amount):
-                progress_bar.update(bytes_amount)
+                if bytes_amount > 0:  # at the end, this sometimes passes a negative byte amount which tqdm can't handle
+                    progress_bar.update(bytes_amount)
 
             obj.download_file(self.output_filename, Callback=progress_hook)
 
