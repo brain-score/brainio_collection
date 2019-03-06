@@ -19,4 +19,9 @@ install:
 - pip install .
 script:
 - if [ "$PRIVATE_ACCESS" = 1 ]; then pytest --skip-memory-intense; fi
-- if [ "$PRIVATE_ACCESS" != 1 ]; then pytest --skip-private --skip-memory-intense; fi
+- if [ "$PRIVATE_ACCESS" != 1 ]; then pytest --skip-private --skip-memory-intense;
+  fi
+env:
+  global:
+  - secure: IULfcDRlV6Q3G04BfPxNpwyj15cr0LwtqJxSayQrLctdE1Ss6ji8bCDiVs7bGQbsXWkNRL2T6WSFMTqgLVHKBcA0BVKQDFqPZM78uwMaz4VllSBlIPh2B8U5zsmNDe+KZ/eZ/mnPSJfy+8UIYIobtLgPWAZKK+EUVQdaxATPiL3PzRuRikuhvzwgtGUOUy899NuHgolU2br4VZa7w1FYYx6TIxBDCDFG17PS5VBu91JsSeIStmnN0man2kxWfe4TdJzhIz3OrdOstL44R4QXOYj3Ppa8k0FQ8J11VljvWKktmeoJzC4fsuRMM0dZuyvmITWoN3C9AcdJQDNxaHg+0eyxjyDG3/2yOxuO5cGJjCBDk80aPfd7uk7wStUFRdIVQGBxz0D8v5Zgey9BCYC/wRpzS3Q17yOxPqxjLTg89bGsJCSKhZYc/8RdfsdlZvf8Qb5qYpcloxMxPCFZW9xDrAM8TKiCKyQHiRBeEX6M8nBtJwGg8L2LXw9lXGyv7tREeIeucVDjMILOMWuGnIveh+w4BOwg8CkVP7eDf9GjQeLWBaA5P+9rkwPjkmoKTk+xlqT0u+BggHoWE2opi4pt++X1xtwftEdkIRuBb6iAIX+hErBT8ze2gkeMig72ZQAfLbANbuunbiNW2AmJh2fB2g5kaklYK+x0ywPw6xuDftg=
+  - secure: kgYmj7LhHuxSU6mAcpS6sXU+jMZp9VDaMl0GciNXw4k7IcBhdfGGizfJB2kalUhkLyjDIRfTAZ8Po5FOw7zbwPWR6pZguRV8AlULOvt99Yo+rGF22ZjjS9UpOVaPlpIDDNpyebhiXqJTxQCe+aXmZM5NZWbR3X0ljVK4FW9nUQjJtwHXiYYVooYUVIL0YHJqbeu04uVRHVURxl9ZtOWRPSpSSt7LkfYCstgRnknRCtvcfbgzWHhCAq3CyjbJLCjslyD/iHm90ALWJuOJ4sELh9EvzZagm7VUfSMjnJSI3dMoYhQxpJnmFgYgI2bQQfdhM+39cmzGptq1PkBdw+aUajT7G3IYYeVkIg3FAKBkjdtTI3Jv0D+WqGYoKgKRXnKNtd4/1NJoDsTtEwVURwnht8VbJuZ1OGPfuTtK4mf5xd/lOToRmge3kuuKkGNw9hXIdd+rzBFO2S/EijcrU5XA8SHy5iASRz7mUc0e/MYc4Tq9os724zSEXqAu1oCnQd/zjMJYV5Lqtdvlup12aQRarsRS5ZRg1YsKk2q1ApV2KucAAm7U106DQMNZLTw28ameLOs6UwnMiY1RVfN3tAr/W8Hov9y6BenLxc1zsYKmo0Fwvhq1mG0Uz++/On3pI+hWNHa3jCTVGVY1C45a4UivnaRg2HgPGvftRIwDrtIvThw=
