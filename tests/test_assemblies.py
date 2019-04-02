@@ -75,7 +75,7 @@ def test_lookup():
     store = assy.assembly_store_maps[0]
     assert store.role == "dicarlo.Majaj2015"
     assert store.assembly_store_model.location_type == "S3"
-    hvm_s3_url = "https://mkgu-dicarlolab-hvm.s3.amazonaws.com/hvm_neuronal_features.nc"
+    hvm_s3_url = "https://brainio-dicarlo.s3.amazonaws.com/hvm_neuronal_features.nc"
     assert store.assembly_store_model.location == hvm_s3_url
 
 
