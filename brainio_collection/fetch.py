@@ -80,7 +80,8 @@ class BotoFetcher(Fetcher):
                 self.download_boto_config(config=unsigned_config, sha1=sha1)
             except Exception as e_unsigned:
                 # when unsigned download also fails, raise both exceptions
-                raise type(e_unsigned)([e_signed, e_unsigned])
+                # raise Exception instead of specific type to avoid missing __init__ arguments
+                raise Exception([e_signed, e_unsigned])
 
     def download_boto_config(self, config, sha1=None):
         s3 = boto3.resource('s3', config=config)
