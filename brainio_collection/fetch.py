@@ -72,11 +72,15 @@ class BotoFetcher(Fetcher):
         try:  # try with authentication
             self._logger.debug("attempting default download (signed)")
             self.download_boto_config(config=None, sha1=sha1)
-        except Exception:  # try without authentication
+        except Exception as e_signed:  # try without authentication
             self._logger.debug("default download failed, trying unsigned")
             # disable signing requests. see https://stackoverflow.com/a/34866092/2225200
             unsigned_config = Config(signature_version=UNSIGNED)
-            self.download_boto_config(config=unsigned_config, sha1=sha1)
+            try:
+                self.download_boto_config(config=unsigned_config, sha1=sha1)
+            except Exception as e_unsigned:
+                # when unsigned download also fails, raise both exceptions
+                raise type(e_unsigned)([e_signed, e_unsigned])
 
     def download_boto_config(self, config, sha1=None):
         s3 = boto3.resource('s3', config=config)
