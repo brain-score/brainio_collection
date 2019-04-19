@@ -72,19 +72,25 @@ class BotoFetcher(Fetcher):
         try:  # try with authentication
             self._logger.debug("attempting default download (signed)")
             self.download_boto_config(config=None, sha1=sha1)
-        except Exception:  # try without authentication
+        except Exception as e_signed:  # try without authentication
             self._logger.debug("default download failed, trying unsigned")
             # disable signing requests. see https://stackoverflow.com/a/34866092/2225200
             unsigned_config = Config(signature_version=UNSIGNED)
-            self.download_boto_config(config=unsigned_config, sha1=sha1)
+            try:
+                self.download_boto_config(config=unsigned_config, sha1=sha1)
+            except Exception as e_unsigned:
+                # when unsigned download also fails, raise both exceptions
+                # raise Exception instead of specific type to avoid missing __init__ arguments
+                raise Exception([e_signed, e_unsigned])
 
     def download_boto_config(self, config, sha1=None):
         s3 = boto3.resource('s3', config=config)
         obj = s3.Object(self.bucketname, self.relative_path)
         # show progress. see https://gist.github.com/wy193777/e7607d12fad13459e8992d4f69b53586
-        with tqdm(total=obj.content_length, unit='B', unit_scale=True, desc=self.relative_path) as progress_bar:
+        with tqdm(total=obj.content_length, unit='B', unit_scale=True, desc=self.bucketname + "/" + self.relative_path) as progress_bar:
             def progress_hook(bytes_amount):
-                progress_bar.update(bytes_amount)
+                if bytes_amount > 0:  # at the end, this sometimes passes a negative byte amount which tqdm can't handle
+                    progress_bar.update(bytes_amount)
 
             obj.download_file(self.output_filename, Callback=progress_hook)
 
@@ -234,6 +240,7 @@ def get_stimulus_set(name):
         df_reconstructed[a.name] = merged["value"].astype(a.type)
     stimulus_set = StimulusSet(df_reconstructed)
     stimulus_set.image_paths = image_paths
+    stimulus_set.name = name
     return stimulus_set
 
 

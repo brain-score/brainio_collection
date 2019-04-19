@@ -10,6 +10,7 @@ def test_get_stimulus_set():
     stimulus_set = brainio_collection.get_stimulus_set("dicarlo.hvm")
     assert "image_id" in stimulus_set.columns
     assert stimulus_set.shape == (5760, 17)
+    assert stimulus_set.name == 'dicarlo.hvm'
     for image_id in stimulus_set['image_id']:
         image_path = stimulus_set.get_image(image_id)
         assert os.path.exists(image_path)
