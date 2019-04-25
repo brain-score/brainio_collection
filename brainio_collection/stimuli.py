@@ -12,7 +12,7 @@ class AttributeModel(peewee.Model):
 
 
 class ImageModel(peewee.Model):
-    image_id = peewee.CharField()
+    image_id = peewee.CharField(unique=True)
 
     class Meta:
         database = pwdb
