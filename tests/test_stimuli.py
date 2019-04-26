@@ -28,3 +28,14 @@ class TestLoadImage:
             image = scipy.misc.imread(path)
             assert isinstance(image, np.ndarray)
             assert image.size > 0
+
+
+def test_list_stimulus_sets():
+    l = brainio_collection.list_stimulus_sets()
+    assert 'dicarlo.hvm' in l
+    assert 'gallant.David2004' in l
+    assert 'tolias.Cadena2017' in l
+    assert 'movshon.FreemanZiemba2013' in l
+    assert 'dicarlo.objectome.public' in l
+    assert 'dicarlo.objectome.private' in l
+    
