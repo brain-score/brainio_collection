@@ -60,3 +60,8 @@ class ImageStoreMap(peewee.Model):
 
     class Meta:
         database = pwdb
+
+
+def list_stimulus_sets():
+    return [ssm.name for ssm in StimulusSetModel.select()]
+

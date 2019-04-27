@@ -48,3 +48,7 @@ def lookup_assembly(name):
     except AssemblyModel.DoesNotExist as e:
         raise AssemblyLookupError("A DataAssembly named " + name + " was not found.")
     return assy
+
+
+def list_assemblies():
+    return [am.name for am in AssemblyModel.select()]

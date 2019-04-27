@@ -132,3 +132,14 @@ def test_stimulus_set_from_assembly():
     for image_id in stimulus_set['image_id']:
         image_path = stimulus_set.get_image(image_id)
         assert os.path.exists(image_path)
+
+
+def test_list_assemblies():
+    l = brainio_collection.list_assemblies()
+    assert 'dicarlo.Majaj2015' in l
+    assert 'gallant.David2004' in l
+    assert 'dicarlo.Majaj2015.temporal' in l
+    assert 'tolias.Cadena2017' in l
+    assert 'movshon.FreemanZiemba2013' in l
+    assert 'dicarlo.Rajalingham2018.public' in l
+    assert 'dicarlo.Rajalingham2018.private' in l
