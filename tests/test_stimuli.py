@@ -1,7 +1,7 @@
 import os
 
+import imageio
 import numpy as np
-import scipy.misc
 
 import brainio_collection
 
@@ -25,7 +25,7 @@ class TestLoadImage:
         stimulus_set = brainio_collection.get_stimulus_set(name="dicarlo.hvm")
         paths = stimulus_set.image_paths.values()
         for path in paths:
-            image = scipy.misc.imread(path)
+            image = imageio.imread(path)
             assert isinstance(image, np.ndarray)
             assert image.size > 0
 
@@ -38,4 +38,3 @@ def test_list_stimulus_sets():
     assert 'movshon.FreemanZiemba2013' in l
     assert 'dicarlo.objectome.public' in l
     assert 'dicarlo.objectome.private' in l
-    
