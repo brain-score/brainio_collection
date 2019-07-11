@@ -40,6 +40,7 @@ class TestExistence:
     def test_movshon(self):
         assert brainio_collection.get_assembly("movshon.FreemanZiemba2013") is not None
 
+    @private_access
     def test_rajalingham2018_public(self):
         assert brainio_collection.get_assembly("dicarlo.Rajalingham2018.public") is not None
 
