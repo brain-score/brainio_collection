@@ -40,6 +40,18 @@ class TestExistence:
     def test_movshon(self):
         assert brainio_collection.get_assembly("movshon.FreemanZiemba2013") is not None
 
+    @private_access
+    def test_rajalingham2018_public(self):
+        assert brainio_collection.get_assembly("dicarlo.Rajalingham2018.public") is not None
+
+    @private_access
+    def test_rajalingham2018_private(self):
+        assert brainio_collection.get_assembly("dicarlo.Rajalingham2018.private") is not None
+
+    @private_access
+    def test_kar2019(self):
+        assert brainio_collection.get_assembly("dicarlo.Kar2019") is not None
+
 
 def test_nr_assembly_ctor():
     assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015")
@@ -134,12 +146,15 @@ def test_stimulus_set_from_assembly():
         assert os.path.exists(image_path)
 
 
-def test_list_assemblies():
+@pytest.mark.parametrize('assembly', (
+        'dicarlo.Majaj2015',
+        'dicarlo.Majaj2015.temporal',
+        'gallant.David2004',
+        'tolias.Cadena2017',
+        'movshon.FreemanZiemba2013',
+        'dicarlo.Rajalingham2018.public', 'dicarlo.Rajalingham2018.private',
+        'dicarlo.Kar2019',
+))
+def test_list_assembly(assembly):
     l = brainio_collection.list_assemblies()
-    assert 'dicarlo.Majaj2015' in l
-    assert 'gallant.David2004' in l
-    assert 'dicarlo.Majaj2015.temporal' in l
-    assert 'tolias.Cadena2017' in l
-    assert 'movshon.FreemanZiemba2013' in l
-    assert 'dicarlo.Rajalingham2018.public' in l
-    assert 'dicarlo.Rajalingham2018.private' in l
+    assert assembly in l

@@ -143,9 +143,10 @@ class AssemblyLoader(object):
         return result
 
     def merge(self, assy, stimulus_set):
-        axis_name = "presentation"
+        axis_name, index_column = "presentation", "image_id"
         df_of_coords = pd.DataFrame(coords_for_dim(assy, axis_name))
-        merged = df_of_coords.merge(stimulus_set, on="image_id", how="left")
+        cols_to_use = stimulus_set.columns.difference(df_of_coords.columns.difference([index_column]))
+        merged = df_of_coords.merge(stimulus_set[cols_to_use], on=index_column, how="left")
         for col in stimulus_set.columns:
             assy[col] = (axis_name, merged[col])
         return assy
