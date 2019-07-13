@@ -10,45 +10,38 @@ from brainio_base import assemblies
 from brainio_base.assemblies import DataAssembly
 from brainio_collection import fetch
 
-private_access = pytest.mark.skipif(
-    pytest.config.getoption("--skip-private"),
-    reason="set --skip-private option to not run tests that require private s3 access")
-memory_intense = pytest.mark.skipif(
-    pytest.config.getoption("--skip-memory-intense"),
-    reason="set --skip-memory-intense option to not run memory intense tests")
-
 
 class TestExistence:
-    @private_access
+    @pytest.mark.private_access
     def test_gallant(self):
         assert brainio_collection.get_assembly("gallant.David2004") is not None
 
     def test_hvm(self):
         assert brainio_collection.get_assembly("dicarlo.Majaj2015") is not None
 
-    @memory_intense
-    @private_access
+    @pytest.mark.memory_intense
+    @pytest.mark.private_access
     def test_hvm_temporal(self):
         assert brainio_collection.get_assembly("dicarlo.Majaj2015.temporal") is not None
 
-    @private_access
+    @pytest.mark.private_access
     def test_tolias(self):
         assert brainio_collection.get_assembly("tolias.Cadena2017") is not None
 
-    @memory_intense
-    @private_access
+    @pytest.mark.memory_intense
+    @pytest.mark.private_access
     def test_movshon(self):
         assert brainio_collection.get_assembly("movshon.FreemanZiemba2013") is not None
 
-    @private_access
+    @pytest.mark.private_access
     def test_rajalingham2018_public(self):
         assert brainio_collection.get_assembly("dicarlo.Rajalingham2018.public") is not None
 
-    @private_access
+    @pytest.mark.private_access
     def test_rajalingham2018_private(self):
         assert brainio_collection.get_assembly("dicarlo.Rajalingham2018.private") is not None
 
-    @private_access
+    @pytest.mark.private_access
     def test_kar2019(self):
         assert brainio_collection.get_assembly("dicarlo.Kar2019") is not None
 
