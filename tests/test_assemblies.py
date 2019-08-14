@@ -11,39 +11,34 @@ from brainio_base.assemblies import DataAssembly
 from brainio_collection import fetch
 
 
-class TestExistence:
-    @pytest.mark.private_access
-    def test_gallant(self):
-        assert brainio_collection.get_assembly("gallant.David2004") is not None
+@pytest.mark.parametrize('assembly', (
+        'dicarlo.Majaj2015',
+        'dicarlo.Majaj2015.temporal',
+        'dicarlo.Majaj2015.temporal-10ms',
+        'gallant.David2004',
+        'tolias.Cadena2017',
+        'movshon.FreemanZiemba2013',
+        'dicarlo.Rajalingham2018.public', 'dicarlo.Rajalingham2018.private',
+        'dicarlo.Kar2019',
+))
+def test_list_assembly(assembly):
+    l = brainio_collection.list_assemblies()
+    assert assembly in l
 
-    def test_hvm(self):
-        assert brainio_collection.get_assembly("dicarlo.Majaj2015") is not None
 
-    @pytest.mark.memory_intense
-    @pytest.mark.private_access
-    def test_hvm_temporal(self):
-        assert brainio_collection.get_assembly("dicarlo.Majaj2015.temporal") is not None
-
-    @pytest.mark.private_access
-    def test_tolias(self):
-        assert brainio_collection.get_assembly("tolias.Cadena2017") is not None
-
-    @pytest.mark.memory_intense
-    @pytest.mark.private_access
-    def test_movshon(self):
-        assert brainio_collection.get_assembly("movshon.FreemanZiemba2013") is not None
-
-    @pytest.mark.private_access
-    def test_rajalingham2018_public(self):
-        assert brainio_collection.get_assembly("dicarlo.Rajalingham2018.public") is not None
-
-    @pytest.mark.private_access
-    def test_rajalingham2018_private(self):
-        assert brainio_collection.get_assembly("dicarlo.Rajalingham2018.private") is not None
-
-    @pytest.mark.private_access
-    def test_kar2019(self):
-        assert brainio_collection.get_assembly("dicarlo.Kar2019") is not None
+@pytest.mark.parametrize('assembly_identifier', [
+    pytest.param('gallant.David2004', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Majaj2015', marks=[]),
+    pytest.param('dicarlo.Majaj2015.temporal', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
+    pytest.param('dicarlo.Majaj2015.temporal-10ms', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
+    pytest.param('tolias.Cadena2017', marks=[pytest.mark.private_access]),
+    pytest.param('movshon.FreemanZiemba2013', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
+    pytest.param('dicarlo.Rajalingham2018.public', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Rajalingham2018.private', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Kar2019', marks=[pytest.mark.private_access]),
+])
+def test_existence(assembly_identifier):
+    assert brainio_collection.get_assembly(assembly_identifier) is not None
 
 
 def test_nr_assembly_ctor():
@@ -137,17 +132,3 @@ def test_stimulus_set_from_assembly():
     for image_id in stimulus_set['image_id']:
         image_path = stimulus_set.get_image(image_id)
         assert os.path.exists(image_path)
-
-
-@pytest.mark.parametrize('assembly', (
-        'dicarlo.Majaj2015',
-        'dicarlo.Majaj2015.temporal',
-        'gallant.David2004',
-        'tolias.Cadena2017',
-        'movshon.FreemanZiemba2013',
-        'dicarlo.Rajalingham2018.public', 'dicarlo.Rajalingham2018.private',
-        'dicarlo.Kar2019',
-))
-def test_list_assembly(assembly):
-    l = brainio_collection.list_assemblies()
-    assert assembly in l
