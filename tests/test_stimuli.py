@@ -39,6 +39,7 @@ class TestLoadImage:
         'dicarlo.objectome.public',
         'dicarlo.objectome.private',
         'dicarlo.Kar2018cocogray',
+        'dicarlo.Kar2018coco_color',
 ))
 def test_list_stimulus_set(stimulus_set):
     l = brainio_collection.list_stimulus_sets()
