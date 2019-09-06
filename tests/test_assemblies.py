@@ -22,7 +22,8 @@ from brainio_collection import fetch
         'dicarlo.Kar2019',
         'dicarlo.Kar2018hvm',
         'dicarlo.Kar2018cocogray',
-        'dicarlo.Kar2018coco_behavior',
+        'dicarlo.Kar2018coco_behavior.public',
+        'dicarlo.Kar2018coco_behavior.private',
 ))
 def test_list_assembly(assembly):
     l = brainio_collection.list_assemblies()
@@ -41,7 +42,8 @@ def test_list_assembly(assembly):
     pytest.param('dicarlo.Kar2019', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Kar2018hvm', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Kar2018cocogray', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.Kar2018coco_behavior', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Kar2018coco_behavior.public', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Kar2018coco_behavior.private', marks=[pytest.mark.private_access]),
 ])
 def test_existence(assembly_identifier):
     assert brainio_collection.get_assembly(assembly_identifier) is not None
