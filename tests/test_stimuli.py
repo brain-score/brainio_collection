@@ -2,6 +2,7 @@ import os
 
 import imageio
 import numpy as np
+import pytest
 
 import brainio_collection
 
@@ -30,11 +31,15 @@ class TestLoadImage:
             assert image.size > 0
 
 
-def test_list_stimulus_sets():
+@pytest.mark.parametrize('stimulus_set', (
+        'dicarlo.hvm',
+        'gallant.David2004',
+        'tolias.Cadena2017',
+        'movshon.FreemanZiemba2013',
+        'dicarlo.objectome.public',
+        'dicarlo.objectome.private',
+        'dicarlo.Kar2018cocogray',
+))
+def test_list_stimulus_set(stimulus_set):
     l = brainio_collection.list_stimulus_sets()
-    assert 'dicarlo.hvm' in l
-    assert 'gallant.David2004' in l
-    assert 'tolias.Cadena2017' in l
-    assert 'movshon.FreemanZiemba2013' in l
-    assert 'dicarlo.objectome.public' in l
-    assert 'dicarlo.objectome.private' in l
+    assert stimulus_set in l
