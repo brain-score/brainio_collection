@@ -32,10 +32,12 @@ class TestLoadImage:
 
 
 @pytest.mark.parametrize('stimulus_set', (
-        'dicarlo.hvm',
+        'dicarlo.hvm-public',
+        'dicarlo.hvm-private',
         'gallant.David2004',
         'tolias.Cadena2017',
-        'movshon.FreemanZiemba2013',
+        'movshon.FreemanZiemba2013-public',
+        'movshon.FreemanZiemba2013-private',
         'dicarlo.objectome.public',
         'dicarlo.objectome.private',
         'dicarlo.Kar2018cocogray',
