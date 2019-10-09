@@ -31,7 +31,6 @@ from brainio_collection import fetch
 ))
 def test_list_assembly(assembly):
     l = brainio_collection.list_assemblies()
-    print(l)
     assert assembly in l
 
 
