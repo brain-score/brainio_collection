@@ -37,12 +37,15 @@ def test_list_assembly(assembly):
 
 @pytest.mark.parametrize('assembly_identifier', [
     pytest.param('gallant.David2004', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Majaj2015', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Majaj2015.public', marks=[]),
     pytest.param('dicarlo.Majaj2015.private', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Majaj2015.temporal', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
     pytest.param('dicarlo.Majaj2015.temporal.public', marks=[pytest.mark.memory_intense]),
     pytest.param('dicarlo.Majaj2015.temporal.private', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
     pytest.param('dicarlo.Majaj2015.temporal-10ms', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
     pytest.param('tolias.Cadena2017', marks=[pytest.mark.private_access]),
+    pytest.param('movshon.FreemanZiemba2013', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
     pytest.param('movshon.FreemanZiemba2013.public', marks=[pytest.mark.memory_intense]),
     pytest.param('movshon.FreemanZiemba2013.private', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
     pytest.param('dicarlo.Rajalingham2018.public', marks=[]),
