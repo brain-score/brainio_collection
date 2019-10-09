@@ -12,14 +12,16 @@ from brainio_collection import fetch
 
 
 @pytest.mark.parametrize('assembly', (
+        'dicarlo.Majaj2015',
         'dicarlo.Majaj2015.private',
         'dicarlo.Majaj2015.public',
+        'dicarlo.Majaj2015.temporal',
         'dicarlo.Majaj2015.temporal.private',
         'dicarlo.Majaj2015.temporal.public',
-        'dicarlo.Majaj2015.temporal.public.-10ms',
-        'dicarlo.Majaj2015.temporal.private.-10ms',
+        'dicarlo.Majaj2015.temporal-10ms',
         'gallant.David2004',
         'tolias.Cadena2017',
+        'movshon.FreemanZiemba2013',
         'movshon.FreemanZiemba2013.private',
         'movshon.FreemanZiemba2013.public',
         'dicarlo.Rajalingham2018.public', 'dicarlo.Rajalingham2018.private',
@@ -29,21 +31,21 @@ from brainio_collection import fetch
 ))
 def test_list_assembly(assembly):
     l = brainio_collection.list_assemblies()
+    print(l)
     assert assembly in l
 
 
 @pytest.mark.parametrize('assembly_identifier', [
     pytest.param('gallant.David2004', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Majaj2015.public', marks=[]),
-    pytest.param('dicarlo.Majaj2015.private', marks=[]),
-    pytest.param('dicarlo.Majaj2015.temporal.public', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
+    pytest.param('dicarlo.Majaj2015.private', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Majaj2015.temporal.public', marks=[pytest.mark.memory_intense]),
     pytest.param('dicarlo.Majaj2015.temporal.private', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
-    pytest.param('dicarlo.Majaj2015.temporal.public-10ms', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
-    pytest.param('dicarlo.Majaj2015.temporal.private-10ms', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
+    pytest.param('dicarlo.Majaj2015.temporal-10ms', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
     pytest.param('tolias.Cadena2017', marks=[pytest.mark.private_access]),
-    pytest.param('movshon.FreemanZiemba2013.public', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
+    pytest.param('movshon.FreemanZiemba2013.public', marks=[pytest.mark.memory_intense]),
     pytest.param('movshon.FreemanZiemba2013.private', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
-    pytest.param('dicarlo.Rajalingham2018.public', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Rajalingham2018.public', marks=[]),
     pytest.param('dicarlo.Rajalingham2018.private', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Kar2019', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Kar2018hvm', marks=[pytest.mark.private_access]),
