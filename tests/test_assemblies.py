@@ -64,7 +64,7 @@ def test_nr_assembly_ctor():
 
 def test_load():
     assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
-    assert assy_hvm.shape == (296, 268800, 1)
+    assert assy_hvm.shape == (256, 148480, 1)
     print(assy_hvm)
 
 
@@ -73,14 +73,14 @@ def test_repr():
     repr_hvm = repr(assy_hvm)
     assert "neuroid" in repr_hvm
     assert "presentation" in repr_hvm
-    assert "296" in repr_hvm
-    assert "268800" in repr_hvm
+    assert "256" in repr_hvm
+    assert "148480" in repr_hvm
     assert "animal" in repr_hvm
     print(repr_hvm)
 
 
 def test_getitem():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.pubic")
+    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
     single = assy_hvm[0, 0, 0]
     assert type(single) is type(assy_hvm)
 
@@ -91,7 +91,7 @@ def test_lookup():
     store = assy.assembly_store_maps[0]
     assert store.role == "dicarlo.Majaj2015.public"
     assert store.assembly_store_model.location_type == "S3"
-    hvm_s3_url = "https://brainio-dicarlo.s3.amazonaws.com/hvm_neuronal_features.nc"
+    hvm_s3_url = "https://brainio-contrib.s3.amazonaws.com/assy_dicarlo_Majaj2015_public.nc"
     assert store.assembly_store_model.location == hvm_s3_url
 
 
@@ -110,7 +110,7 @@ def test_fetch():
 
 def test_wrap():
     assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
-    hvm_v6 = assy_hvm.sel(variation=6)
+    hvm_v6 = assy_hvm.sel(variation=3)
     assert isinstance(hvm_v6, assemblies.NeuronRecordingAssembly)
 
     hvm_it_v6 = hvm_v6.sel(region="IT")
@@ -134,7 +134,7 @@ def test_wrap():
 
 def test_multi_group():
     assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
-    hvm_it_v6 = assy_hvm.sel(variation=6).sel(region="IT")
+    hvm_it_v6 = assy_hvm.sel(variation=3).sel(region="IT")
     hvm_it_v6.load()
     hvm_it_v6_obj = hvm_it_v6.multi_groupby(["category_name", "object_name"]).mean(dim="presentation")
     assert "category_name" in hvm_it_v6_obj.indexes["presentation"].names
