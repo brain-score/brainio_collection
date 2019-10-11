@@ -91,7 +91,7 @@ def test_lookup():
     store = assy.assembly_store_maps[0]
     assert store.role == "dicarlo.Majaj2015.public"
     assert store.assembly_store_model.location_type == "S3"
-    hvm_s3_url = "https://brainio-contrib.s3.amazonaws.com/assy_dicarlo_Majaj2015_public.nc"
+    hvm_s3_url = "https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_Majaj2015_public.nc"
     assert store.assembly_store_model.location == hvm_s3_url
 
 
@@ -110,35 +110,35 @@ def test_fetch():
 
 def test_wrap():
     assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
-    hvm_v6 = assy_hvm.sel(variation=3)
-    assert isinstance(hvm_v6, assemblies.NeuronRecordingAssembly)
+    hvm_v3 = assy_hvm.sel(variation=3)
+    assert isinstance(hvm_v3, assemblies.NeuronRecordingAssembly)
 
-    hvm_it_v6 = hvm_v6.sel(region="IT")
-    assert isinstance(hvm_it_v6, assemblies.NeuronRecordingAssembly)
+    hvm_it_v3 = hvm_v3.sel(region="IT")
+    assert isinstance(hvm_it_v3, assemblies.NeuronRecordingAssembly)
 
-    hvm_it_v6.coords["cat_obj"] = hvm_it_v6.coords["category_name"] + hvm_it_v6.coords["object_name"]
-    hvm_it_v6.load()
-    hvm_it_v6_grp = hvm_it_v6.multi_groupby(["category_name", "object_name"])
-    assert not isinstance(hvm_it_v6_grp, xr.core.groupby.GroupBy)
-    assert isinstance(hvm_it_v6_grp, assemblies.GroupbyBridge)
+    hvm_it_v3.coords["cat_obj"] = hvm_it_v3.coords["category_name"] + hvm_it_v3.coords["object_name"]
+    hvm_it_v3.load()
+    hvm_it_v3_grp = hvm_it_v3.multi_groupby(["category_name", "object_name"])
+    assert not isinstance(hvm_it_v3_grp, xr.core.groupby.GroupBy)
+    assert isinstance(hvm_it_v3_grp, assemblies.GroupbyBridge)
 
-    hvm_it_v6_obj = hvm_it_v6_grp.mean(dim="presentation")
-    assert isinstance(hvm_it_v6_obj, assemblies.NeuronRecordingAssembly)
+    hvm_it_v3_obj = hvm_it_v3_grp.mean(dim="presentation")
+    assert isinstance(hvm_it_v3_obj, assemblies.NeuronRecordingAssembly)
 
-    hvm_it_v6_sqz = hvm_it_v6_obj.squeeze("time_bin")
-    assert isinstance(hvm_it_v6_sqz, assemblies.NeuronRecordingAssembly)
+    hvm_it_v3_sqz = hvm_it_v3_obj.squeeze("time_bin")
+    assert isinstance(hvm_it_v3_sqz, assemblies.NeuronRecordingAssembly)
 
-    hvm_it_v6_t = hvm_it_v6_sqz.T
-    assert isinstance(hvm_it_v6_t, assemblies.NeuronRecordingAssembly)
+    hvm_it_v3_t = hvm_it_v3_sqz.T
+    assert isinstance(hvm_it_v3_t, assemblies.NeuronRecordingAssembly)
 
 
 def test_multi_group():
     assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
-    hvm_it_v6 = assy_hvm.sel(variation=3).sel(region="IT")
-    hvm_it_v6.load()
-    hvm_it_v6_obj = hvm_it_v6.multi_groupby(["category_name", "object_name"]).mean(dim="presentation")
-    assert "category_name" in hvm_it_v6_obj.indexes["presentation"].names
-    assert "object_name" in hvm_it_v6_obj.indexes["presentation"].names
+    hvm_it_v3 = assy_hvm.sel(variation=3).sel(region="IT")
+    hvm_it_v3.load()
+    hvm_it_v3_obj = hvm_it_v3.multi_groupby(["category_name", "object_name"]).mean(dim="presentation")
+    assert "category_name" in hvm_it_v3_obj.indexes["presentation"].names
+    assert "object_name" in hvm_it_v3_obj.indexes["presentation"].names
 
 
 def test_stimulus_set_from_assembly():
