@@ -160,13 +160,3 @@ class TestIndexEfficient:
         indexer = [index for index in indexer if index != -1]
         result = index_efficient(a, b)
         assert result == indexer
-
-# def get_assembly(name):
-#     assembly = get_assembly(name)
-#     if not hasattr(assembly.stimulus_set, 'name'):
-#         assembly.stimulus_set.name = assembly.stimulus_set_name
-#
-#     stimulus_set_degrees = {'dicarlo.hvm': 8, 'movshon.FreemanZiemba2013': 4}
-#     if assembly.stimulus_set.name in stimulus_set_degrees:
-#         assembly.stimulus_set['degrees'] = stimulus_set_degrees[assembly.stimulus_set.name]
-#     return assembly
