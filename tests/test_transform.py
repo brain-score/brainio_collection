@@ -1,4 +1,3 @@
-
 import numpy as np
 import pytest
 import xarray as xr
@@ -113,6 +112,7 @@ class TestSubset:
         np.testing.assert_array_equal(subset_assembly, target_assembly)
         assert (subset_assembly == target_assembly).all()
 
+    @pytest.mark.private_access
     def test_category_subselection(self):
         assembly = get_assembly('dicarlo.Majaj2015')
         categories = np.unique(assembly['category_name'])
@@ -160,7 +160,6 @@ class TestIndexEfficient:
         indexer = [index for index in indexer if index != -1]
         result = index_efficient(a, b)
         assert result == indexer
-
 
 # def get_assembly(name):
 #     assembly = get_assembly(name)
