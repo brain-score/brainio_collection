@@ -87,8 +87,7 @@ class BotoFetcher(Fetcher):
         s3 = boto3.resource('s3', config=config)
         obj = s3.Object(self.bucketname, self.relative_path)
         # show progress. see https://gist.github.com/wy193777/e7607d12fad13459e8992d4f69b53586
-        with tqdm(total=obj.content_length, unit='B', unit_scale=True,
-                  desc=self.bucketname + "/" + self.relative_path) as progress_bar:
+        with tqdm(total=obj.content_length, unit='B', unit_scale=True, desc=self.bucketname + "/" + self.relative_path) as progress_bar:
             def progress_hook(bytes_amount):
                 if bytes_amount > 0:  # at the end, this sometimes passes a negative byte amount which tqdm can't handle
                     progress_bar.update(bytes_amount)
@@ -147,8 +146,6 @@ class AssemblyLoader(object):
         axis_name, index_column = "presentation", "image_id"
         df_of_coords = pd.DataFrame(coords_for_dim(assy, axis_name))
         cols_to_use = stimulus_set.columns.difference(df_of_coords.columns.difference([index_column]))
-        if (index_column not in df_of_coords._get_axis('columns')):
-            df_of_coords = df_of_coords.rename({'id': index_column, '_id': 'id'}, axis='columns')
         merged = df_of_coords.merge(stimulus_set[cols_to_use], on=index_column, how="left")
         for col in stimulus_set.columns:
             assy[col] = (axis_name, merged[col])
