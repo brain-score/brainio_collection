@@ -11,7 +11,7 @@ import xarray as xr
 from botocore import UNSIGNED
 from botocore.config import Config
 from brainio_base import assemblies as assemblies_base
-from brainio_base.assemblies import coords_for_dim
+from brainio_base.assemblies import coords_for_dim, gather_indexes
 from brainio_base.stimuli import StimulusSet
 from six.moves.urllib.parse import urlparse
 from tqdm import tqdm
@@ -138,6 +138,7 @@ class AssemblyLoader(object):
         merged = self.merge(concatenated, stimulus_set)
         class_object = getattr(assemblies_base, self.assy_model.assembly_class)
         result = class_object(data=merged)
+        result = gather_indexes(result)
         result.attrs["stimulus_set_name"] = stimulus_set_name
         result.attrs["stimulus_set"] = stimulus_set
         return result
