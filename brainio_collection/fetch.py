@@ -91,9 +91,8 @@ class BotoFetcher(Fetcher):
             def progress_hook(bytes_amount):
                 if bytes_amount > 0:  # at the end, this sometimes passes a negative byte amount which tqdm can't handle
                     progress_bar.update(bytes_amount)
-            with open(self.output_filename, 'wb') as f:
-                print('>>>>>>>>>>We fetch an object and not only be string!!!')
-                obj.download_fileobj(f, Callback=progress_hook)
+
+            obj.download_file(self.output_filename, Callback=progress_hook)
 
         if sha1 is not None:
             self.verify_sha1(self.output_filename, sha1)
