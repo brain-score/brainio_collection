@@ -13,7 +13,7 @@ requirements = [
     "requests",
     "boto3",
     "tqdm",
-    "netcdf4",
+    "netcdf4==1.5.2",
     "peewee",
     # test_requirements
     "pytest",
