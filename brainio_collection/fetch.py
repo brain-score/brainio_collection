@@ -21,7 +21,7 @@ from brainio_collection.stimuli import AttributeModel, \
     ImageModel, ImageMetaModel, ImageStoreModel, ImageStoreMap, \
     StimulusSetImageMap, StimulusSetModel
 
-_local_data_path = os.path.expanduser("~/.brainio/data")
+_local_data_path = os.path.expanduser(os.getenv('BRAINIO_HOME', '~/.brainio'))
 
 
 class Fetcher(object):
