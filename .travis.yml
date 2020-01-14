@@ -21,3 +21,12 @@ install:
 script:
 - if [ "$PRIVATE_ACCESS" = 1 ] && [ "$TRAVIS_PULL_REQUEST" = "false" ]; then pytest -m "not memory_intense"; fi
 - if [ "$PRIVATE_ACCESS" != 1 ]; then pytest -m "not memory_intense and not private_access"; fi
+
+notifications:
+  slack:
+    if: |
+      branch = master AND \
+      type IN (push, api, cron)
+    on_success: change
+    on_failure: always
+    secure: "fVNvMnpY6U1NuP/tpuViqCJxzXMI/dXnMjVgIQu990RjF5U2E+Po+F8rlTdrvbgdvEa1u1zo6xtMo6spJgSiqIqByvt+0nmQkiPmMAL7/yWMva/nuc+HkOg0phCkmqyUkHKe2z5JDSaTD7GqfLCdz/xfljQ1/fkg5UA0WLGPF2ANggYr9NGlOqHYn93l7G5ILUSWQj2ak3DXCJXEL8LNXW99OobTz2gZx8ankk+tLHqYduO4e2n4IXORdGQdK6ddCsZsibWxfkQ/COu0JWVhzK8k28IO+u+pUbtslIbTIEBG2J/PXzNewACgxj7ImUZDuOahEQfAJL0FYJYxb6rmYKosWyW+hlX9jC6pyJB0G0+srJxwZd3x3qGdWmCxL9scr6pbnsHvJvyJeR99oUIzFyHxQSb3pxBm2oqimIsQC+A9B6rm8QQ2GXdvcPzKJqv4YoWZ+GFOmFSe0xZqItReLpLaE+OP17M+VNXhLbcKxOHiMx1BgwSv6oRhLJhX3Q54IRXNJAVG7HTX1M0C1BUpG4Ol4JwWoJr41ECEOtYbxATeDTFBv6wtiuj3E5C215JbmjjaASq7fQOxyu+H/1fBmEu22CcLS3tCNNrfndr31C+FmO97j7DKQkldxPCvtV1KCXxCPazcsvZXhvGxgK8bAVdnWwojB982Isz3AN0uJWE="
