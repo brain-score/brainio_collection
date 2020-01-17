@@ -18,7 +18,7 @@ requirements = [
     # test_requirements
     "pytest",
     "Pillow",
-    "scipy",
+    "imageio",
 ]
 
 setup(

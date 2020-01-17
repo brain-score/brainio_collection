@@ -10,72 +10,88 @@ from brainio_base import assemblies
 from brainio_base.assemblies import DataAssembly
 from brainio_collection import fetch
 
-private_access = pytest.mark.skipif(
-    pytest.config.getoption("--skip-private"),
-    reason="set --skip-private option to not run tests that require private s3 access")
-memory_intense = pytest.mark.skipif(
-    pytest.config.getoption("--skip-memory-intense"),
-    reason="set --skip-memory-intense option to not run memory intense tests")
+
+@pytest.mark.parametrize('assembly', (
+        'dicarlo.Majaj2015',
+        'dicarlo.Majaj2015.private',
+        'dicarlo.Majaj2015.public',
+        'dicarlo.Majaj2015.temporal',
+        'dicarlo.Majaj2015.temporal.private',
+        'dicarlo.Majaj2015.temporal.public',
+        'dicarlo.Majaj2015.temporal-10ms',
+        'gallant.David2004',
+        'tolias.Cadena2017',
+        'movshon.FreemanZiemba2013',
+        'movshon.FreemanZiemba2013.private',
+        'movshon.FreemanZiemba2013.public',
+        'dicarlo.Rajalingham2018.public', 'dicarlo.Rajalingham2018.private',
+        'dicarlo.Kar2019',
+        'dicarlo.Kar2018hvm',
+        'dicarlo.Kar2018cocogray',
+))
+def test_list_assembly(assembly):
+    l = brainio_collection.list_assemblies()
+    assert assembly in l
 
 
-class TestExistence:
-    @private_access
-    def test_gallant(self):
-        assert brainio_collection.get_assembly("gallant.David2004") is not None
-
-    def test_hvm(self):
-        assert brainio_collection.get_assembly("dicarlo.Majaj2015") is not None
-
-    @memory_intense
-    @private_access
-    def test_hvm_temporal(self):
-        assert brainio_collection.get_assembly("dicarlo.Majaj2015.temporal") is not None
-
-    @private_access
-    def test_tolias(self):
-        assert brainio_collection.get_assembly("tolias.Cadena2017") is not None
-
-    @memory_intense
-    @private_access
-    def test_movshon(self):
-        assert brainio_collection.get_assembly("movshon.FreemanZiemba2013") is not None
+@pytest.mark.parametrize('assembly_identifier', [
+    pytest.param('gallant.David2004', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Majaj2015', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Majaj2015.public', marks=[]),
+    pytest.param('dicarlo.Majaj2015.private', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Majaj2015.temporal', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
+    pytest.param('dicarlo.Majaj2015.temporal.public', marks=[pytest.mark.memory_intense]),
+    pytest.param('dicarlo.Majaj2015.temporal.private', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
+    # pytest.param('dicarlo.Majaj2015.temporal-10ms', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
+    pytest.param('tolias.Cadena2017', marks=[pytest.mark.private_access]),
+    pytest.param('movshon.FreemanZiemba2013', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
+    pytest.param('movshon.FreemanZiemba2013.public', marks=[pytest.mark.memory_intense]),
+    pytest.param('movshon.FreemanZiemba2013.private', marks=[pytest.mark.private_access, pytest.mark.memory_intense]),
+    pytest.param('dicarlo.Rajalingham2018.public', marks=[]),
+    pytest.param('dicarlo.Rajalingham2018.private', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Kar2019', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Kar2018hvm', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Kar2018cocogray', marks=[pytest.mark.private_access]),
+])
+def test_existence(assembly_identifier):
+    assert brainio_collection.get_assembly(assembly_identifier) is not None
 
 
 def test_nr_assembly_ctor():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015")
+    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
     assert isinstance(assy_hvm, DataAssembly)
 
 
 def test_load():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015")
-    assert assy_hvm.shape == (296, 268800, 1)
+    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
+    assert assy_hvm.shape == (256, 148480, 1)
     print(assy_hvm)
 
 
 def test_repr():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015")
+    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
     repr_hvm = repr(assy_hvm)
     assert "neuroid" in repr_hvm
     assert "presentation" in repr_hvm
-    assert "296" in repr_hvm
-    assert "268800" in repr_hvm
+    assert "256" in repr_hvm
+    assert "148480" in repr_hvm
     assert "animal" in repr_hvm
     print(repr_hvm)
 
 
 def test_getitem():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015")
+    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
     single = assy_hvm[0, 0, 0]
     assert type(single) is type(assy_hvm)
 
 
 def test_lookup():
-    assy = brainio_collection.assemblies.lookup_assembly("dicarlo.Majaj2015")
-    assert assy.name == "dicarlo.Majaj2015"
+    assy = brainio_collection.assemblies.lookup_assembly("dicarlo.Majaj2015.public")
+    assert assy.name == "dicarlo.Majaj2015.public"
     store = assy.assembly_store_maps[0]
-    assert store.role == "dicarlo.Majaj2015"
+    assert store.role == "dicarlo.Majaj2015.public"
     assert store.assembly_store_model.location_type == "S3"
-    hvm_s3_url = "https://brainio-dicarlo.s3.amazonaws.com/hvm_neuronal_features.nc"
+    hvm_s3_url = "https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_Majaj2015_public.nc"
     assert store.assembly_store_model.location == hvm_s3_url
 
 
@@ -85,48 +101,48 @@ def test_lookup_bad_name():
 
 
 def test_fetch():
-    assy_record = brainio_collection.assemblies.lookup_assembly("dicarlo.Majaj2015")
+    assy_record = brainio_collection.assemblies.lookup_assembly("dicarlo.Majaj2015.public")
     local_paths = fetch.fetch_assembly(assy_record)
     assert len(local_paths) == 1
-    print(local_paths["dicarlo.Majaj2015"])
-    assert os.path.exists(local_paths["dicarlo.Majaj2015"])
+    print(local_paths["dicarlo.Majaj2015.public"])
+    assert os.path.exists(local_paths["dicarlo.Majaj2015.public"])
 
 
 def test_wrap():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015")
-    hvm_v6 = assy_hvm.sel(variation=6)
-    assert isinstance(hvm_v6, assemblies.NeuronRecordingAssembly)
+    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
+    hvm_v3 = assy_hvm.sel(variation=3)
+    assert isinstance(hvm_v3, assemblies.NeuronRecordingAssembly)
 
-    hvm_it_v6 = hvm_v6.sel(region="IT")
-    assert isinstance(hvm_it_v6, assemblies.NeuronRecordingAssembly)
+    hvm_it_v3 = hvm_v3.sel(region="IT")
+    assert isinstance(hvm_it_v3, assemblies.NeuronRecordingAssembly)
 
-    hvm_it_v6.coords["cat_obj"] = hvm_it_v6.coords["category_name"] + hvm_it_v6.coords["object_name"]
-    hvm_it_v6.load()
-    hvm_it_v6_grp = hvm_it_v6.multi_groupby(["category_name", "object_name"])
-    assert not isinstance(hvm_it_v6_grp, xr.core.groupby.GroupBy)
-    assert isinstance(hvm_it_v6_grp, assemblies.GroupbyBridge)
+    hvm_it_v3.coords["cat_obj"] = hvm_it_v3.coords["category_name"] + hvm_it_v3.coords["object_name"]
+    hvm_it_v3.load()
+    hvm_it_v3_grp = hvm_it_v3.multi_groupby(["category_name", "object_name"])
+    assert not isinstance(hvm_it_v3_grp, xr.core.groupby.GroupBy)
+    assert isinstance(hvm_it_v3_grp, assemblies.GroupbyBridge)
 
-    hvm_it_v6_obj = hvm_it_v6_grp.mean(dim="presentation")
-    assert isinstance(hvm_it_v6_obj, assemblies.NeuronRecordingAssembly)
+    hvm_it_v3_obj = hvm_it_v3_grp.mean(dim="presentation")
+    assert isinstance(hvm_it_v3_obj, assemblies.NeuronRecordingAssembly)
 
-    hvm_it_v6_sqz = hvm_it_v6_obj.squeeze("time_bin")
-    assert isinstance(hvm_it_v6_sqz, assemblies.NeuronRecordingAssembly)
+    hvm_it_v3_sqz = hvm_it_v3_obj.squeeze("time_bin")
+    assert isinstance(hvm_it_v3_sqz, assemblies.NeuronRecordingAssembly)
 
-    hvm_it_v6_t = hvm_it_v6_sqz.T
-    assert isinstance(hvm_it_v6_t, assemblies.NeuronRecordingAssembly)
+    hvm_it_v3_t = hvm_it_v3_sqz.T
+    assert isinstance(hvm_it_v3_t, assemblies.NeuronRecordingAssembly)
 
 
 def test_multi_group():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015")
-    hvm_it_v6 = assy_hvm.sel(variation=6).sel(region="IT")
-    hvm_it_v6.load()
-    hvm_it_v6_obj = hvm_it_v6.multi_groupby(["category_name", "object_name"]).mean(dim="presentation")
-    assert "category_name" in hvm_it_v6_obj.indexes["presentation"].names
-    assert "object_name" in hvm_it_v6_obj.indexes["presentation"].names
+    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
+    hvm_it_v3 = assy_hvm.sel(variation=3).sel(region="IT")
+    hvm_it_v3.load()
+    hvm_it_v3_obj = hvm_it_v3.multi_groupby(["category_name", "object_name"]).mean(dim="presentation")
+    assert "category_name" in hvm_it_v3_obj.indexes["presentation"].names
+    assert "object_name" in hvm_it_v3_obj.indexes["presentation"].names
 
 
 def test_stimulus_set_from_assembly():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015")
+    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
     stimulus_set = assy_hvm.attrs["stimulus_set"]
     assert stimulus_set.shape[0] == np.unique(assy_hvm["image_id"]).shape[0]
     for image_id in stimulus_set['image_id']:
