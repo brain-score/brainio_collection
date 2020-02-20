@@ -35,6 +35,7 @@ class TestLoadImage:
         'dicarlo.hvm',
         'dicarlo.hvm-public',
         'dicarlo.hvm-private',
+        'dicarlo.hvm-640',
         'gallant.David2004',
         'tolias.Cadena2017',
         'movshon.FreemanZiemba2013',
