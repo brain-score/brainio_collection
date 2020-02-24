@@ -50,7 +50,7 @@ def test_list_stimulus_set(stimulus_set):
     assert stimulus_set in l
 
 
-@pytest.mark.private
+@pytest.mark.private_access
 def test_klab_Zhang2018search():
     stimulus_set = brainio_collection.get_stimulus_set('klab.Zhang2018.search_obj_array')
     assert len(stimulus_set) == 606

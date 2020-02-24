@@ -152,7 +152,7 @@ def test_stimulus_set_from_assembly():
         assert os.path.exists(image_path)
 
 
-@pytest.mark.private
+@pytest.mark.private_access
 def test_klab_Zhang2018search():
     assembly = brainio_collection.get_assembly('klab.Zhang2018search_obj_array')
     assert set(assembly.dims) == {'presentation', 'fixation', 'position'}
