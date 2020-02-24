@@ -28,6 +28,7 @@ from brainio_collection import fetch
         'dicarlo.Kar2019',
         'dicarlo.Kar2018hvm',
         'dicarlo.Kar2018cocogray',
+        'klab.Zhang2018search_obj_array',
 ))
 def test_list_assembly(assembly):
     l = brainio_collection.list_assemblies()
@@ -52,6 +53,7 @@ def test_list_assembly(assembly):
     pytest.param('dicarlo.Kar2019', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Kar2018hvm', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Kar2018cocogray', marks=[pytest.mark.private_access]),
+    pytest.param('klab.Zhang2018search_obj_array', marks=[pytest.mark.private_access]),
 ])
 def test_existence(assembly_identifier):
     assert brainio_collection.get_assembly(assembly_identifier) is not None
@@ -148,3 +150,14 @@ def test_stimulus_set_from_assembly():
     for image_id in stimulus_set['image_id']:
         image_path = stimulus_set.get_image(image_id)
         assert os.path.exists(image_path)
+
+
+def test_klab_Zhang2018search():
+    assembly = brainio_collection.get_assembly('klab.Zhang2018search_obj_array')
+    assert set(assembly.dims) == {'presentation', 'fixation', 'position'}
+    assert len(assembly['presentation']) == 4500
+    assert len(set(assembly['image_id'].values)) == 300
+    assert len(set(assembly['subjects'].values)) == 15
+    assert len(assembly['fixation']) == 8
+    assert len(assembly['position']) == 2
+    assert assembly.stimulus_set is not None

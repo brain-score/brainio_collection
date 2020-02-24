@@ -43,7 +43,14 @@ class TestLoadImage:
         'dicarlo.objectome.public',
         'dicarlo.objectome.private',
         'dicarlo.Kar2018cocogray',
+        'klab.Zhang2018.search_obj_array',
 ))
 def test_list_stimulus_set(stimulus_set):
     l = brainio_collection.list_stimulus_sets()
     assert stimulus_set in l
+
+
+def test_klab_Zhang2018search():
+    stimulus_set = brainio_collection.get_stimulus_set('klab.Zhang2018.search_obj_array')
+    assert len(stimulus_set) == 606
+    assert len(set(stimulus_set['image_id'])) == 606
