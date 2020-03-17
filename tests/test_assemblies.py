@@ -3,6 +3,9 @@ import os
 import numpy as np
 import pytest
 import xarray as xr
+from PIL import Image
+from pathlib import Path
+from pytest import approx
 
 import brainio_collection
 import brainio_collection.assemblies
@@ -162,3 +165,58 @@ def test_klab_Zhang2018search():
     assert len(assembly['fixation']) == 8
     assert len(assembly['position']) == 2
     assert assembly.stimulus_set is not None
+
+
+class TestFreemanZiemba:
+    @pytest.mark.parametrize('identifier', [
+        pytest.param('movshon.FreemanZiemba2013.public', marks=[]),
+        pytest.param('movshon.FreemanZiemba2013.private', marks=[pytest.mark.private_access]),
+    ])
+    def test_v1_v2_alignment(self, identifier):
+        assembly = brainio_collection.get_assembly(identifier)
+        v1, v2 = assembly.sel(region='V1'), assembly.sel(region='V2')
+        assert len(v1['presentation']) == len(v2['presentation'])
+        assert set(v1['image_id'].values) == set(v2['image_id'].values)
+
+    @pytest.mark.parametrize('identifier', [
+        pytest.param('movshon.FreemanZiemba2013.public', marks=[]),
+        pytest.param('movshon.FreemanZiemba2013.private', marks=[pytest.mark.private_access]),
+    ])
+    def test_num_neurons(self, identifier):
+        assembly = brainio_collection.get_assembly(identifier)
+        assert len(assembly['neuroid']) == 205
+        v1 = assembly[{'neuroid': [region == 'V1' for region in assembly['region'].values]}]
+        assert len(v1['neuroid']) == 102
+        v2 = assembly[{'neuroid': [region == 'V2' for region in assembly['region'].values]}]
+        assert len(v2['neuroid']) == 103
+
+    @pytest.mark.parametrize('identifier', [
+        pytest.param('movshon.FreemanZiemba2013.public', marks=[]),
+        pytest.param('movshon.FreemanZiemba2013.private', marks=[pytest.mark.private_access]),
+    ])
+    def test_nonzero(self, identifier):
+        assembly = brainio_collection.get_assembly(identifier)
+        nonzero = np.count_nonzero(assembly)
+        assert nonzero > 0
+
+    @pytest.mark.parametrize('identifier', [
+        pytest.param('movshon.FreemanZiemba2013.public', marks=[]),
+        pytest.param('movshon.FreemanZiemba2013.private', marks=[pytest.mark.private_access]),
+    ])
+    def test_aperture(self, identifier):
+        """ test a random image for the correct amount of gray pixels """
+        assembly = brainio_collection.get_assembly(identifier)
+        stimulus_set = assembly.stimulus_set
+        image_path = Path(stimulus_set.get_image('21041db1f26c142812a66277c2957fb3e2070916'))
+        assert image_path.is_file()
+        # count number of gray pixels in image
+        image = Image.open(image_path)
+        image = np.array(image)
+        amount_gray = 0
+        for index in np.ndindex(image.shape[:2]):
+            color = image[index]
+            gray = [128, 128, 128]
+            if (color == gray).all():
+                amount_gray += 1
+        assert amount_gray / image.size == approx(.3101171875, abs=.0001)
+        assert amount_gray == 31756
