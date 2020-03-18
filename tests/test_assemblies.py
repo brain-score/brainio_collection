@@ -174,7 +174,8 @@ class TestFreemanZiemba:
     ])
     def test_v1_v2_alignment(self, identifier):
         assembly = brainio_collection.get_assembly(identifier)
-        v1, v2 = assembly.sel(region='V1'), assembly.sel(region='V2')
+        v1 = assembly[{'neuroid': [region == 'V1' for region in assembly['region'].values]}]
+        v2 = assembly[{'neuroid': [region == 'V2' for region in assembly['region'].values]}]
         assert len(v1['presentation']) == len(v2['presentation'])
         assert set(v1['image_id'].values) == set(v2['image_id'].values)
 
@@ -199,15 +200,17 @@ class TestFreemanZiemba:
         nonzero = np.count_nonzero(assembly)
         assert nonzero > 0
 
-    @pytest.mark.parametrize('identifier', [
-        pytest.param('movshon.FreemanZiemba2013.public', marks=[]),
-        pytest.param('movshon.FreemanZiemba2013.private', marks=[pytest.mark.private_access]),
+    @pytest.mark.parametrize('identifier, image_id, amount_gray, ratio_gray', [
+        pytest.param('movshon.FreemanZiemba2013.public', '21041db1f26c142812a66277c2957fb3e2070916',
+                     31756, .3101171875, marks=[]),
+        pytest.param('movshon.FreemanZiemba2013.private', 'bfd26c127f8ba028cc95cdc95f00c45c8884b365',
+                     31585, .308447265625, marks=[pytest.mark.private_access]),
     ])
-    def test_aperture(self, identifier):
+    def test_aperture(self, identifier, image_id, amount_gray, ratio_gray):
         """ test a random image for the correct amount of gray pixels """
         assembly = brainio_collection.get_assembly(identifier)
         stimulus_set = assembly.stimulus_set
-        image_path = Path(stimulus_set.get_image('21041db1f26c142812a66277c2957fb3e2070916'))
+        image_path = Path(stimulus_set.get_image(image_id))
         assert image_path.is_file()
         # count number of gray pixels in image
         image = Image.open(image_path)
@@ -218,5 +221,5 @@ class TestFreemanZiemba:
             gray = [128, 128, 128]
             if (color == gray).all():
                 amount_gray += 1
-        assert amount_gray / image.size == approx(.3101171875, abs=.0001)
-        assert amount_gray == 31756
+        assert amount_gray / image.size == approx(ratio_gray, abs=.0001)
+        assert amount_gray == amount_gray
