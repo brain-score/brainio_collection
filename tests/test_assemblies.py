@@ -200,13 +200,13 @@ class TestFreemanZiemba:
         nonzero = np.count_nonzero(assembly)
         assert nonzero > 0
 
-    @pytest.mark.parametrize('identifier, image_id, amount_gray, ratio_gray', [
+    @pytest.mark.parametrize('identifier, image_id, expected_amount_gray, ratio_gray', [
         pytest.param('movshon.FreemanZiemba2013.public', '21041db1f26c142812a66277c2957fb3e2070916',
                      31756, .3101171875, marks=[]),
         pytest.param('movshon.FreemanZiemba2013.private', 'bfd26c127f8ba028cc95cdc95f00c45c8884b365',
                      31585, .308447265625, marks=[pytest.mark.private_access]),
     ])
-    def test_aperture(self, identifier, image_id, amount_gray, ratio_gray):
+    def test_aperture(self, identifier, image_id, expected_amount_gray, ratio_gray):
         """ test a random image for the correct amount of gray pixels """
         assembly = brainio_collection.get_assembly(identifier)
         stimulus_set = assembly.stimulus_set
@@ -222,4 +222,4 @@ class TestFreemanZiemba:
             if (color == gray).all():
                 amount_gray += 1
         assert amount_gray / image.size == approx(ratio_gray, abs=.0001)
-        assert amount_gray == amount_gray
+        assert amount_gray == expected_amount_gray
