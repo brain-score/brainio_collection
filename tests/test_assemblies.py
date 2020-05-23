@@ -32,6 +32,7 @@ from brainio_collection import fetch
         'dicarlo.Kar2018hvm',
         'dicarlo.Kar2018cocogray',
         'klab.Zhang2018search_obj_array',
+        'dicarlo.Rajalingham2020orthographic_IT',
 ))
 def test_list_assembly(assembly):
     l = brainio_collection.list_assemblies()
@@ -57,6 +58,7 @@ def test_list_assembly(assembly):
     pytest.param('dicarlo.Kar2018hvm', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Kar2018cocogray', marks=[pytest.mark.private_access]),
     pytest.param('klab.Zhang2018search_obj_array', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Rajalingham2020orthographic_IT', marks=[pytest.mark.private_access]),
 ])
 def test_existence(assembly_identifier):
     assert brainio_collection.get_assembly(assembly_identifier) is not None
