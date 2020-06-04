@@ -154,11 +154,32 @@ def test_stimulus_set_from_assembly():
 
 @pytest.mark.private_access
 def test_klab_Zhang2018search():
+    # object array
     assembly = brainio_collection.get_assembly('klab.Zhang2018search_obj_array')
     assert set(assembly.dims) == {'presentation', 'fixation', 'position'}
     assert len(assembly['presentation']) == 4500
     assert len(set(assembly['image_id'].values)) == 300
     assert len(set(assembly['subjects'].values)) == 15
     assert len(assembly['fixation']) == 8
+    assert len(assembly['position']) == 2
+    assert assembly.stimulus_set is not None
+
+    # naturaldesign
+    assembly = brainio_collection.get_assembly('klab.Zhang2018search_naturaldesign')
+    assert set(assembly.dims) == {'presentation', 'fixation', 'position'}
+    assert len(assembly['presentation']) == 3600
+    assert len(set(assembly['image_id'].values)) == 240
+    assert len(set(assembly['subjects'].values)) == 15
+    assert len(assembly['fixation']) == 66
+    assert len(assembly['position']) == 2
+    assert assembly.stimulus_set is not None
+
+    # waldo
+    assembly = brainio_collection.get_assembly('klab.Zhang2018search_waldo')
+    assert set(assembly.dims) == {'presentation', 'fixation', 'position'}
+    assert len(assembly['presentation']) == 1005
+    assert len(set(assembly['image_id'].values)) == 67
+    assert len(set(assembly['subjects'].values)) == 15
+    assert len(assembly['fixation']) == 81
     assert len(assembly['position']) == 2
     assert assembly.stimulus_set is not None
