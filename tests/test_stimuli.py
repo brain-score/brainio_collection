@@ -45,6 +45,7 @@ class TestLoadImage:
         'dicarlo.Kar2018cocogray',
         'klab.Zhang2018.search_obj_array',
         'dicarlo.Rajalingham2020orthographic_IT',
+        'dicarlo.Sanghavi2020',
 ))
 def test_list_stimulus_set(stimulus_set):
     l = brainio_collection.list_stimulus_sets()
