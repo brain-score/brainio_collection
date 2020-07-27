@@ -29,20 +29,20 @@ def _is_zip_lookup(data_row):
 
 
 def append(object_identifier, object_class, lookup_type,
-           bucket_name, sha1, s3_key, stimulus_set_name=None):
+           bucket_name, sha1, s3_key, stimulus_set_identifier=None):
     global data
     _logger.debug(f"Adding {object_identifier} to lookup")
-    object_lookup = {'identifier': object_identifier, 'stimulus_set_identifier': stimulus_set_name,
-                     'object_class': object_class, 'lookup_type': lookup_type,
+    object_lookup = {'identifier': object_identifier, 'lookup_type': lookup_type, 'object_class': object_class,
                      'location_type': "S3", 'location': f"https://{bucket_name}.s3.amazonaws.com/{s3_key}",
-                     "sha1": sha1}
+                     'sha1': sha1, 'stimulus_set_identifier': stimulus_set_identifier, }
     # check duplicates
     assert object_lookup['lookup_type'] in [TYPE_ASSEMBLY, TYPE_STIMULUS_SET]
-    duplicates = data[data['identifier'] == object_lookup['identifier']]
+    duplicates = data[(data['identifier'] == object_lookup['identifier']) &
+                      (data['lookup_type'] == object_lookup['lookup_type'])]
     if len(duplicates) > 0:
         if object_lookup['lookup_type'] == TYPE_ASSEMBLY:
-            raise ValueError(
-                f"Trying to add duplicate identifier {object_lookup['identifier']}, existing {duplicates}")
+            raise ValueError(f"Trying to add duplicate identifier {object_lookup['identifier']}, "
+                             f"existing \n{duplicates.to_string()}")
         elif object_lookup['lookup_type'] == TYPE_STIMULUS_SET:
             if len(duplicates) == 1 and duplicates.squeeze()['identifier'] == object_lookup['identifier'] and (
                     (_is_csv_lookup(duplicates.squeeze()) and _is_zip_lookup(object_lookup)) or
