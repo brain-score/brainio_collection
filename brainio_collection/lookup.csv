@@ -1,0 +1,3 @@
+identifier,stimulus_set_identifier,object_class,lookup_type,location_type,location,sha1
+dicarlo.hvm,,StimulusSet,stimulus_set,S3,https://brainio-temp.s3.amazonaws.com/image_dicarlo_hvm.csv,772ba804639b7f704f5226b54af9627c36e554cd
+dicarlo.hvm,,,stimulus_set,S3,https://brainio-temp.s3.amazonaws.com/image_dicarlo_hvm.zip,ad35dd3e85c2fefab116a5fded481f20fc7a0217
