@@ -8,7 +8,6 @@ from pathlib import Path
 from pytest import approx
 
 import brainio_collection
-import brainio_collection.assemblies
 from brainio_base import assemblies
 from brainio_base.assemblies import DataAssembly
 from brainio_collection import fetch
@@ -93,18 +92,16 @@ def test_getitem():
 
 
 def test_lookup():
-    assy = brainio_collection.assemblies.lookup_assembly("dicarlo.Majaj2015.public")
-    assert assy.name == "dicarlo.Majaj2015.public"
-    store = assy.assembly_store_maps[0]
-    assert store.role == "dicarlo.Majaj2015.public"
-    assert store.assembly_store_model.location_type == "S3"
+    assy = brainio_collection.lookup.lookup_assembly("dicarlo.Majaj2015.public")
+    assert assy['identifier'] == "dicarlo.Majaj2015.public"
+    assert assy['location_type'] == "S3"
     hvm_s3_url = "https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_Majaj2015_public.nc"
-    assert store.assembly_store_model.location == hvm_s3_url
+    assert assy['location'] == hvm_s3_url
 
 
 def test_lookup_bad_name():
-    with pytest.raises(brainio_collection.assemblies.AssemblyLookupError) as err:
-        brainio_collection.assemblies.lookup_assembly("BadName")
+    with pytest.raises(brainio_collection.lookup.AssemblyLookupError):
+        brainio_collection.lookup.lookup_assembly("BadName")
 
 
 def test_fetch():
