@@ -18,6 +18,30 @@ print(f"Loading lookup from {path}")  # print because logging usually isn't set 
 data = pd.read_csv(path)
 
 
+def lookup_assembly(identifier):
+    lookup = data[(data['identifier'] == identifier) & (data['lookup_type'] == TYPE_ASSEMBLY)]
+    if len(lookup) == 0:
+        raise KeyError(f"assembly {identifier} not found")
+    if len(lookup) > 1:
+        raise ValueError(f"Internal data inconsistency: Found multiple lookup rows for identifier {identifier}")
+    lookup = lookup.squeeze()
+    return lookup
+
+
+def lookup_stimulus_set(identifier):
+    lookup = data[(data['identifier'] == identifier) & (data['lookup_type'] == TYPE_STIMULUS_SET)]
+    if len(lookup) == 0:
+        raise KeyError(f"stimulus_set {identifier} not found")
+    if len(lookup) > 2:
+        raise ValueError(
+            f"Internal data inconsistency: Found more than 2 lookup rows for stimulus_set identifier {identifier}")
+    csv_lookup = [lookup_row for _, lookup_row in lookup.iterrows() if _is_csv_lookup(lookup_row)]
+    zip_lookup = [lookup_row for _, lookup_row in lookup.iterrows() if _is_zip_lookup(lookup_row)]
+    assert len(csv_lookup) == 1 and len(zip_lookup) == 1
+    csv_lookup, zip_lookup = csv_lookup[0], zip_lookup[0]
+    return csv_lookup, zip_lookup
+
+
 def _is_csv_lookup(data_row):
     return data_row['lookup_type'] == TYPE_STIMULUS_SET \
            and data_row['location'].endswith('.csv') \
@@ -62,3 +86,13 @@ def append(object_identifier, cls, lookup_type,
 lookupdb_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "lookup.db"))
 _logger.debug(f"Loading database from {lookupdb_path}")
 pwdb = peewee.SqliteDatabase(lookupdb_path)
+
+
+def sha1_hash(path, buffer_size=64 * 2 ** 10):
+    sha1 = hashlib.sha1()
+    with open(path, "rb") as f:
+        buffer = f.read(buffer_size)
+        while len(buffer) > 0:
+            sha1.update(buffer)
+            buffer = f.read(buffer_size)
+    return sha1.hexdigest()

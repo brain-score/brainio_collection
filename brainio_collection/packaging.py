@@ -1,4 +1,3 @@
-import hashlib
 import logging
 import os
 import zipfile
@@ -10,19 +9,9 @@ from xarray import DataArray
 
 import brainio_base.assemblies
 from brainio_collection import lookup, list_stimulus_sets
-from brainio_collection.lookup import TYPE_ASSEMBLY, TYPE_STIMULUS_SET
+from brainio_collection.lookup import TYPE_ASSEMBLY, TYPE_STIMULUS_SET, sha1_hash
 
 _logger = logging.getLogger(__name__)
-
-
-def sha1_hash(path, buffer_size=64 * 2 ** 10):
-    sha1 = hashlib.sha1()
-    with open(path, "rb") as f:
-        buffer = f.read(buffer_size)
-        while len(buffer) > 0:
-            sha1.update(buffer)
-            buffer = f.read(buffer_size)
-    return sha1.hexdigest()
 
 
 def create_image_zip(proto_stimulus_set, target_zip_path):

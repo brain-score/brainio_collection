@@ -10,20 +10,24 @@ import brainio_collection
 def test_get_stimulus_set():
     stimulus_set = brainio_collection.get_stimulus_set("dicarlo.hvm-public")
     assert "image_id" in stimulus_set.columns
-    assert stimulus_set.shape == (3200, 17)
-    assert stimulus_set.name == 'dicarlo.hvm-public'
+    assert set(stimulus_set.columns).issuperset({'image_id', 'object_name', 'variation', 'category_name',
+                                                 'image_file_name', 'background_id', 'ty', 'tz',
+                                                 'size', 'id', 's', 'rxz', 'ryz', 'ryz_semantic',
+                                                 'rxy', 'rxy_semantic', 'rxz_semantic'})
+    assert len(stimulus_set) == 3200
+    assert stimulus_set.identifier == 'dicarlo.hvm-public'
     for image_id in stimulus_set['image_id']:
         image_path = stimulus_set.get_image(image_id)
         assert os.path.exists(image_path)
 
 
 def test_loadname_dicarlo_hvm():
-    assert brainio_collection.get_stimulus_set(name="dicarlo.hvm-public") is not None
+    assert brainio_collection.get_stimulus_set(identifier="dicarlo.hvm-public") is not None
 
 
 class TestLoadImage:
     def test_dicarlohvm(self):
-        stimulus_set = brainio_collection.get_stimulus_set(name="dicarlo.hvm-public")
+        stimulus_set = brainio_collection.get_stimulus_set(identifier="dicarlo.hvm-public")
         paths = stimulus_set.image_paths.values()
         for path in paths:
             image = imageio.imread(path)

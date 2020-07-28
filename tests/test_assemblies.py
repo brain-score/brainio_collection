@@ -65,18 +65,18 @@ def test_existence(assembly_identifier):
 
 
 def test_nr_assembly_ctor():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
+    assy_hvm = brainio_collection.get_assembly(identifier="dicarlo.Majaj2015.public")
     assert isinstance(assy_hvm, DataAssembly)
 
 
 def test_load():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
+    assy_hvm = brainio_collection.get_assembly(identifier="dicarlo.Majaj2015.public")
     assert assy_hvm.shape == (256, 148480, 1)
     print(assy_hvm)
 
 
 def test_repr():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
+    assy_hvm = brainio_collection.get_assembly(identifier="dicarlo.Majaj2015.public")
     repr_hvm = repr(assy_hvm)
     assert "neuroid" in repr_hvm
     assert "presentation" in repr_hvm
@@ -109,14 +109,14 @@ def test_lookup_bad_name():
 
 def test_fetch():
     assy_record = brainio_collection.assemblies.lookup_assembly("dicarlo.Majaj2015.public")
-    local_paths = fetch.fetch_assembly(assy_record)
+    local_paths = fetch.fetch_file(assy_record)
     assert len(local_paths) == 1
     print(local_paths["dicarlo.Majaj2015.public"])
     assert os.path.exists(local_paths["dicarlo.Majaj2015.public"])
 
 
 def test_wrap():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
+    assy_hvm = brainio_collection.get_assembly(identifier="dicarlo.Majaj2015.public")
     hvm_v3 = assy_hvm.sel(variation=3)
     assert isinstance(hvm_v3, assemblies.NeuronRecordingAssembly)
 
@@ -140,7 +140,7 @@ def test_wrap():
 
 
 def test_multi_group():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
+    assy_hvm = brainio_collection.get_assembly(identifier="dicarlo.Majaj2015.public")
     hvm_it_v3 = assy_hvm.sel(variation=3).sel(region="IT")
     hvm_it_v3.load()
     hvm_it_v3_obj = hvm_it_v3.multi_groupby(["category_name", "object_name"]).mean(dim="presentation")
@@ -149,7 +149,7 @@ def test_multi_group():
 
 
 def test_stimulus_set_from_assembly():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
+    assy_hvm = brainio_collection.get_assembly(identifier="dicarlo.Majaj2015.public")
     stimulus_set = assy_hvm.attrs["stimulus_set"]
     assert stimulus_set.shape[0] == np.unique(assy_hvm["image_id"]).shape[0]
     for image_id in stimulus_set['image_id']:

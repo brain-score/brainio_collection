@@ -1,6 +1,5 @@
 from __future__ import absolute_import, division, print_function, unicode_literals
 
-import hashlib
 import logging
 import os
 import zipfile
@@ -10,27 +9,26 @@ import pandas as pd
 import xarray as xr
 from botocore import UNSIGNED
 from botocore.config import Config
-from brainio_base import assemblies as assemblies_base
-from brainio_base.assemblies import coords_for_dim
-from brainio_base.stimuli import StimulusSet
 from six.moves.urllib.parse import urlparse
 from tqdm import tqdm
 
-from brainio_collection import assemblies
-from brainio_collection.stimuli import AttributeModel, \
-    ImageModel, ImageMetaModel, ImageStoreModel, ImageStoreMap, \
-    StimulusSetImageMap, StimulusSetModel
+from brainio_base import assemblies as assemblies_base
+from brainio_base.assemblies import coords_for_dim
+from brainio_base.stimuli import StimulusSet
+from brainio_collection.lookup import lookup_assembly, lookup_stimulus_set, sha1_hash
 
 _local_data_path = os.path.expanduser(os.getenv('BRAINIO_HOME', '~/.brainio'))
+
+_logger = logging.getLogger(__name__)
 
 
 class Fetcher(object):
     """A Fetcher obtains data with which to populate a DataAssembly.  """
 
-    def __init__(self, location, unique_name):
+    def __init__(self, location, local_filename):
         self.location = location
-        self.unique_name = unique_name
-        self.local_dir_path = os.path.join(_local_data_path, self.unique_name)
+        self.local_filename = local_filename
+        self.local_dir_path = os.path.join(_local_data_path, self.local_filename)
         os.makedirs(self.local_dir_path, exist_ok=True)
 
     def fetch(self):
@@ -38,14 +36,14 @@ class Fetcher(object):
         Fetches the resource identified by location.
         :return: a full local file path
         """
-        raise NotImplementedError("The base Fetcher class does not implement .fetch().  Use a subclass of Fetcher.  ")
+        raise NotImplementedError("The base Fetcher class does not implement .fetch().  Use a subclass of Fetcher.")
 
 
 class BotoFetcher(Fetcher):
     """A Fetcher that retrieves files from Amazon Web Services' S3 data storage.  """
 
-    def __init__(self, location, unique_name):
-        super(BotoFetcher, self).__init__(location, unique_name)
+    def __init__(self, location, local_filename):
+        super(BotoFetcher, self).__init__(location, local_filename)
         self.parsed_url = urlparse(self.location)
         self.split_hostname = self.parsed_url.hostname.split(".")
         self.split_path = self.parsed_url.path.lstrip('/').split("/")
@@ -66,83 +64,64 @@ class BotoFetcher(Fetcher):
             self.download_boto()
         return self.output_filename
 
-    def download_boto(self, sha1=None):
+    def download_boto(self):
         """Downloads file from S3 via boto at `url` and writes it in `self.output_filename`."""
         self._logger.info('downloading %s' % self.relative_path)
         try:  # try with authentication
             self._logger.debug("attempting default download (signed)")
-            self.download_boto_config(config=None, sha1=sha1)
+            self.download_boto_config(config=None)
         except Exception as e_signed:  # try without authentication
             self._logger.debug("default download failed, trying unsigned")
             # disable signing requests. see https://stackoverflow.com/a/34866092/2225200
             unsigned_config = Config(signature_version=UNSIGNED)
             try:
-                self.download_boto_config(config=unsigned_config, sha1=sha1)
+                self.download_boto_config(config=unsigned_config)
             except Exception as e_unsigned:
                 # when unsigned download also fails, raise both exceptions
                 # raise Exception instead of specific type to avoid missing __init__ arguments
                 raise Exception([e_signed, e_unsigned])
 
-    def download_boto_config(self, config, sha1=None):
+    def download_boto_config(self, config):
         s3 = boto3.resource('s3', config=config)
         obj = s3.Object(self.bucketname, self.relative_path)
         # show progress. see https://gist.github.com/wy193777/e7607d12fad13459e8992d4f69b53586
-        with tqdm(total=obj.content_length, unit='B', unit_scale=True, desc=self.bucketname + "/" + self.relative_path) as progress_bar:
+        with tqdm(total=obj.content_length, unit='B', unit_scale=True,
+                  desc=self.bucketname + "/" + self.relative_path) as progress_bar:
             def progress_hook(bytes_amount):
                 if bytes_amount > 0:  # at the end, this sometimes passes a negative byte amount which tqdm can't handle
                     progress_bar.update(bytes_amount)
 
             obj.download_file(self.output_filename, Callback=progress_hook)
 
-        if sha1 is not None:
-            self.verify_sha1(self.output_filename, sha1)
 
-    def verify_sha1(self, filename, sha1):
-        data = open(filename, 'rb').read()
-        if sha1 != hashlib.sha1(data).hexdigest():
-            raise IOError("File '%s': invalid SHA-1 hash! You may want to delete "
-                          "this corrupted file..." % filename)
+def verify_sha1(filepath, sha1):
+    actual_hash = sha1_hash(filepath)
+    if sha1 != actual_hash:
+        raise IOError(f"File '{filepath}': invalid SHA-1 hash {actual_hash} (expected {sha1})")
+    _logger.debug(f"sha1 OK: {filepath}")
 
 
-class URLFetcher(Fetcher):
-    """A Fetcher that retrieves a resource identified by URL.  """
-
-    def __init__(self, location, unique_name):
-        super(URLFetcher, self).__init__(location, unique_name)
-
-
-class LocalFetcher(Fetcher):
-    """A Fetcher that retrieves local files.  """
-
-    def __init__(self, location, unique_name):
-        super(LocalFetcher, self).__init__(location, unique_name)
-
-
-class AssemblyLoader(object):
+class AssemblyLoader:
     """
-    Loads a DataAssembly from files.
+    Loads an assembly from a file.
     """
 
-    def __init__(self, assy_model, local_paths):
-        self.assy_model = assy_model
-        self.local_paths = local_paths
+    def __init__(self, local_path, stimulus_set_identifier, cls):
+        self.local_path = local_path
+        self.stimulus_set_identifier = stimulus_set_identifier
+        self.assembly_class = cls
 
     def load(self):
-        data_arrays = []
-        for role, path in self.local_paths.items():
-            tmp_da = xr.open_dataarray(path)
-            data_arrays.append(tmp_da)
-        concatenated = xr.concat(data_arrays, dim="presentation")
-        stimulus_set_name = self.assy_model.stimulus_set.name
-        stimulus_set = get_stimulus_set(stimulus_set_name)
-        merged = self.merge(concatenated, stimulus_set)
-        class_object = getattr(assemblies_base, self.assy_model.assembly_class)
+        data_array = xr.open_dataarray(self.local_path)
+        stimulus_set = get_stimulus_set(self.stimulus_set_identifier)
+        merged = self.merge_stimulus_set_meta(data_array, stimulus_set)
+        class_object = getattr(assemblies_base, self.assembly_class)
         result = class_object(data=merged)
-        result.attrs["stimulus_set_name"] = stimulus_set_name
+        result.attrs["stimulus_set_identifier"] = self.stimulus_set_identifier
         result.attrs["stimulus_set"] = stimulus_set
         return result
 
-    def merge(self, assy, stimulus_set):
+    def merge_stimulus_set_meta(self, assy, stimulus_set):
         axis_name, index_column = "presentation", "image_id"
         df_of_coords = pd.DataFrame(coords_for_dim(assy, axis_name))
         cols_to_use = stimulus_set.columns.difference(df_of_coords.columns.difference([index_column]))
@@ -152,96 +131,81 @@ class AssemblyLoader(object):
         return assy
 
 
-class AssemblyFetchError(Exception):
-    pass
+class StimulusSetLoader:
+    def __init__(self, csv_path, stimuli_directory, cls):
+        self.csv_path = csv_path
+        self.stimuli_directory = stimuli_directory
+        self.cls = cls
+
+    def load(self):
+        stimulus_set = pd.read_csv(self.csv_path)
+        stimulus_set = StimulusSet(stimulus_set)
+        stimulus_set.image_paths = {row.image_id: os.path.join(self.stimuli_directory, row.filename)
+                                    for row in stimulus_set.itertuples()}
+        assert all(os.path.isfile(image_path) for image_path in stimulus_set.image_paths.values())
+        return stimulus_set
 
 
 _fetcher_types = {
-    "local": LocalFetcher,
     "S3": BotoFetcher,
-    "URL": URLFetcher
 }
 
 
-def get_fetcher(type="S3", location=None, unique_name=None):
-    return _fetcher_types[type](location, unique_name)
+def get_fetcher(type="S3", location=None, local_filename=None):
+    return _fetcher_types[type](location, local_filename)
 
 
-def fetch_assembly(assy_model):
-    local_paths = {}
-    for s in assy_model.assembly_store_maps:
-        fetcher = get_fetcher(type=s.assembly_store_model.location_type,
-                              location=s.assembly_store_model.location,
-                              unique_name=s.assembly_store_model.unique_name)
-        local_paths[s.role] = fetcher.fetch()
-    return local_paths
+def fetch_file(location_type, location, sha1):
+    filename = filename_from_link(location)
+    fetcher = get_fetcher(type=location_type, location=location,
+                          local_filename=filename)
+    local_path = fetcher.fetch()
+    verify_sha1(local_path, sha1)
+    return local_path
 
 
-def fetch_stimulus_set(stimulus_set_model):
-    local_paths = {}
-    image_paths = {}
-    pw_query_stores_for_set = ImageStoreModel.select() \
-        .join(ImageStoreMap) \
-        .join(ImageModel) \
-        .join(StimulusSetImageMap) \
-        .join(StimulusSetModel) \
-        .where(StimulusSetModel.name == stimulus_set_model.name) \
-        .distinct()
-    for s in pw_query_stores_for_set:
-        fetcher = get_fetcher(type=s.location_type,
-                              location=s.location,
-                              unique_name=s.unique_name)
-        fetched = fetcher.fetch()
-        containing_dir = os.path.dirname(fetched)
-        with zipfile.ZipFile(fetched, 'r') as zip_file:
-            if not all(map(lambda x: os.path.exists(os.path.join(containing_dir, x)), zip_file.namelist())):
-                zip_file.extractall(containing_dir)
-        local_paths[s.location] = containing_dir
-    for image_map in stimulus_set_model.stimulus_set_image_maps.prefetch(ImageModel, ImageStoreMap, ImageStoreModel):
-        store_map = image_map.image.image_image_store_maps[0]
-        local_path_base = local_paths[store_map.image_store.location]
-        image_path = os.path.join(local_path_base, store_map.path)
-        image_paths[image_map.image.image_id] = image_path
-    return image_paths
+def filename_from_link(location):
+    parse = urlparse(location)
+    local_name = os.path.basename(parse.path)
+    local_name = os.path.splitext(local_name)[0]
+    return local_name
 
 
-def get_assembly(name):
-    assy_model = assemblies.lookup_assembly(name)
-    local_paths = fetch_assembly(assy_model)
-    loader = AssemblyLoader(assy_model, local_paths)
+def unzip(zip_path):
+    containing_dir = os.path.dirname(zip_path)
+    with zipfile.ZipFile(zip_path, 'r') as zip_file:
+        if not all(map(lambda filename: os.path.exists(os.path.join(containing_dir, filename)), zip_file.namelist())):
+            _logger.debug(f"Extractall to {containing_dir}")
+            zip_file.extractall(containing_dir)
+    return containing_dir
+
+
+def get_assembly(identifier):
+    assembly_lookup = lookup_assembly(identifier)
+    local_path = fetch_file(location_type=assembly_lookup['location_type'],
+                            location=assembly_lookup['location'], sha1=assembly_lookup['sha1'])
+    loader = AssemblyLoader(local_path, cls=assembly_lookup['class'],
+                            stimulus_set_identifier=assembly_lookup['stimulus_set_identifier'])
     assembly = loader.load()
-    assembly.name = name
+    assembly.attrs['identifier'] = identifier
     return assembly
 
 
-def get_stimulus_set(name):
-    stimulus_set_model = StimulusSetModel.get(StimulusSetModel.name == name)
-    image_paths = fetch_stimulus_set(stimulus_set_model)
-    pw_query = ImageModel.select() \
-        .join(StimulusSetImageMap) \
-        .join(StimulusSetModel) \
-        .where(StimulusSetModel.name == name)
-    df_reconstructed = pd.DataFrame(list(pw_query.dicts()))
-    pw_query_attributes = AttributeModel.select() \
-        .join(ImageMetaModel) \
-        .join(ImageModel) \
-        .join(StimulusSetImageMap) \
-        .join(StimulusSetModel) \
-        .where(StimulusSetModel.name == name) \
-        .distinct()
-    for a in pw_query_attributes:
-        pw_query_single_attribute = AttributeModel.select(ImageModel.image_id, ImageMetaModel.value) \
-            .join(ImageMetaModel) \
-            .join(ImageModel) \
-            .join(StimulusSetImageMap) \
-            .join(StimulusSetModel) \
-            .where((StimulusSetModel.name == name) & (AttributeModel.name == a.name))
-        df_single_attribute = pd.DataFrame(list(pw_query_single_attribute.dicts()))
-        merged = df_reconstructed.merge(df_single_attribute, on="image_id", how="left", suffixes=("orig_", ""))
-        df_reconstructed[a.name] = merged["value"].astype(a.type)
-    stimulus_set = StimulusSet(df_reconstructed)
-    stimulus_set.image_paths = image_paths
-    stimulus_set.name = name
+def get_stimulus_set(identifier):
+    csv_lookup, zip_lookup = lookup_stimulus_set(identifier)
+    csv_path = fetch_file(location_type=csv_lookup['location_type'], location=csv_lookup['location'],
+                          sha1=csv_lookup['sha1'])
+    zip_path = fetch_file(location_type=zip_lookup['location_type'], location=zip_lookup['location'],
+                          sha1=zip_lookup['sha1'])
+    stimuli_directory = unzip(zip_path)
+    loader = StimulusSetLoader(csv_path=csv_path, stimuli_directory=stimuli_directory, cls=csv_lookup['class'])
+    stimulus_set = loader.load()
+    stimulus_set.identifier = identifier
+    # ensure perfect overlap
+    stimuli_paths = [os.path.join(stimuli_directory, local_path) for local_path in os.listdir(stimuli_directory)
+                     if not local_path.endswith('.zip') and not local_path.endswith('.csv')]
+    assert set(stimulus_set.image_paths.values()) == set(stimuli_paths), \
+        "Inconsistency: unzipped stimuli paths do not match csv paths"
     return stimulus_set
 
 
