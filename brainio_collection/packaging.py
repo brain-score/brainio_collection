@@ -37,13 +37,15 @@ def create_image_zip(proto_stimulus_set, target_zip_path):
     """
     _logger.debug(f"Zipping stimulus set to {target_zip_path}")
     os.makedirs(os.path.dirname(target_zip_path), exist_ok=True)
+    arcnames = []
     with zipfile.ZipFile(target_zip_path, 'w') as target_zip:
         for _, row in proto_stimulus_set.iterrows():  # using iterrows instead of itertuples for very large StimulusSets
             image_path = proto_stimulus_set.get_image(row['image_id'])
             arcname = row['image_path_within_store'] if hasattr(row, 'image_path_within_store') else row['image_id']
             target_zip.write(image_path, arcname=arcname)
+            arcnames.append(arcname)
     sha1 = sha1_hash(target_zip_path)
-    return sha1
+    return sha1, arcnames
 
 
 def upload_to_s3(source_file_path, bucket_name, target_s3_key):
@@ -79,7 +81,7 @@ def package_stimulus_set(proto_stimulus_set, stimulus_set_identifier, bucket_nam
     Package a set of images along with their metadata for the BrainIO system.
     :param proto_stimulus_set: A StimulusSet containing one row for each image,
         and the columns {'image_id', ['image_path_within_store' (optional to structure zip directory layout)]}
-        and columns for all stimulus-set-specific metadata
+        and columns for all stimulus-set-specific metadata but not the column 'filename'.
     :param stimulus_set_identifier: A unique name identifying the stimulus set
         <lab identifier>.<first author e.g. 'Rajalingham' or 'MajajHong' for shared first-author><YYYY year of publication>.
     :param bucket_name: 'brainio-dicarlo' for DiCarlo Lab stimulus sets, 'brainio-contrib' for external stimulus sets.
@@ -97,17 +99,19 @@ def package_stimulus_set(proto_stimulus_set, stimulus_set_identifier, bucket_nam
     zip_file_name = image_store_identifier + ".zip"
     target_zip_path = Path(__file__).parent / zip_file_name
     # create csv and zip files
+    image_zip_sha1, zip_filenames = create_image_zip(proto_stimulus_set, str(target_zip_path))
+    assert 'filename' not in proto_stimulus_set.columns, "StimulusSet already has column 'filename'"
+    proto_stimulus_set['filename'] = zip_filenames  # keep record of zip (or later local) filenames
     csv_sha1 = create_image_csv(proto_stimulus_set, str(target_csv_path))
-    image_zip_sha1 = create_image_zip(proto_stimulus_set, str(target_zip_path))
     # upload both to S3
     upload_to_s3(str(target_csv_path), bucket_name, target_s3_key=csv_file_name)
     upload_to_s3(str(target_zip_path), bucket_name, target_s3_key=zip_file_name)
     # link to csv and zip from same identifier. The csv however is the only one of the two rows with a class.
-    lookup.append(object_identifier=stimulus_set_identifier, object_class='StimulusSet',
+    lookup.append(object_identifier=stimulus_set_identifier, cls='StimulusSet',
                   lookup_type=TYPE_STIMULUS_SET,
                   bucket_name=bucket_name, sha1=csv_sha1, s3_key=csv_file_name,
                   stimulus_set_identifier=None)
-    lookup.append(object_identifier=stimulus_set_identifier, object_class=None,
+    lookup.append(object_identifier=stimulus_set_identifier, cls=None,
                   lookup_type=TYPE_STIMULUS_SET,
                   bucket_name=bucket_name, sha1=image_zip_sha1, s3_key=zip_file_name,
                   stimulus_set_identifier=None)
@@ -172,5 +176,5 @@ def package_data_assembly(proto_data_assembly, assembly_identifier, stimulus_set
     lookup.append(object_identifier=assembly_identifier, stimulus_set_identifier=stimulus_set_identifier,
                   lookup_type=TYPE_ASSEMBLY,
                   bucket_name=bucket_name, sha1=netcdf_kf_sha1,
-                  s3_key=s3_key, object_class=assembly_class)
+                  s3_key=s3_key, cls=assembly_class)
     _logger.debug(f"assembly {assembly_identifier} packaged")

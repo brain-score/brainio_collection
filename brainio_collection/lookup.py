@@ -1,7 +1,9 @@
+import hashlib
 import logging
 import os
 from pathlib import Path
 
+import numpy as np
 import pandas as pd
 import peewee
 
@@ -19,20 +21,20 @@ data = pd.read_csv(path)
 def _is_csv_lookup(data_row):
     return data_row['lookup_type'] == TYPE_STIMULUS_SET \
            and data_row['location'].endswith('.csv') \
-           and data_row['object_class'] is not None
+           and data_row['class'] not in [None, np.nan]
 
 
 def _is_zip_lookup(data_row):
     return data_row['lookup_type'] == TYPE_STIMULUS_SET \
            and data_row['location'].endswith('.zip') \
-           and data_row['object_class'] is None
+           and data_row['class'] in [None, np.nan]
 
 
-def append(object_identifier, object_class, lookup_type,
+def append(object_identifier, cls, lookup_type,
            bucket_name, sha1, s3_key, stimulus_set_identifier=None):
     global data
     _logger.debug(f"Adding {object_identifier} to lookup")
-    object_lookup = {'identifier': object_identifier, 'lookup_type': lookup_type, 'object_class': object_class,
+    object_lookup = {'identifier': object_identifier, 'lookup_type': lookup_type, 'class': cls,
                      'location_type': "S3", 'location': f"https://{bucket_name}.s3.amazonaws.com/{s3_key}",
                      'sha1': sha1, 'stimulus_set_identifier': stimulus_set_identifier, }
     # check duplicates

@@ -29,8 +29,10 @@ def repackage_assemblies():
         stimulus_set_identifier = assembly.stimulus_set_name
         # fix individual assemblies
         assembly_class = assembly.__class__.__name__
-        if identifier == 'dicarlo.Kar2019': # special case for OST
+        if identifier == 'dicarlo.Kar2019':  # change OST assembly
             assembly_class = 'DataAssembly'  # it's not actually a NeuronRecordingAssembly because it contains OSTs
+        if identifier == 'dicarlo.Majaj2015':
+            assembly.name = 'dicarlo.MajajHong2015'  # joint first authors
         # strip
         assembly = _strip_presentation_coords(assembly)
         del assembly.attrs['stimulus_set']
