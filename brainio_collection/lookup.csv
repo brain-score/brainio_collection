@@ -54,3 +54,4 @@ movshon.FreemanZiemba2013.public,assembly,NeuronRecordingAssembly,S3,https://bra
 movshon.FreemanZiemba2013.private,assembly,NeuronRecordingAssembly,S3,https://brainio-temp.s3.amazonaws.com/assy_movshon_FreemanZiemba2013_private.nc,557830071b98171a61ed55a0b0437a54f59c4a9c,movshon.FreemanZiemba2013.aperture-private
 movshon.FreemanZiemba2013,assembly,NeuronRecordingAssembly,S3,https://brainio-temp.s3.amazonaws.com/assy_movshon_FreemanZiemba2013.nc,6d26f10e8d09d826c5553179e490016a7bd43f45,movshon.FreemanZiemba2013.aperture
 dicarlo.Rajalingham2020orthographic_IT,assembly,NeuronRecordingAssembly,S3,https://brainio-temp.s3.amazonaws.com/assy_dicarlo_Rajalingham2020orthographic_IT.nc,557e1aaf87fd5093713377587c7ecaec6b9b8f8a,dicarlo.Rajalingham2020orthographic_IT
+klab.Zhang2018search_obj_array,assembly,BehavioralAssembly,S3,https://brainio-temp.s3.amazonaws.com/assy_klab_Zhang2018search_obj_array.nc,f5201997c4aa3ba29092d4143912b861cbeda102,klab.Zhang2018.search_obj_array

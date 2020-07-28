@@ -16,7 +16,7 @@ def repackage_stimulus_sets():
 
 def _strip_presentation_coords(assembly):
     presentation_columns = [coord for coord, dim, values in walk_coords(assembly['presentation'])]
-    redundant_coords = set(presentation_columns) - {'image_id', 'repetition', 'repetition_id'}
+    redundant_coords = set(presentation_columns) - {'image_id', 'repetition', 'repetition_id', 'subjects'}
     assembly = DataArray(assembly)
     assembly = assembly.reset_index('presentation')
     assembly = assembly.drop(redundant_coords)
@@ -31,6 +31,8 @@ def repackage_assemblies():
         assembly_class = assembly.__class__.__name__
         if identifier == 'dicarlo.Kar2019':  # change OST assembly
             assembly_class = 'DataAssembly'  # it's not actually a NeuronRecordingAssembly because it contains OSTs
+        if identifier == 'klab.Zhang2018search_obj_array':
+            assembly_class = 'BehavioralAssembly'  # was incorrectly packaged as NeuronRecordingAssembly but is behavior
         if identifier == 'dicarlo.Majaj2015':
             assembly.name = 'dicarlo.MajajHong2015'  # joint first authors
         # strip

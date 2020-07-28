@@ -87,7 +87,7 @@ def test_repr():
 
 
 def test_getitem():
-    assy_hvm = brainio_collection.get_assembly(name="dicarlo.Majaj2015.public")
+    assy_hvm = brainio_collection.get_assembly(identifier="dicarlo.Majaj2015.public")
     single = assy_hvm[0, 0, 0]
     assert type(single) is type(assy_hvm)
 
@@ -108,11 +108,10 @@ def test_lookup_bad_name():
 
 
 def test_fetch():
-    assy_record = brainio_collection.assemblies.lookup_assembly("dicarlo.Majaj2015.public")
-    local_paths = fetch.fetch_file(assy_record)
-    assert len(local_paths) == 1
-    print(local_paths["dicarlo.Majaj2015.public"])
-    assert os.path.exists(local_paths["dicarlo.Majaj2015.public"])
+    local_path = fetch.fetch_file(location_type='S3',
+                                  location='https://brainio-temp.s3.amazonaws.com/assy_dicarlo_Majaj2015_public.nc',
+                                  sha1='38a2e882c65850723e0969d8bcb519a1f4c45ae5')
+    assert os.path.exists(local_path)
 
 
 def test_wrap():
