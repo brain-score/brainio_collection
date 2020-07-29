@@ -41,8 +41,8 @@ def repackage_assemblies():
             assembly_class = 'DataAssembly'  # it's not actually a NeuronRecordingAssembly because it contains OSTs
         if identifier == 'klab.Zhang2018search_obj_array':
             assembly_class = 'BehavioralAssembly'  # was incorrectly packaged as NeuronRecordingAssembly but is behavior
-        if identifier == 'dicarlo.Majaj2015':
-            assembly.name = 'dicarlo.MajajHong2015'  # joint first authors
+        if identifier.startswith('dicarlo.Majaj2015'):
+            assembly.name = assembly.name.replace('Majaj2015', 'MajajHong2015')  # joint first authors
         # strip
         assembly = _strip_presentation_coords(assembly)
         del assembly.attrs['stimulus_set']
