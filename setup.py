@@ -14,7 +14,7 @@ requirements = [
     "boto3",
     "tqdm",
     "netcdf4",
-    "peewee",
+    "pandas",
     # test_requirements
     "pytest",
     "Pillow",
