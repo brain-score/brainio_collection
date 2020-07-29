@@ -114,7 +114,7 @@ class TestSubset:
 
     @pytest.mark.private_access
     def test_category_subselection(self):
-        assembly = get_assembly('dicarlo.Majaj2015')
+        assembly = get_assembly('dicarlo.MajajHong2015')
         categories = np.unique(assembly['category_name'])
         target = xr.DataArray([0] * len(categories), coords={'category_name': categories},
                               dims=['category_name']).stack(presentation=['category_name'])
