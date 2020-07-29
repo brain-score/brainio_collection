@@ -95,7 +95,7 @@ def test_lookup():
     assy = brainio_collection.lookup.lookup_assembly("dicarlo.Majaj2015.public")
     assert assy['identifier'] == "dicarlo.Majaj2015.public"
     assert assy['location_type'] == "S3"
-    hvm_s3_url = "https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_Majaj2015_public.nc"
+    hvm_s3_url = "https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Majaj2015_public.nc"
     assert assy['location'] == hvm_s3_url
 
 
@@ -106,8 +106,8 @@ def test_lookup_bad_name():
 
 def test_fetch():
     local_path = fetch.fetch_file(location_type='S3',
-                                  location='https://brainio-temp.s3.amazonaws.com/assy_dicarlo_Majaj2015_public.nc',
-                                  sha1='38a2e882c65850723e0969d8bcb519a1f4c45ae5')
+                                  location='https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Majaj2015_public.nc',
+                                  sha1='bd256c298bb3915db22d2e7fc91bc0745f7d67b7')
     assert os.path.exists(local_path)
 
 

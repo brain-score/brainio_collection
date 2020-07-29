@@ -61,7 +61,7 @@ class AssemblyLookupError(KeyError):
 def append(object_identifier, cls, lookup_type,
            bucket_name, sha1, s3_key, stimulus_set_identifier=None):
     global data
-    _logger.debug(f"Adding {object_identifier} to lookup")
+    _logger.debug(f"Adding {lookup_type} {object_identifier} to lookup")
     object_lookup = {'identifier': object_identifier, 'lookup_type': lookup_type, 'class': cls,
                      'location_type': "S3", 'location': f"https://{bucket_name}.s3.amazonaws.com/{s3_key}",
                      'sha1': sha1, 'stimulus_set_identifier': stimulus_set_identifier, }

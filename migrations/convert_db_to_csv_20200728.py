@@ -11,12 +11,19 @@ from brainio_collection.packaging import package_stimulus_set, package_data_asse
 def repackage_stimulus_sets():
     for identifier in stimuli.list_stimulus_sets():
         stimulus_set = brainio_collection.get_stimulus_set(identifier)
-        package_stimulus_set(stimulus_set, stimulus_set_identifier=stimulus_set.name, bucket_name='brainio-temp')
+        # re-assign bucket
+        stimulus_set_model = stimuli.StimulusSetModel.get(stimuli.StimulusSetModel.name == identifier)
+        location = stimulus_set_model.stimulus_set_image_maps[0].image.image_image_store_maps[0].image_store.location
+        bucket = 'brainio-dicarlo' if 'brainio-dicarlo' in location else 'brainio-contrib'
+        bucket = bucket.replace('-', '.')
+        # package
+        package_stimulus_set(stimulus_set, stimulus_set_identifier=stimulus_set.name, bucket_name=bucket)
 
 
 def _strip_presentation_coords(assembly):
     presentation_columns = [coord for coord, dim, values in walk_coords(assembly['presentation'])]
-    redundant_coords = set(presentation_columns) - {'image_id', 'repetition', 'repetition_id', 'subjects'}
+    stimulus_set_columns = assembly.stimulus_set.columns
+    redundant_coords = set(presentation_columns).intersection(set(stimulus_set_columns)) - {'image_id'}
     assembly = DataArray(assembly)
     assembly = assembly.reset_index('presentation')
     assembly = assembly.drop(redundant_coords)
@@ -25,6 +32,7 @@ def _strip_presentation_coords(assembly):
 
 def repackage_assemblies():
     for identifier in assemblies.list_assemblies():
+        print(f"Repackaging {identifier}")
         assembly = brainio_collection.get_assembly(identifier)
         stimulus_set_identifier = assembly.stimulus_set_name
         # fix individual assemblies
@@ -39,10 +47,16 @@ def repackage_assemblies():
         assembly = _strip_presentation_coords(assembly)
         del assembly.attrs['stimulus_set']
         del assembly.attrs['stimulus_set_name']
+        # re-assign bucket
+        assembly_model = assemblies.lookup_assembly(identifier)
+        store = assembly_model.assembly_store_maps[0]
+        location = store.assembly_store_model.location
+        bucket = 'brainio-dicarlo' if 'brainio-dicarlo' in location else 'brainio-contrib'
+        bucket = bucket.replace('-', '.')
         # package
         package_data_assembly(assembly, assembly_identifier=assembly.name,
                               stimulus_set_identifier=stimulus_set_identifier,
-                              assembly_class=assembly_class, bucket_name='brainio-temp')
+                              assembly_class=assembly_class, bucket_name=bucket)
 
 
 if __name__ == '__main__':

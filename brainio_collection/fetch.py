@@ -44,18 +44,16 @@ class BotoFetcher(Fetcher):
 
     def __init__(self, location, local_filename):
         super(BotoFetcher, self).__init__(location, local_filename)
-        self.parsed_url = urlparse(self.location)
-        self.split_hostname = self.parsed_url.hostname.split(".")
-        self.split_path = self.parsed_url.path.lstrip('/').split("/")
+        parsed_url = urlparse(self.location)
+        split_path = parsed_url.path.lstrip('/').split("/")
         # http://docs.aws.amazon.com/AmazonS3/latest/dev/UsingBucket.html#access-bucket-intro
-        virtual_hosted_style = len(self.split_hostname) == 4
+        virtual_hosted_style = 's3.' in parsed_url.hostname  # s3. for virtual hosted style; s3- for older AWS
         if virtual_hosted_style:
-            self.bucketname = self.split_hostname[0]
-            self.relative_path = os.path.join(*(self.split_path))
+            self.bucketname = parsed_url.hostname.split(".s3.")[0]
+            self.relative_path = os.path.join(*(split_path))
         else:
-            self.bucketname = self.split_path[0]
-            self.relative_path = os.path.join(*(self.split_path[1:]))
-        self.basename = self.split_path[-1]
+            self.bucketname = split_path[0]
+            self.relative_path = os.path.join(*(split_path[1:]))
         self.output_filename = os.path.join(self.local_dir_path, self.relative_path)
         self._logger = logging.getLogger(fullname(self))
 
