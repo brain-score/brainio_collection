@@ -19,6 +19,8 @@ def test_get_stimulus_set():
     for image_id in stimulus_set['image_id']:
         image_path = stimulus_set.get_image(image_id)
         assert os.path.exists(image_path)
+        extension = os.path.splitext(image_path)[1]
+        assert extension in ['.png', '.PNG', '.jpg', '.jpeg', '.JPG', '.JPEG']
 
 
 def test_loadname_dicarlo_hvm():
