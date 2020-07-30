@@ -30,7 +30,9 @@ def create_image_zip(proto_stimulus_set, target_zip_path):
     with zipfile.ZipFile(target_zip_path, 'w') as target_zip:
         for _, row in proto_stimulus_set.iterrows():  # using iterrows instead of itertuples for very large StimulusSets
             image_path = proto_stimulus_set.get_image(row['image_id'])
+            extension = os.path.splitext(image_path)[1]
             arcname = row['image_path_within_store'] if hasattr(row, 'image_path_within_store') else row['image_id']
+            arcname = arcname + extension
             target_zip.write(image_path, arcname=arcname)
             arcnames.append(arcname)
     sha1 = sha1_hash(target_zip_path)
