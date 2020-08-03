@@ -58,3 +58,6 @@ dicarlo.Rajalingham2020orthographic_IT,assembly,NeuronRecordingAssembly,S3,https
 dicarlo.Rust2012,stimulus_set,StimulusSet,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_Rust2012.csv,4933514ca7aa6094b99539b59271fd57afe5cabc,
 dicarlo.Rust2012,stimulus_set,,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_Rust2012.zip,7cbf5dcec235f7705eaad1cfae202eda77e261a2,
 dicarlo.SanghaviMurty2020,assembly,NeuronRecordingAssembly,S3,https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_SanghaviMurty2020.nc,7ed8e8006a9697922e304bd1230a1de3123ee3b9,dicarlo.Rust2012
+dicarlo.BOLD5000,stimulus_set,StimulusSet,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_BOLD5000.csv,dba01a9b6f735f8c51643539cbde76bef21496e9,
+dicarlo.BOLD5000,stimulus_set,,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_BOLD5000.zip,1a2e6d782dcd21bbe60460d85d83b13fa76a9543,
+dicarlo.SanghaviJozwik2020,assembly,NeuronRecordingAssembly,S3,https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_SanghaviJozwik2020.nc,34f4a39ef65fbfbe2e3f86c9d99e90793f1274f5,dicarlo.BOLD5000
