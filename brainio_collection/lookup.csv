@@ -64,3 +64,4 @@ dicarlo.SanghaviJozwik2020,assembly,NeuronRecordingAssembly,S3,https://brainio-d
 dicarlo.THINGS1,stimulus_set,StimulusSet,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_THINGS1.csv,4d328c4a04dcf679d66a690f8b1d5d6049731196,
 dicarlo.THINGS1,stimulus_set,,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_THINGS1.zip,fb716eb58c303157dd577a70caad5c8079e74e9b,
 dicarlo.SanghaviMurty2020THINGS1,assembly,NeuronRecordingAssembly,S3,https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_SanghaviMurty2020THINGS1.nc,c32eba60509bc3738dcf03fb0fb1d324b8a6f87f,dicarlo.THINGS1
+dicarlo.Sanghavi2020,assembly,NeuronRecordingAssembly,S3,https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_Sanghavi2020.nc,23201406436683adac7b69e79b53237c5db0625c,dicarlo.hvm
