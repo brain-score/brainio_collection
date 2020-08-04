@@ -50,7 +50,7 @@ class TestLoadImage:
         'dicarlo.objectome.private',
         'dicarlo.Kar2018cocogray',
         'klab.Zhang2018.search_obj_array',
-        'dicarlo.Rajalingham2020orthographic_IT',
+        'dicarlo.Rajalingham2020',
         'dicarlo.Rust2012',
         'dicarlo.BOLD5000',
         'dicarlo.THINGS1',

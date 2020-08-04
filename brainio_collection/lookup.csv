@@ -31,8 +31,6 @@ movshon.FreemanZiemba2013.aperture-private,stimulus_set,StimulusSet,S3,https://b
 movshon.FreemanZiemba2013.aperture-private,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_movshon_FreemanZiemba2013_aperture-private.zip,ab8f128d489ca13867b4a8df3851548c9251b90e,
 movshon.FreemanZiemba2013.aperture,stimulus_set,StimulusSet,S3,https://brainio.contrib.s3.amazonaws.com/image_movshon_FreemanZiemba2013_aperture.csv,abb7bfaf9a7b2d77407c13ddda872ae6a8608b78,
 movshon.FreemanZiemba2013.aperture,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_movshon_FreemanZiemba2013_aperture.zip,069d4fd71a7be0b4bf0967abe030d3ee26b6166d,
-dicarlo.Rajalingham2020orthographic_IT,stimulus_set,StimulusSet,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_Rajalingham2020orthographic_IT.csv,3ac9ab73b653ac9cf839f9bfde131354a3766ccd,
-dicarlo.Rajalingham2020orthographic_IT,stimulus_set,,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_Rajalingham2020orthographic_IT.zip,0e025f6f8b06e803a6d8d1a17bd25a41af3e81db,
 dicarlo.MajajHong2015,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_MajajHong2015.nc,bf8f8d01010d727e3db3f85a9bd5f95f9456b7ec,dicarlo.hvm
 gallant.David2004,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_gallant_David2004.nc,d2ed9834c054da2333f5d894285c9841a1f27313,gallant.David2004
 dicarlo.MajajHong2015.temporal,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_MajajHong2015_temporal.nc,4c5cfe25ad53162c5c716d64004de269162eff38,dicarlo.hvm
@@ -54,7 +52,6 @@ klab.Zhang2018search_obj_array,assembly,BehavioralAssembly,S3,https://brainio.co
 movshon.FreemanZiemba2013.public,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_movshon_FreemanZiemba2013_public.nc,761c08f796db4e342555cdb60eef23a4f19ead43,movshon.FreemanZiemba2013.aperture-public
 movshon.FreemanZiemba2013.private,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_movshon_FreemanZiemba2013_private.nc,63f636fa2e2b51b47a676768a69b06ce95efdd8f,movshon.FreemanZiemba2013.aperture-private
 movshon.FreemanZiemba2013,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_movshon_FreemanZiemba2013.nc,f03f1630f0ab1e2dbd51816b47fbf2916876134e,movshon.FreemanZiemba2013.aperture
-dicarlo.Rajalingham2020orthographic_IT,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Rajalingham2020orthographic_IT.nc,2a14beba8120968166c2c1d017e5c3db3e757940,dicarlo.Rajalingham2020orthographic_IT
 dicarlo.Rust2012,stimulus_set,StimulusSet,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_Rust2012.csv,b48caf5938400075008b5a7be8a7402d6448969c,
 dicarlo.Rust2012,stimulus_set,,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_Rust2012.zip,7cbf5dcec235f7705eaad1cfae202eda77e261a2,
 dicarlo.SanghaviMurty2020,assembly,NeuronRecordingAssembly,S3,https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_SanghaviMurty2020.nc,1572d8d6519209f411e43e4e24f087fdf24384bc,dicarlo.Rust2012
@@ -68,3 +65,6 @@ dicarlo.Sanghavi2020,assembly,NeuronRecordingAssembly,S3,https://brainio-dicarlo
 dicarlo.THINGS2,stimulus_set,StimulusSet,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_THINGS2.csv,2f31c54aa3337440b28886340c93b0f92101a931,
 dicarlo.THINGS2,stimulus_set,,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_THINGS2.zip,e7918dd10102b67464bc652fdb3ced25ee1fbe7a,
 dicarlo.SanghaviMurty2020THINGS2,assembly,NeuronRecordingAssembly,S3,https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_SanghaviMurty2020THINGS2.nc,23aaf500cd77b225300ee55d5d97167fac3087d4,dicarlo.THINGS2
+dicarlo.Rajalingham2020,stimulus_set,StimulusSet,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_Rajalingham2020.csv,debe8d3adaf704d0f89cc2576a30558ee0705d8c,
+dicarlo.Rajalingham2020,stimulus_set,,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_Rajalingham2020.zip,6097086901032e20f8ae764e9cc06e0a891a3e18,
+dicarlo.Rajalingham2020,assembly,NeuronRecordingAssembly,S3,https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_Rajalingham2020.nc,8a0ad97ce64c09f7fa0ff38b801cca49447866f6,dicarlo.Rajalingham2020
