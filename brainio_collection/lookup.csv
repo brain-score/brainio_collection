@@ -65,3 +65,6 @@ dicarlo.THINGS1,stimulus_set,StimulusSet,S3,https://brainio-dicarlo.s3.amazonaws
 dicarlo.THINGS1,stimulus_set,,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_THINGS1.zip,fb716eb58c303157dd577a70caad5c8079e74e9b,
 dicarlo.SanghaviMurty2020THINGS1,assembly,NeuronRecordingAssembly,S3,https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_SanghaviMurty2020THINGS1.nc,c32eba60509bc3738dcf03fb0fb1d324b8a6f87f,dicarlo.THINGS1
 dicarlo.Sanghavi2020,assembly,NeuronRecordingAssembly,S3,https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_Sanghavi2020.nc,23201406436683adac7b69e79b53237c5db0625c,dicarlo.hvm
+dicarlo.THINGS2,stimulus_set,StimulusSet,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_THINGS2.csv,2f31c54aa3337440b28886340c93b0f92101a931,
+dicarlo.THINGS2,stimulus_set,,S3,https://brainio-dicarlo.s3.amazonaws.com/image_dicarlo_THINGS2.zip,e7918dd10102b67464bc652fdb3ced25ee1fbe7a,
+dicarlo.SanghaviMurty2020THINGS2,assembly,NeuronRecordingAssembly,S3,https://brainio-dicarlo.s3.amazonaws.com/assy_dicarlo_SanghaviMurty2020THINGS2.nc,23aaf500cd77b225300ee55d5d97167fac3087d4,dicarlo.THINGS2
