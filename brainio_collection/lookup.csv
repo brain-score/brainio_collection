@@ -55,6 +55,6 @@ movshon.FreemanZiemba2013.public,assembly,NeuronRecordingAssembly,S3,https://bra
 movshon.FreemanZiemba2013.private,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_movshon_FreemanZiemba2013_private.nc,63f636fa2e2b51b47a676768a69b06ce95efdd8f,movshon.FreemanZiemba2013.aperture-private
 movshon.FreemanZiemba2013,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_movshon_FreemanZiemba2013.nc,f03f1630f0ab1e2dbd51816b47fbf2916876134e,movshon.FreemanZiemba2013.aperture
 dicarlo.Rajalingham2020orthographic_IT,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Rajalingham2020orthographic_IT.nc,2a14beba8120968166c2c1d017e5c3db3e757940,dicarlo.Rajalingham2020orthographic_IT
-aru.Kuzovkin2018,stimulus_set,StimulusSet,S3,https://brainio-contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.csv,f40cbe9f385c2f391952bcc91cec3878a18f0bc4,
-aru.Kuzovkin2018,stimulus_set,,S3,https://brainio-contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.zip,9698c22f30b19d68bbb72195eaefbdf4a5899f57,
-aru.Kuzovkin2018,assembly,NeuronRecordingAssembly,S3,https://brainio-contrib.s3.amazonaws.com/assy_aru_Kuzovkin2018.nc,c3787b30ffdc6816e245a8f8d8f2096d8bf85569,aru.Kuzovkin2018
+aru.Kuzovkin2018,stimulus_set,StimulusSet,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.csv,6923dbe74b78a104ab2c1b158c147b93110e8295,
+aru.Kuzovkin2018,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.zip,f918fc1e5092ef05e711f4f96083193bfc9264e8,
+aru.Kuzovkin2018,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_aru_Kuzovkin2018.nc,a1ad7aa05271916a991ed1fab85130beeaba225e,aru.Kuzovkin2018
