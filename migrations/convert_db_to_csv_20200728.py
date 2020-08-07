@@ -11,6 +11,8 @@ from brainio_collection.packaging import package_stimulus_set, package_data_asse
 def repackage_stimulus_sets():
     for identifier in stimuli.list_stimulus_sets():
         stimulus_set = brainio_collection.get_stimulus_set(identifier)
+        if identifier.startswith('movshon'):
+            stimulus_set['image_path_within_store'] = stimulus_set['image_file_name']
         # re-assign bucket
         stimulus_set_model = stimuli.StimulusSetModel.get(stimuli.StimulusSetModel.name == identifier)
         location = stimulus_set_model.stimulus_set_image_maps[0].image.image_image_store_maps[0].image_store.location
