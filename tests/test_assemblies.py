@@ -64,17 +64,13 @@ def test_list_assembly(assembly):
     pytest.param('dicarlo.Kar2018hvm', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Kar2018cocogray', marks=[pytest.mark.private_access]),
     pytest.param('klab.Zhang2018search_obj_array', marks=[pytest.mark.private_access]),
-<<<<<<< HEAD
     pytest.param('dicarlo.Rajalingham2020', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.SanghaviMurty2020', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.SanghaviJozwik2020', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Sanghavi2020', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.SanghaviMurty2020THINGS1', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.SanghaviMurty2020THINGS2', marks=[pytest.mark.private_access]),
-=======
-    pytest.param('dicarlo.Rajalingham2020orthographic_IT', marks=[pytest.mark.private_access]),
     pytest.param('aru.Kuzovkin2018', marks=[pytest.mark.private_access]),
->>>>>>> 29ca05f7377bb92a841d9a1535df150acae9c4ad
 ])
 def test_existence(assembly_identifier):
     assert brainio_collection.get_assembly(assembly_identifier) is not None
