@@ -56,6 +56,8 @@ class TestLoadImage:
         'dicarlo.THINGS1',
         'dicarlo.THINGS2',
         'aru.Kuzovkin2018',
+        'dicarlo.BashivanKar2019.naturalistic',
+        'dicarlo.BashivanKar2019.synthetic'
 ))
 def test_list_stimulus_set(stimulus_set):
     l = brainio_collection.list_stimulus_sets()
