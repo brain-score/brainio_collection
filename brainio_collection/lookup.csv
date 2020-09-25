@@ -57,9 +57,6 @@ movshon.FreemanZiemba2013,assembly,NeuronRecordingAssembly,S3,https://brainio.co
 aru.Kuzovkin2018,stimulus_set,StimulusSet,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.csv,6923dbe74b78a104ab2c1b158c147b93110e8295,
 aru.Kuzovkin2018,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.zip,f918fc1e5092ef05e711f4f96083193bfc9264e8,
 aru.Kuzovkin2018,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_aru_Kuzovkin2018.nc,a1ad7aa05271916a991ed1fab85130beeaba225e,aru.Kuzovkin2018
-dicarlo.Rajalingham2020,stimulus_set,StimulusSet,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_Rajalingham2020.csv,57e07849723c2af8e2bf6d2c6bcf7805dd3c566d,
-dicarlo.Rajalingham2020,stimulus_set,,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_Rajalingham2020.zip,6097086901032e20f8ae764e9cc06e0a891a3e18,
-dicarlo.Rajalingham2020,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Rajalingham2020.nc,27b32304c68fe8edfd26cac5534fbbe825e40bd3,dicarlo.Rajalingham2020
 dicarlo.Rust2012,stimulus_set,StimulusSet,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_Rust2012.csv,482da1f9f4a0ab5433c3b7b57073ad30e45c2bf1,
 dicarlo.Rust2012,stimulus_set,,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_Rust2012.zip,7cbf5dcec235f7705eaad1cfae202eda77e261a2,
 dicarlo.SanghaviMurty2020,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_SanghaviMurty2020.nc,6cb8e054688066d1d86d4944e1385efc6a69ebd4,dicarlo.Rust2012
@@ -223,3 +220,6 @@ dietterich.Hendrycks2019.glass_blur_5,stimulus_set,StimulusSet,S3,https://braini
 dietterich.Hendrycks2019.glass_blur_5,stimulus_set,,S3,https://brainio-contrib.s3.amazonaws.com/image_dietterich_Hendrycks2019_glass_blur_5.zip,2c2a0f8e04e0a22501e04431fb0d8ec7d116b215,
 dietterich.Hendrycks2019.frost_5,stimulus_set,StimulusSet,S3,https://brainio-contrib.s3.amazonaws.com/image_dietterich_Hendrycks2019_frost_5.csv,e303a003c1fd77cb0a02d19ffd7c47dff7709982,
 dietterich.Hendrycks2019.frost_5,stimulus_set,,S3,https://brainio-contrib.s3.amazonaws.com/image_dietterich_Hendrycks2019_frost_5.zip,dd4e258aa79a1b5996c009e29376277f8698cba3,
+dicarlo.Rajalingham2020,stimulus_set,StimulusSet,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_Rajalingham2020.csv,9a9a6b3115d2d8ce5d54ec2522093d8a87ed13a0,
+dicarlo.Rajalingham2020,stimulus_set,,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_Rajalingham2020.zip,6097086901032e20f8ae764e9cc06e0a891a3e18,
+dicarlo.Rajalingham2020,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Rajalingham2020.nc,ab95ae6c9907438f87b9b13b238244049f588680,dicarlo.Rajalingham2020
