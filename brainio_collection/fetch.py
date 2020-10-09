@@ -112,9 +112,12 @@ class AssemblyLoader:
     def load(self):
         data_array = xr.open_dataarray(self.local_path)
         stimulus_set = get_stimulus_set(self.stimulus_set_identifier)
-        merged = self.merge_stimulus_set_meta(data_array, stimulus_set)
         class_object = getattr(assemblies_base, self.assembly_class)
-        result = class_object(data=merged)
+        if self.assembly_class == 'PropertyAssembly':
+            result = data_array
+        else:
+            result = self.merge_stimulus_set_meta(data_array, stimulus_set)
+        result = class_object(data=result)
         result.attrs["stimulus_set_identifier"] = self.stimulus_set_identifier
         result.attrs["stimulus_set"] = stimulus_set
         return result

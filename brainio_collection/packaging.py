@@ -120,10 +120,11 @@ def write_netcdf(assembly, target_netcdf_file):
 
 
 def verify_assembly(assembly, assembly_class):
-    assert 'presentation' in assembly.dims
-    if assembly_class.startswith('Neur'):  # neural/neuron assemblies need to follow this format
-        assert set(assembly.dims) == {'presentation', 'neuroid'} or \
-               set(assembly.dims) == {'presentation', 'neuroid', 'time_bin'}
+    if assembly_class is not "PropertyAssembly":
+        assert 'presentation' in assembly.dims
+        if assembly_class.startswith('Neur'):  # neural/neuron assemblies need to follow this format
+            assert set(assembly.dims) == {'presentation', 'neuroid'} or \
+                   set(assembly.dims) == {'presentation', 'neuroid', 'time_bin'}
 
 
 def package_data_assembly(proto_data_assembly, assembly_identifier, stimulus_set_identifier,
