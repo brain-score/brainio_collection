@@ -235,3 +235,11 @@ class TestFreemanZiemba:
                 amount_gray += 1
         assert amount_gray / image.size == approx(ratio_gray, abs=.0001)
         assert amount_gray == expected_amount_gray
+
+
+@pytest.mark.filterwarnings("error::DeprecationWarning")
+def test_inplace():
+    assy_hvm = brainio_collection.get_assembly(identifier="dicarlo.MajajHong2015.public")
+    hvm_it_v3 = assy_hvm.sel(variation=3).sel(region="IT")
+    hvm_it_v3.load()
+    hvm_it_v3_obj = hvm_it_v3.multi_groupby(["category_name", "object_name"]).mean(dim="presentation")
