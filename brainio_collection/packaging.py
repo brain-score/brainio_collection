@@ -111,12 +111,10 @@ def package_stimulus_set(proto_stimulus_set, stimulus_set_identifier, bucket_nam
 
 def write_netcdf(assembly, target_netcdf_file):
     _logger.debug(f"Writing assembly to {target_netcdf_file}")
-    assembly = DataArray(assembly)  # if we're passed a BrainIO DataAssembly, it will automatically re-index otherwise
-    assembly = assembly.reset_index(list(assembly.indexes))
-    assembly.to_netcdf(target_netcdf_file)
+    assembly_da = DataArray(assembly).reset_index(list(assembly.indexes))
+    assembly_da.to_netcdf(target_netcdf_file)
     sha1 = sha1_hash(target_netcdf_file)
     return sha1
-
 
 def verify_assembly(assembly, assembly_class):
     if assembly_class is not "PropertyAssembly":
