@@ -5,9 +5,10 @@ from pathlib import Path
 
 import boto3
 from tqdm import tqdm
-from xarray import DataArray, IndexVariable
+from xarray import DataArray
 
 import brainio_base.assemblies
+from brainio_base.assemblies import get_levels
 from brainio_collection import lookup, list_stimulus_sets
 from brainio_collection.lookup import TYPE_ASSEMBLY, TYPE_STIMULUS_SET, sha1_hash
 
@@ -107,15 +108,6 @@ def package_stimulus_set(proto_stimulus_set, stimulus_set_identifier, bucket_nam
                   bucket_name=bucket_name, sha1=image_zip_sha1, s3_key=zip_file_name,
                   stimulus_set_identifier=None)
     _logger.debug(f"stimulus set {stimulus_set_identifier} packaged")
-
-
-def get_levels(assembly):
-    levels = []
-    for key, value in assembly.coords.variables.items():
-        if isinstance(value, IndexVariable) and value.level_names:
-            for level in value.level_names:
-                levels.append(level)
-    return levels
 
 
 def write_netcdf(assembly, target_netcdf_file):
