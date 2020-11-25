@@ -225,4 +225,4 @@ dicarlo.Rajalingham2020,stimulus_set,,S3,https://brainio.dicarlo.s3.amazonaws.co
 dicarlo.Rajalingham2020,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Rajalingham2020.nc,ab95ae6c9907438f87b9b13b238244049f588680,dicarlo.Rajalingham2020
 fei-fei.Deng2009,stimulus_set,StimulusSet,S3,https://brainio.contrib.s3.amazonaws.com/image_fei-fei_Deng2009.csv,ff79dcf6b0d115e6e8aa8d0fbba3af11dc649e57,
 fei-fei.Deng2009,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_fei-fei_Deng2009.zip,78172d752d8216a00833cfa34be67c8532ad7330,
-dicarlo.Seibert2019,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Seibert2019.nc,e9db6eb71ab3e46159a808c994fdc89a355e9aff,dicarlo.hvm
+dicarlo.Seibert2019,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Seibert2019.nc,eef41bb1f3d83c0e60ebf0e91511ce71ef5fee32,dicarlo.hvm
