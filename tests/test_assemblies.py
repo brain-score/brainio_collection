@@ -249,6 +249,7 @@ class TestSeibert:
         assert len(assembly['presentation']) == 286080
         assert len(assembly['time_bin']) == 1
 
+    @pytest.mark.private_access
     def test_coords(self):
         assembly = brainio_collection.get_assembly('dicarlo.Seibert2019')
         assert len(set(assembly['image_id'].values)) == 5760
@@ -257,6 +258,7 @@ class TestSeibert:
         assert len(set(assembly['region'].values)) == 2
         assert len(set(assembly['variation'].values)) == 3
 
+    @pytest.mark.private_access
     def test_content(self):
         assembly = brainio_collection.get_assembly('dicarlo.Seibert2019')
         assert np.count_nonzero(np.isnan(assembly)) == 19118720
