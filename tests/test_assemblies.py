@@ -38,6 +38,7 @@ from brainio_collection import fetch
         'dicarlo.SanghaviMurty2020THINGS1',
         'dicarlo.SanghaviMurty2020THINGS2',
         'aru.Kuzovkin2018',
+        'dicarlo.Seibert2019',
 ))
 def test_list_assembly(assembly):
     l = brainio_collection.list_assemblies()
@@ -71,6 +72,7 @@ def test_list_assembly(assembly):
     pytest.param('dicarlo.SanghaviMurty2020THINGS1', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.SanghaviMurty2020THINGS2', marks=[pytest.mark.private_access]),
     pytest.param('aru.Kuzovkin2018', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Seibert2019', marks=[pytest.mark.private_access]),
 ])
 def test_existence(assembly_identifier):
     assert brainio_collection.get_assembly(assembly_identifier) is not None
@@ -235,3 +237,32 @@ class TestFreemanZiemba:
                 amount_gray += 1
         assert amount_gray / image.size == approx(ratio_gray, abs=.0001)
         assert amount_gray == expected_amount_gray
+
+
+class TestSeibert:
+    @pytest.mark.private_access
+    def test_dims(self):
+        assembly = brainio_collection.get_assembly('dicarlo.Seibert2019')
+        # neuroid: 258 presentation: 286080 time_bin: 1
+        assert assembly.dims == ("neuroid", "presentation", "time_bin")
+        assert len(assembly['neuroid']) == 258
+        assert len(assembly['presentation']) == 286080
+        assert len(assembly['time_bin']) == 1
+
+    @pytest.mark.private_access
+    def test_coords(self):
+        assembly = brainio_collection.get_assembly('dicarlo.Seibert2019')
+        assert len(set(assembly['image_id'].values)) == 5760
+        assert len(set(assembly['neuroid_id'].values)) == 258
+        assert len(set(assembly['animal'].values)) == 3
+        assert len(set(assembly['region'].values)) == 2
+        assert len(set(assembly['variation'].values)) == 3
+
+    @pytest.mark.private_access
+    def test_content(self):
+        assembly = brainio_collection.get_assembly('dicarlo.Seibert2019')
+        assert np.count_nonzero(np.isnan(assembly)) == 19118720
+        assert assembly.stimulus_set_identifier == "dicarlo.hvm"
+        hvm = assembly.stimulus_set
+        assert hvm.shape == (5760, 18)
+
