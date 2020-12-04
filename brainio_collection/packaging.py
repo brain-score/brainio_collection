@@ -5,7 +5,6 @@ from pathlib import Path
 
 import boto3
 from tqdm import tqdm
-from xarray import DataArray
 
 import brainio_base.assemblies
 from brainio_base.assemblies import get_levels
@@ -112,8 +111,8 @@ def package_stimulus_set(proto_stimulus_set, stimulus_set_identifier, bucket_nam
 
 def write_netcdf(assembly, target_netcdf_file):
     _logger.debug(f"Writing assembly to {target_netcdf_file}")
-    assembly_da = DataArray(assembly).reset_index(get_levels(assembly))
-    assembly_da.to_netcdf(target_netcdf_file)
+    assembly = assembly.reset_index(list(assembly.indexes))
+    assembly.to_netcdf(target_netcdf_file)
     sha1 = sha1_hash(target_netcdf_file)
     return sha1
 
