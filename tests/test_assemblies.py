@@ -239,6 +239,13 @@ class TestFreemanZiemba:
         assert amount_gray == expected_amount_gray
 
 
+def test_inplace():
+    d = xr.DataArray(0, None, None, None, None, None, False)
+    with pytest.raises(TypeError) as te:
+        d = d.reset_index(None, inplace=True)
+    assert "inplace" in str(te.value)
+
+
 class TestSeibert:
     @pytest.mark.private_access
     def test_dims(self):
