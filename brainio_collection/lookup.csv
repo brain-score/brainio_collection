@@ -55,6 +55,9 @@ movshon.FreemanZiemba2013.public,assembly,NeuronRecordingAssembly,S3,https://bra
 movshon.FreemanZiemba2013.private,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_movshon_FreemanZiemba2013_private.nc,63f636fa2e2b51b47a676768a69b06ce95efdd8f,movshon.FreemanZiemba2013.aperture-private
 movshon.FreemanZiemba2013,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_movshon_FreemanZiemba2013.nc,f03f1630f0ab1e2dbd51816b47fbf2916876134e,movshon.FreemanZiemba2013.aperture
 dicarlo.Rajalingham2020orthographic_IT,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Rajalingham2020orthographic_IT.nc,2a14beba8120968166c2c1d017e5c3db3e757940,dicarlo.Rajalingham2020orthographic_IT
-aru.Kuzovkin2018,stimulus_set,StimulusSet,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.csv,6923dbe74b78a104ab2c1b158c147b93110e8295,
-aru.Kuzovkin2018,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.zip,f918fc1e5092ef05e711f4f96083193bfc9264e8,
-aru.Kuzovkin2018,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_aru_Kuzovkin2018.nc,a1ad7aa05271916a991ed1fab85130beeaba225e,aru.Kuzovkin2018
+aru.Kuzovkin2018,stimulus_set,StimulusSet,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.csv,8afab400b1be3434d3272e334b42204e80e2a57c,
+aru.Kuzovkin2018,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.zip,cca4d819d7743bdd4bf65c1cb2439fd0ec97543a,
+aru.Kuzovkin2018,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_aru_Kuzovkin2018.nc,4dfcf9cb0df987b0906d06ce688ed169cf42be30,aru.Kuzovkin2018
+aru.Jozwiktbd,stimulus_set,StimulusSet,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Jozwiktbd.csv,101d7015e3ed11e3bc966ca52225514417f1a982,
+aru.Jozwiktbd,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Jozwiktbd.zip,d2166dd9c2720cb24bc520f5041e6830779c0240,
+aru.Jozwiktbd,assembly,DataAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_aru_Jozwiktbd.nc,553cf4fd360398c367380e6fff71e59b9a43d1da,aru.Jozwiktbd
