@@ -5,9 +5,9 @@ from pathlib import Path
 
 import boto3
 from tqdm import tqdm
-from xarray import DataArray
 
 import brainio_base.assemblies
+from brainio_base.assemblies import get_levels
 from brainio_collection import lookup, list_stimulus_sets
 from brainio_collection.lookup import TYPE_ASSEMBLY, TYPE_STIMULUS_SET, sha1_hash
 
@@ -111,19 +111,18 @@ def package_stimulus_set(proto_stimulus_set, stimulus_set_identifier, bucket_nam
 
 def write_netcdf(assembly, target_netcdf_file):
     _logger.debug(f"Writing assembly to {target_netcdf_file}")
-    assembly = DataArray(assembly)  # if we're passed a BrainIO DataAssembly, it will automatically re-index otherwise
-    for index in assembly.indexes.keys():
-        assembly.reset_index(index, inplace=True)
+    assembly = assembly.reset_index(list(assembly.indexes))
     assembly.to_netcdf(target_netcdf_file)
     sha1 = sha1_hash(target_netcdf_file)
     return sha1
 
 
 def verify_assembly(assembly, assembly_class):
-    assert 'presentation' in assembly.dims
-    if assembly_class.startswith('Neur'):  # neural/neuron assemblies need to follow this format
-        assert set(assembly.dims) == {'presentation', 'neuroid'} or \
-               set(assembly.dims) == {'presentation', 'neuroid', 'time_bin'}
+    if assembly_class is not "PropertyAssembly":
+        assert 'presentation' in assembly.dims
+        if assembly_class.startswith('Neur'):  # neural/neuron assemblies need to follow this format
+            assert set(assembly.dims) == {'presentation', 'neuroid'} or \
+                   set(assembly.dims) == {'presentation', 'neuroid', 'time_bin'}
 
 
 def package_data_assembly(proto_data_assembly, assembly_identifier, stimulus_set_identifier,
