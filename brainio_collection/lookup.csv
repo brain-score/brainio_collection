@@ -226,3 +226,5 @@ dicarlo.Seibert2019,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.
 aru.Kuzovkin2018,stimulus_set,StimulusSet,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.csv,a5990b24aea3e453756141cbe69a83304db72d0b,
 aru.Kuzovkin2018,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.zip,cca4d819d7743bdd4bf65c1cb2439fd0ec97543a,
 aru.Kuzovkin2018,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_aru_Kuzovkin2018.nc,5fae8b283a043562ce9925d48ad99db151f39067,aru.Kuzovkin2018
+dicarlo.Rust2012.single,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Rust2012_single.nc,4ef420e70fbd0de3745df5be7c83dfc0a8f2e528,dicarlo.Rust2012
+dicarlo.Rust2012.array,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Rust2012_array.nc,6709b641751370acfccd9567e3d75b71865a71ab,dicarlo.Rust2012
