@@ -293,7 +293,7 @@ class TestRustSingle:
 
     @pytest.mark.private_access
     def test_coords(self):
-        assembly = brainio_collection.get_assembly('dicarlo.Seibert2019')
+        assembly = brainio_collection.get_assembly('dicarlo.Rust2012.single')
         assert len(set(assembly['image_id'].values)) == 300
         assert len(set(assembly['neuroid_id'].values)) == 285
         assert len(set(assembly['region'].values)) == 2
@@ -311,7 +311,7 @@ class TestRustArray:
 
     @pytest.mark.private_access
     def test_coords(self):
-        assembly = brainio_collection.get_assembly('dicarlo.Seibert2019')
+        assembly = brainio_collection.get_assembly('dicarlo.Rust2012.array')
         assert len(set(assembly['image_id'].values)) == 300
         assert len(set(assembly['neuroid_id'].values)) == 296
         assert len(set(assembly['animal'].values)) == 2
