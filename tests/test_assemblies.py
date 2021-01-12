@@ -40,6 +40,7 @@ from brainio_collection import fetch
         'dicarlo.SanghaviMurty2020THINGS2',
         'aru.Kuzovkin2018',
         'dicarlo.Seibert2019',
+        'aru.Cichy2019',
 
 ))
 def test_list_assembly(assembly):
@@ -75,6 +76,7 @@ def test_list_assembly(assembly):
     pytest.param('dicarlo.SanghaviMurty2020THINGS1', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.SanghaviMurty2020THINGS2', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Seibert2019', marks=[pytest.mark.private_access]),
+    pytest.param('aru.Cichy2019', marks=[pytest.mark.private_access]),
 
 ])
 def test_existence(assembly_identifier):
