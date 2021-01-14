@@ -1,8 +1,12 @@
 import pytest
 from pathlib import Path
 
+from pandas import DataFrame
+
 from brainio_base.assemblies import DataAssembly, get_levels
-from brainio_collection.packaging import write_netcdf
+from brainio_base.stimuli import StimulusSet
+from brainio_collection.packaging import write_netcdf, check_image_numbers, check_image_naming_convention,\
+    check_video_length
 
 
 def test_write_netcdf():
@@ -38,7 +42,6 @@ def test_reset_index():
     assert list(assy.indexes) == []
 
 
-
 def test_reset_index_levels():
     assy = DataAssembly(
         data=[[1, 2, 3], [4, 5, 6], [7, 8, 9], [10, 11, 12], [13, 14, 15], [16, 17, 18]],
@@ -54,4 +57,23 @@ def test_reset_index_levels():
     assert get_levels(assy) == []
 
 
+def test_image_numbers():
+    stimulus_set = StimulusSet(DataFrame({'image_id': [0, 1]}))
+    filenames = ['Nat300_1.png', 'Nat300_2.png']
+    assert len(stimulus_set) == len(filenames)
+    stimulus_set.image_paths = {stimulus_set.at[idx, 'image_id']: filenames[idx] for idx in range(len(stimulus_set))}
 
+    check_image_numbers(stimulus_set)
+
+
+def test_image_naming_convention():
+    for name in ['image_1.png', 'Nat300_100.png', '1.png']:
+        check_image_naming_convention(name)
+
+
+def test_video_length():
+    stimulus_set = StimulusSet(DataFrame({'image_id': [0, 1]}))
+    filenames = ['video_0.mp4', 'video_1.mp4']
+    assert len(stimulus_set) == len(filenames)
+    stimulus_set.image_paths = {stimulus_set.at[idx, 'image_id']: filenames[idx] for idx in range(len(stimulus_set))}
+    check_video_length(stimulus_set)

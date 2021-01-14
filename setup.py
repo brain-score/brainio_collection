@@ -19,6 +19,7 @@ requirements = [
     "pytest",
     "Pillow",
     "imageio",
+    "opencv-python",
 ]
 
 setup(
