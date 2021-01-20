@@ -56,6 +56,7 @@ class TestLoadImage:
         'dicarlo.THINGS1',
         'dicarlo.THINGS2',
         'aru.Kuzovkin2018',
+        'fei-fei.Deng2009',
         'dicarlo.BashivanKar2019.naturalistic',
         'dicarlo.BashivanKar2019.synthetic'
 ))
@@ -74,3 +75,10 @@ def test_klab_Zhang2018search():
     # Therefore, a total of 300 * 2 + 6 images are there in the stimulus set.
     assert len(stimulus_set) == 606
     assert len(set(stimulus_set['image_id'])) == 606
+
+
+@pytest.mark.private_access
+def test_feifei_Deng2009():
+    stimulus_set = brainio_collection.get_stimulus_set('fei-fei.Deng2009')
+    assert len(stimulus_set) == 50_000
+    assert len(set(stimulus_set['label'])) == 1_000

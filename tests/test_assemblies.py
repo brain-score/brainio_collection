@@ -38,22 +38,11 @@ from brainio_collection import fetch
         'dicarlo.SanghaviMurty2020THINGS1',
         'dicarlo.SanghaviMurty2020THINGS2',
         'aru.Kuzovkin2018',
-        'dicarlo.BashivanKar2019.m_ohp_session_1_nat',
-        'dicarlo.BashivanKar2019.m_ohp_session_2_nat',
-        'dicarlo.BashivanKar2019.m_stretch_session_1_nat',
-        'dicarlo.BashivanKar2019.m_stretch_session_2_nat',
-        'dicarlo.BashivanKar2019.n_stretch_session_1_nat',
-        'dicarlo.BashivanKar2019.n_stretch_session_2_nat',
-        'dicarlo.BashivanKar2019.s_ohp_session_1_nat',
-        'dicarlo.BashivanKar2019.s_stretch_session_1_nat',
-        'dicarlo.BashivanKar2019.m_ohp_session_1_synth',
-        'dicarlo.BashivanKar2019.m_ohp_session_2_synth',
-        'dicarlo.BashivanKar2019.m_stretch_session_1_synth',
-        'dicarlo.BashivanKar2019.m_stretch_session_2_synth',
-        'dicarlo.BashivanKar2019.n_stretch_session_1_synth',
-        'dicarlo.BashivanKar2019.n_stretch_session_2_synth',
-        'dicarlo.BashivanKar2019.s_ohp_session_1_synth',
-        'dicarlo.BashivanKar2019.s_stretch_session_1_synth',
+        'dicarlo.Seibert2019',
+        'dicarlo.Rust2012.single',
+        'dicarlo.Rust2012.array',
+        'dicarlo.BashivanKar2019.naturalistic',
+        'dicarlo.BashivanKar2019.synthetic',
 ))
 def test_list_assembly(assembly):
     l = brainio_collection.list_assemblies()
@@ -80,29 +69,18 @@ def test_list_assembly(assembly):
     pytest.param('dicarlo.Kar2018hvm', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Kar2018cocogray', marks=[pytest.mark.private_access]),
     pytest.param('klab.Zhang2018search_obj_array', marks=[pytest.mark.private_access]),
+    pytest.param('aru.Kuzovkin2018', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Rajalingham2020', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.SanghaviMurty2020', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.SanghaviJozwik2020', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Sanghavi2020', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.SanghaviMurty2020THINGS1', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.SanghaviMurty2020THINGS2', marks=[pytest.mark.private_access]),
-    pytest.param('aru.Kuzovkin2018', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_ohp_session_1_nat', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_ohp_session_2_nat', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_stretch_session_1_nat', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_stretch_session_2_nat', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.n_stretch_session_1_nat', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.n_stretch_session_2_nat', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.s_ohp_session_1_nat', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.s_stretch_session_1_nat', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_ohp_session_1_synth', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_ohp_session_2_synth', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_stretch_session_1_synth', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_stretch_session_2_synth', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.n_stretch_session_1_synth', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.n_stretch_session_2_synth', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.s_ohp_session_1_synth', marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.s_stretch_session_1_synth', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Seibert2019', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Rust2012.single', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.Rust2012.array', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.BashivanKar2019.naturalistic', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.BashivanKar2019.synthetic', marks=[pytest.mark.private_access]),
 ])
 def test_existence(assembly_identifier):
     assert brainio_collection.get_assembly(assembly_identifier) is not None
@@ -269,27 +247,81 @@ class TestFreemanZiemba:
         assert amount_gray == expected_amount_gray
 
 
+def test_inplace():
+    d = xr.DataArray(0, None, None, None, None, None, False)
+    with pytest.raises(TypeError) as te:
+        d = d.reset_index(None, inplace=True)
+    assert "inplace" in str(te.value)
+
+
+class TestSeibert:
+    @pytest.mark.private_access
+    def test_dims(self):
+        assembly = brainio_collection.get_assembly('dicarlo.Seibert2019')
+        # neuroid: 258 presentation: 286080 time_bin: 1
+        assert assembly.dims == ("neuroid", "presentation", "time_bin")
+        assert len(assembly['neuroid']) == 258
+        assert len(assembly['presentation']) == 286080
+        assert len(assembly['time_bin']) == 1
+
+    @pytest.mark.private_access
+    def test_coords(self):
+        assembly = brainio_collection.get_assembly('dicarlo.Seibert2019')
+        assert len(set(assembly['image_id'].values)) == 5760
+        assert len(set(assembly['neuroid_id'].values)) == 258
+        assert len(set(assembly['animal'].values)) == 3
+        assert len(set(assembly['region'].values)) == 2
+        assert len(set(assembly['variation'].values)) == 3
+
+    @pytest.mark.private_access
+    def test_content(self):
+        assembly = brainio_collection.get_assembly('dicarlo.Seibert2019')
+        assert np.count_nonzero(np.isnan(assembly)) == 19118720
+        assert assembly.stimulus_set_identifier == "dicarlo.hvm"
+        hvm = assembly.stimulus_set
+        assert hvm.shape == (5760, 18)
+
+
+class TestRustSingle:
+    @pytest.mark.private_access
+    def test_dims(self):
+        assembly = brainio_collection.get_assembly('dicarlo.Rust2012.single')
+        # (neuroid: 285, presentation: 1500, time_bin: 1)
+        assert assembly.dims == ("neuroid", "presentation", "time_bin")
+        assert len(assembly['neuroid']) == 285
+        assert len(assembly['presentation']) == 1500
+        assert len(assembly['time_bin']) == 1
+
+    @pytest.mark.private_access
+    def test_coords(self):
+        assembly = brainio_collection.get_assembly('dicarlo.Rust2012.single')
+        assert len(set(assembly['image_id'].values)) == 300
+        assert len(set(assembly['neuroid_id'].values)) == 285
+        assert len(set(assembly['region'].values)) == 2
+
+
+class TestRustArray:
+    @pytest.mark.private_access
+    def test_dims(self):
+        assembly = brainio_collection.get_assembly('dicarlo.Rust2012.array')
+        # (neuroid: 296, presentation: 53700, time_bin: 6)
+        assert assembly.dims == ("neuroid", "presentation", "time_bin")
+        assert len(assembly['neuroid']) == 296
+        assert len(assembly['presentation']) == 53700
+        assert len(assembly['time_bin']) == 6
+
+    @pytest.mark.private_access
+    def test_coords(self):
+        assembly = brainio_collection.get_assembly('dicarlo.Rust2012.array')
+        assert len(set(assembly['image_id'].values)) == 300
+        assert len(set(assembly['neuroid_id'].values)) == 296
+        assert len(set(assembly['animal'].values)) == 2
+        assert len(set(assembly['region'].values)) == 2
+
+
 @pytest.mark.parametrize('assembly,shape', [
-    pytest.param('dicarlo.BashivanKar2019.m_ohp_session_1_nat', (24320, 39, 1), marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_ohp_session_2_nat', (23040, 38, 1), marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_stretch_session_1_nat', (24320, 39, 1), marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_stretch_session_2_nat', (23040, 52, 1), marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.n_stretch_session_1_nat', (21760, 20, 1), marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.n_stretch_session_2_nat', (21760, 1, 1), marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.s_ohp_session_1_nat', (21120, 22, 1), marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.s_stretch_session_1_nat', (21120, 22, 1), marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_ohp_session_1_synth', (2550, 39, 1), marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_ohp_session_2_synth', (1800, 38, 1), marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_stretch_session_1_synth', (2550, 39, 1),
-                 marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.m_stretch_session_2_synth', (2640, 52, 1),
-                 marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.n_stretch_session_1_synth', (2790, 20, 1),
-                 marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.n_stretch_session_2_synth', (100, 1, 1), marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.s_ohp_session_1_synth', (4465, 22, 1), marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.s_stretch_session_1_synth', (4465, 22, 1),
-                 marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.BashivanKar2019.naturalistic', (24320, 233, 1), marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.BashivanKar2019.synthetic', (21360, 233, 1), marks=[pytest.mark.private_access]),
 ])
 def test_synthetic(assembly, shape):
     assy = brainio_collection.get_assembly(assembly)
