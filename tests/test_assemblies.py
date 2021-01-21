@@ -319,11 +319,12 @@ class TestRustArray:
         assert len(set(assembly['region'].values)) == 2
 
 
-@pytest.mark.parametrize('assembly,shape', [
-    pytest.param('dicarlo.BashivanKar2019.naturalistic', (24320, 233, 1), marks=[pytest.mark.private_access]),
-    pytest.param('dicarlo.BashivanKar2019.synthetic', (21360, 233, 1), marks=[pytest.mark.private_access]),
+@pytest.mark.parametrize('assembly,shape,nans', [
+    pytest.param('dicarlo.BashivanKar2019.naturalistic', (24320, 233, 1), 309760, marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.BashivanKar2019.synthetic', (21360, 233, 1), 4319940, marks=[pytest.mark.private_access]),
 ])
-def test_synthetic(assembly, shape):
+def test_synthetic(assembly, shape, nans):
     assy = brainio_collection.get_assembly(assembly)
     assert assy.shape == shape
+    assert np.count_nonzero(np.isnan(assy)) == nans
 
