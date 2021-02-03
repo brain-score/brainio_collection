@@ -12,7 +12,6 @@ from PIL import Image
 import cv2
 
 import brainio_base.assemblies
-from brainio_base.assemblies import get_levels
 from brainio_collection import lookup, list_stimulus_sets
 from brainio_collection.lookup import TYPE_ASSEMBLY, TYPE_STIMULUS_SET, sha1_hash
 
@@ -126,8 +125,6 @@ def check_stimulus_set(stimulus_set):
             check_image_format(image, file_path)
 
     check_image_numbers(stimulus_set)
-    if file_type_0.startswith('video'):
-        check_video_length(stimulus_set)
 
 
 def package_stimulus_set(proto_stimulus_set, stimulus_set_identifier, bucket_name="brainio-contrib"):
