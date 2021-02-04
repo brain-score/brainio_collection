@@ -4,10 +4,10 @@ matrix:
   - python: '3.7'
     dist: xenial
     sudo: true
-  - name: 3.6 public
-    python: '3.6'
-  - name: 3.6 private
-    python: '3.6'
+  - name: 3.7 public
+    python: '3.7'
+  - name: 3.7 private
+    python: '3.7'
     env:
     - PRIVATE_ACCESS=1
     - secure: IULfcDRlV6Q3G04BfPxNpwyj15cr0LwtqJxSayQrLctdE1Ss6ji8bCDiVs7bGQbsXWkNRL2T6WSFMTqgLVHKBcA0BVKQDFqPZM78uwMaz4VllSBlIPh2B8U5zsmNDe+KZ/eZ/mnPSJfy+8UIYIobtLgPWAZKK+EUVQdaxATPiL3PzRuRikuhvzwgtGUOUy899NuHgolU2br4VZa7w1FYYx6TIxBDCDFG17PS5VBu91JsSeIStmnN0man2kxWfe4TdJzhIz3OrdOstL44R4QXOYj3Ppa8k0FQ8J11VljvWKktmeoJzC4fsuRMM0dZuyvmITWoN3C9AcdJQDNxaHg+0eyxjyDG3/2yOxuO5cGJjCBDk80aPfd7uk7wStUFRdIVQGBxz0D8v5Zgey9BCYC/wRpzS3Q17yOxPqxjLTg89bGsJCSKhZYc/8RdfsdlZvf8Qb5qYpcloxMxPCFZW9xDrAM8TKiCKyQHiRBeEX6M8nBtJwGg8L2LXw9lXGyv7tREeIeucVDjMILOMWuGnIveh+w4BOwg8CkVP7eDf9GjQeLWBaA5P+9rkwPjkmoKTk+xlqT0u+BggHoWE2opi4pt++X1xtwftEdkIRuBb6iAIX+hErBT8ze2gkeMig72ZQAfLbANbuunbiNW2AmJh2fB2g5kaklYK+x0ywPw6xuDftg=
