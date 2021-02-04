@@ -31,7 +31,6 @@ from brainio_collection import fetch
         'dicarlo.Kar2018hvm',
         'dicarlo.Kar2018cocogray',
         'klab.Zhang2018search_obj_array',
-        'aru.Kuzovkin2018',
         'dicarlo.Rajalingham2020',
         'dicarlo.SanghaviMurty2020',
         'dicarlo.SanghaviJozwik2020',
@@ -42,7 +41,8 @@ from brainio_collection import fetch
         'dicarlo.Seibert2019',
         'dicarlo.Rust2012.single',
         'dicarlo.Rust2012.array',
-
+        'dicarlo.BashivanKar2019.naturalistic',
+        'dicarlo.BashivanKar2019.synthetic',
 ))
 def test_list_assembly(assembly):
     l = brainio_collection.list_assemblies()
@@ -79,7 +79,8 @@ def test_list_assembly(assembly):
     pytest.param('dicarlo.Seibert2019', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Rust2012.single', marks=[pytest.mark.private_access]),
     pytest.param('dicarlo.Rust2012.array', marks=[pytest.mark.private_access]),
-
+    pytest.param('dicarlo.BashivanKar2019.naturalistic', marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.BashivanKar2019.synthetic', marks=[pytest.mark.private_access]),
 ])
 def test_existence(assembly_identifier):
     assert brainio_collection.get_assembly(assembly_identifier) is not None
@@ -317,4 +318,13 @@ class TestRustArray:
         assert len(set(assembly['animal'].values)) == 2
         assert len(set(assembly['region'].values)) == 2
 
+
+@pytest.mark.parametrize('assembly,shape,nans', [
+    pytest.param('dicarlo.BashivanKar2019.naturalistic', (24320, 233, 1), 309760, marks=[pytest.mark.private_access]),
+    pytest.param('dicarlo.BashivanKar2019.synthetic', (21360, 233, 1), 4319940, marks=[pytest.mark.private_access]),
+])
+def test_synthetic(assembly, shape, nans):
+    assy = brainio_collection.get_assembly(assembly)
+    assert assy.shape == shape
+    assert np.count_nonzero(np.isnan(assy)) == nans
 
