@@ -5,8 +5,7 @@ from pandas import DataFrame
 
 from brainio_base.assemblies import DataAssembly, get_levels
 from brainio_base.stimuli import StimulusSet
-from brainio_collection.packaging import write_netcdf, check_image_numbers, check_image_naming_convention,\
-    check_video_length
+from brainio_collection.packaging import write_netcdf, check_image_numbers, check_image_naming_convention
 
 
 def test_write_netcdf():

@@ -76,7 +76,7 @@ def check_naming_convention(name):
 
 
 def check_image_naming_convention(name):
-    assert re.match(r"[a-zA-Z0-9]+_(?!0)\d+\.(?:jpg|jpeg|png|mp4)|(?!0)\d+\.(?:jpg|jpeg|png|mp4)", name)
+    assert re.match(r"[a-zA-Z0-9]+_?(?!0)\d+\.(?:jpg|jpeg|png|mp4)|(?!0)\d+\.(?:jpg|jpeg|png|mp4)", name)
 
 
 def check_image_format(image, identifier):
