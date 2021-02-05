@@ -70,10 +70,3 @@ def test_image_naming_convention():
     for name in ['image_1.png', 'Nat300_100.png', '1.png']:
         check_image_naming_convention(name)
 
-
-def test_video_length():
-    stimulus_set = StimulusSet(DataFrame({'image_id': [0, 1]}))
-    filenames = ['video_0.mp4', 'video_1.mp4']
-    assert len(stimulus_set) == len(filenames)
-    stimulus_set.image_paths = {stimulus_set.at[idx, 'image_id']: filenames[idx] for idx in range(len(stimulus_set))}
-    check_video_length(stimulus_set)

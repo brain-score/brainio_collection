@@ -96,20 +96,6 @@ def check_image_numbers(stimulus_set):
         assert image_numbers[i] == image_numbers[i + 1] - 1, "StimulusSet files not sequentially numbered"
 
 
-def check_video_length(stimulus_set):
-    file_paths = list(stimulus_set.image_paths.values())
-
-    video_0 = cv2.VideoCapture(file_paths[0])
-    duration_0 = int(video_0.get(cv2.CAP_PROP_FRAME_COUNT)) / video_0.get(cv2.CAP_PROP_FPS)
-
-    for file_path in file_paths:
-        video = cv2.VideoCapture(file_path)
-        fps = video.get(cv2.CAP_PROP_FPS)
-        frame_count = int(video.get(cv2.CAP_PROP_FRAME_COUNT))
-        duration = frame_count / fps
-        assert duration_0 == duration
-
-
 def check_stimulus_set(stimulus_set):
     assert len(stimulus_set['image_id']), "StimulusSet is empty"
     file_paths = list(stimulus_set.image_paths.values())
