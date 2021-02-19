@@ -229,3 +229,12 @@ aru.Kuzovkin2018,assembly,NeuronRecordingAssembly,S3,https://brainio.contrib.s3.
 aru.Cichy2019,stimulus_set,StimulusSet,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Cichy2019.csv,851dcae666ab9a555e3a60371c02f1d433f91077,
 aru.Cichy2019,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Cichy2019.zip,d2166dd9c2720cb24bc520f5041e6830779c0240,
 aru.Cichy2019,assembly,DataAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_aru_Cichy2019.nc,81238060ca1faa5d1875fd2b6321fd7763578d35,aru.Cichy2019
+aru.Cichy2019,assembly,DataAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_aru_Cichy2019.nc,9224de46b32b61e6488f68171214c7d42b99db02,aru.Cichy2019
+dicarlo.Rust2012.single,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Rust2012_single.nc,4ef420e70fbd0de3745df5be7c83dfc0a8f2e528,dicarlo.Rust2012
+dicarlo.Rust2012.array,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Rust2012_array.nc,6709b641751370acfccd9567e3d75b71865a71ab,dicarlo.Rust2012
+dicarlo.BashivanKar2019.naturalistic,stimulus_set,StimulusSet,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_BashivanKar2019_naturalistic.csv,48ef84282552b8796142ffe7d0d2c632f8ef061a,
+dicarlo.BashivanKar2019.naturalistic,stimulus_set,,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_BashivanKar2019_naturalistic.zip,d7b71b431cf23d435395205f1e38036a9e10acca,
+dicarlo.BashivanKar2019.naturalistic,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_BashivanKar2019_naturalistic.nc,1ec2f32ef800f0c6e15879d883be1d55b51b8b67,dicarlo.BashivanKar2019.naturalistic
+dicarlo.BashivanKar2019.synthetic,stimulus_set,StimulusSet,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_BashivanKar2019_synthetic.csv,81da195e9b2a128b228fc4867e23ae6b21bd7abd,
+dicarlo.BashivanKar2019.synthetic,stimulus_set,,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_BashivanKar2019_synthetic.zip,e2de33f25c5c19bcfb400055c1db399d553487e5,
+dicarlo.BashivanKar2019.synthetic,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_BashivanKar2019_synthetic.nc,f687c8d26f8943dc379dbcbe94d3feb148400c6b,dicarlo.BashivanKar2019.synthetic
