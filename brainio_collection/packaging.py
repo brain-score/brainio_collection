@@ -96,7 +96,14 @@ def check_image_numbers(stimulus_set):
         assert image_numbers[i] == image_numbers[i + 1] - 1, "StimulusSet files not sequentially numbered"
 
 
-def check_stimulus_set(stimulus_set):
+def check_experiment_stimulus_set(stimulus_set):
+    """
+    Checks the stimulus set files are non-corrupt and named/numbered sequentially. This function should only be called
+    on stimulus sets that are pushed to the `brainio.requested` bucket.
+    :param stimulus_set: A StimulusSet containing one row for each image, and the columns
+    {'image_id', ['image_path_within_store' (optional to structure zip directory layout)]}
+    and columns for all stimulus-set-specific metadata but not the column 'filename'.
+    """
     assert len(stimulus_set['image_id']), "StimulusSet is empty"
     file_paths = list(stimulus_set.image_paths.values())
 
@@ -129,7 +136,7 @@ def package_stimulus_set(proto_stimulus_set, stimulus_set_identifier, bucket_nam
     assert 'image_id' in proto_stimulus_set.columns, "StimulusSet needs to have an `image_id` column"
 
     if bucket_name == 'brainio.requested':
-        check_stimulus_set(proto_stimulus_set)
+        check_experiment_stimulus_set(proto_stimulus_set)
 
     # naming
     image_store_identifier = "image_" + stimulus_set_identifier.replace(".", "_")
