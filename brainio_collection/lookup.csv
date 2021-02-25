@@ -230,3 +230,12 @@ dicarlo.Rust2012.single,assembly,NeuronRecordingAssembly,S3,https://brainio.dica
 dicarlo.Rust2012.array,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Rust2012_array.nc,6709b641751370acfccd9567e3d75b71865a71ab,dicarlo.Rust2012
 dicarlo.ImageNetSlim15000,stimulus_set,StimulusSet,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_ImageNetSlim15000.csv,e85826c749fe095585c6a591dcc7fc54063e77cc,
 dicarlo.ImageNetSlim15000,stimulus_set,,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_ImageNetSlim15000.zip,633d08474e3067add834f4ddf552642c538db112,
+dicarlo.BashivanKar2019.naturalistic,stimulus_set,StimulusSet,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_BashivanKar2019_naturalistic.csv,48ef84282552b8796142ffe7d0d2c632f8ef061a,
+dicarlo.BashivanKar2019.naturalistic,stimulus_set,,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_BashivanKar2019_naturalistic.zip,d7b71b431cf23d435395205f1e38036a9e10acca,
+dicarlo.BashivanKar2019.naturalistic,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_BashivanKar2019_naturalistic.nc,1ec2f32ef800f0c6e15879d883be1d55b51b8b67,dicarlo.BashivanKar2019.naturalistic
+dicarlo.BashivanKar2019.synthetic,stimulus_set,StimulusSet,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_BashivanKar2019_synthetic.csv,81da195e9b2a128b228fc4867e23ae6b21bd7abd,
+dicarlo.BashivanKar2019.synthetic,stimulus_set,,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_BashivanKar2019_synthetic.zip,e2de33f25c5c19bcfb400055c1db399d553487e5,
+dicarlo.BashivanKar2019.synthetic,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_BashivanKar2019_synthetic.nc,f687c8d26f8943dc379dbcbe94d3feb148400c6b,dicarlo.BashivanKar2019.synthetic
+aru.Cichy2019,stimulus_set,StimulusSet,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Cichy2019.csv,201e86eef69af9150621141063a5f2ad1225d18e,
+aru.Cichy2019,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Cichy2019.zip,d2166dd9c2720cb24bc520f5041e6830779c0240,
+aru.Cichy2019,assembly,DataAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_aru_Cichy2019.nc,4cc809f45a170e903cc32c04584628e81717f2bf,aru.Cichy2019
