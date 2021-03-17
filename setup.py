@@ -19,6 +19,7 @@ requirements = [
     "pytest",
     "Pillow",
     "imageio",
+    "opencv-python",
 ]
 
 setup(
@@ -29,7 +30,7 @@ setup(
     author="Jon Prescott-Roy, Martin Schrimpf",
     author_email='jjpr@mit.edu, mschrimpf@mit.edu',
     url='https://github.com/brain-score/brainio_collection',
-    packages=find_packages(exclude=['tests']),
+    packages=find_packages(exclude=['tests', 'brainio_contrib']),
     include_package_data=True,
     install_requires=requirements,
     license="MIT license",
@@ -40,7 +41,6 @@ setup(
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
     ],
     test_suite='tests',
