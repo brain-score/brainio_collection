@@ -1,14 +1,15 @@
-import logging
 import os
-import zipfile
-from pathlib import Path
 import re
-import mimetypes
+from pathlib import Path
 
 import boto3
-from tqdm import tqdm
+import logging
+import mimetypes
 import numpy as np
+import xarray as xr
+import zipfile
 from PIL import Image
+from tqdm import tqdm
 import cv2
 
 import brainio_base.assemblies
@@ -112,7 +113,8 @@ def check_experiment_stimulus_set(stimulus_set):
     for file_path in file_paths:
         check_image_naming_convention(file_path[file_path.rfind('/') + 1:])
         assert os.path.isfile(file_path), f"{file_path} does not exist"
-        assert file_type_0 == mimetypes.guess_type(file_path)[0], f"{file_path} is a different media type than other stimuli in the StimulusSet"
+        assert file_type_0 == mimetypes.guess_type(file_path)[0], \
+            f"{file_path} is a different media type than other stimuli in the StimulusSet"
         if file_type_0.startswith('image'):
             image = Image.open(file_path)
             check_image_format(image, file_path)
