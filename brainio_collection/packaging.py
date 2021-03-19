@@ -9,7 +9,7 @@ import boto3
 from tqdm import tqdm
 import numpy as np
 from PIL import Image
-#import cv2
+import cv2
 
 import brainio_base.assemblies
 from brainio_collection import lookup, list_stimulus_sets
