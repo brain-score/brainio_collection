@@ -1,10 +1,11 @@
-import os
-
 import imageio
 import numpy as np
+import os
+import pandas as pd
 import pytest
 
 import brainio_collection
+from brainio_collection.fetch import fetch_file
 
 
 def test_get_stimulus_set():
@@ -56,7 +57,7 @@ class TestLoadImage:
         'dicarlo.THINGS1',
         'dicarlo.THINGS2',
         'aru.Kuzovkin2018',
-        'fei-fei.Deng2009',
+        'fei-fei.Deng2009.val',
         'aru.Cichy2019',
         'dicarlo.BashivanKar2019.naturalistic',
         'dicarlo.BashivanKar2019.synthetic'
@@ -79,7 +80,17 @@ def test_klab_Zhang2018search():
 
 
 @pytest.mark.private_access
-def test_feifei_Deng2009():
-    stimulus_set = brainio_collection.get_stimulus_set('fei-fei.Deng2009')
-    assert len(stimulus_set) == 50_000
-    assert len(set(stimulus_set['label'])) == 1_000
+class TestFeiFeiDeng2009:
+    def test_val(self):
+        stimulus_set = brainio_collection.get_stimulus_set('fei-fei.Deng2009.val')
+        assert len(stimulus_set) == 50_000
+        assert len(set(stimulus_set['label'])) == 1_000
+
+    def test_train(self):
+        # To preserve bandwidth and space (140G), we only store the metadata for ImageNet train and keep files local.
+        csv_path = fetch_file(location_type='S3',
+                              location='https://brainio.contrib.s3.amazonaws.com/image_fei-fei_Deng2009_train.csv',
+                              sha1='be793cd12a4e3ccffe17a2499e99d2125c1db4c5')  # from packaging
+        stimulus_set = pd.read_csv(csv_path)
+        assert len(stimulus_set) == 1_281_167
+        assert len(set(stimulus_set['synset'])) == 1_000
