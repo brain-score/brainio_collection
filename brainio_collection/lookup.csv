@@ -220,8 +220,8 @@ dietterich.Hendrycks2019.jpeg_compression_5,stimulus_set,,S3,https://brainio-con
 dicarlo.Rajalingham2020,stimulus_set,StimulusSet,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_Rajalingham2020.csv,9a9a6b3115d2d8ce5d54ec2522093d8a87ed13a0,
 dicarlo.Rajalingham2020,stimulus_set,,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_Rajalingham2020.zip,6097086901032e20f8ae764e9cc06e0a891a3e18,
 dicarlo.Rajalingham2020,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Rajalingham2020.nc,ab95ae6c9907438f87b9b13b238244049f588680,dicarlo.Rajalingham2020
-fei-fei.Deng2009,stimulus_set,StimulusSet,S3,https://brainio.contrib.s3.amazonaws.com/image_fei-fei_Deng2009.csv,ff79dcf6b0d115e6e8aa8d0fbba3af11dc649e57,
-fei-fei.Deng2009,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_fei-fei_Deng2009.zip,78172d752d8216a00833cfa34be67c8532ad7330,
+fei-fei.Deng2009.val,stimulus_set,StimulusSet,S3,https://brainio.contrib.s3.amazonaws.com/image_fei-fei_Deng2009.csv,ff79dcf6b0d115e6e8aa8d0fbba3af11dc649e57,
+fei-fei.Deng2009.val,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_fei-fei_Deng2009.zip,78172d752d8216a00833cfa34be67c8532ad7330,
 dicarlo.Seibert2019,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_Seibert2019.nc,eef41bb1f3d83c0e60ebf0e91511ce71ef5fee32,dicarlo.hvm
 aru.Kuzovkin2018,stimulus_set,StimulusSet,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.csv,a5990b24aea3e453756141cbe69a83304db72d0b,
 aru.Kuzovkin2018,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_aru_Kuzovkin2018.zip,cca4d819d7743bdd4bf65c1cb2439fd0ec97543a,
