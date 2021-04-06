@@ -2,12 +2,16 @@ import logging
 import os
 import zipfile
 from pathlib import Path
+import re
+import mimetypes
 
 import boto3
 from tqdm import tqdm
+import numpy as np
+from PIL import Image
+import cv2
 
 import brainio_base.assemblies
-from brainio_base.assemblies import get_levels
 from brainio_collection import lookup, list_stimulus_sets
 from brainio_collection.lookup import TYPE_ASSEMBLY, TYPE_STIMULUS_SET, sha1_hash
 
@@ -67,6 +71,55 @@ def create_image_csv(proto_stimulus_set, target_path):
     return sha1
 
 
+def check_naming_convention(name):
+    assert re.match(r"[a-z]+\.[A-Z][a-zA-Z0-9]+", name)
+
+
+def check_image_naming_convention(name):
+    assert re.match(r"[a-zA-Z0-9]+_?(?!0)\d+\.(?:jpg|jpeg|png|mp4)|(?!0)\d+\.(?:jpg|jpeg|png|mp4)", name)
+
+
+def check_image_format(image, identifier):
+    assert image.mode in ['RGBA', 'RGB', 'LA', 'L'], f"{identifier}: incorrect image mode {image.mode}"
+    image_shape = np.array(image).shape
+    assert 3 == len(image_shape), f"{identifier}: incorrect shape {len(image_shape)}"
+
+    channels = {'RGBA': 4, 'RGB': 3, 'LA': 2, 'L': 1}
+    assert channels[image.mode] == image_shape[2], f"{identifier}: incorrect channels {image_shape[2]}"
+
+
+def check_image_numbers(stimulus_set):
+    image_numbers = [int(image_file_path[image_file_path.rfind('_') + 1:image_file_path.rfind('.')])
+                     for image_file_path in list(stimulus_set.image_paths.values())]
+    image_numbers.sort()
+    for i in range(len(image_numbers) - 1):
+        assert image_numbers[i] == image_numbers[i + 1] - 1, "StimulusSet files not sequentially numbered"
+
+
+def check_experiment_stimulus_set(stimulus_set):
+    """
+    Checks the stimulus set files are non-corrupt and named/numbered sequentially. This function should only be called
+    on stimulus sets that are pushed to the `brainio.requested` bucket.
+    :param stimulus_set: A StimulusSet containing one row for each image, and the columns
+    {'image_id', ['image_path_within_store' (optional to structure zip directory layout)]}
+    and columns for all stimulus-set-specific metadata but not the column 'filename'.
+    """
+    assert len(stimulus_set['image_id']), "StimulusSet is empty"
+    file_paths = list(stimulus_set.image_paths.values())
+
+    file_type_0 = mimetypes.guess_type(file_paths[0])[0]
+
+    for file_path in file_paths:
+        check_image_naming_convention(file_path[file_path.rfind('/') + 1:])
+        assert os.path.isfile(file_path), f"{file_path} does not exist"
+        assert file_type_0 == mimetypes.guess_type(file_path)[0], f"{file_path} is a different media type than other stimuli in the StimulusSet"
+        if file_type_0.startswith('image'):
+            image = Image.open(file_path)
+            check_image_format(image, file_path)
+
+    check_image_numbers(stimulus_set)
+
+
 def package_stimulus_set(proto_stimulus_set, stimulus_set_identifier, bucket_name="brainio-contrib"):
     """
     Package a set of images along with their metadata for the BrainIO system.
@@ -75,11 +128,15 @@ def package_stimulus_set(proto_stimulus_set, stimulus_set_identifier, bucket_nam
         and columns for all stimulus-set-specific metadata but not the column 'filename'.
     :param stimulus_set_identifier: A unique name identifying the stimulus set
         <lab identifier>.<first author e.g. 'Rajalingham' or 'MajajHong' for shared first-author><YYYY year of publication>.
-    :param bucket_name: 'brainio-dicarlo' for DiCarlo Lab stimulus sets, 'brainio-contrib' for external stimulus sets.
+    :param bucket_name: 'brainio.dicarlo' for DiCarlo Lab stimulus sets, 'brainio.contrib' for external stimulus sets,
+        'brainio.requested' for to-be-run-on-monkey-machine stimulus sets.
     """
     _logger.debug(f"Packaging {stimulus_set_identifier}")
 
     assert 'image_id' in proto_stimulus_set.columns, "StimulusSet needs to have an `image_id` column"
+
+    if bucket_name == 'brainio.requested':
+        check_experiment_stimulus_set(proto_stimulus_set)
 
     # naming
     image_store_identifier = "image_" + stimulus_set_identifier.replace(".", "_")
