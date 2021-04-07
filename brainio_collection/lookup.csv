@@ -253,7 +253,7 @@ movshon.FreemanZiemba2013_properties,stimulus_set,StimulusSet,S3,https://brainio
 movshon.FreemanZiemba2013_properties,stimulus_set,,S3,https://brainio.contrib.s3.amazonaws.com/image_movshon_FreemanZiemba2013_properties.zip,c64a0d6b447676a6d5cff3d3625a5f294e62ff97,
 movshon.Cavanaugh2002a,assembly,PropertyAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_movshon_Cavanaugh2002a.nc,d4b24f4bbf8a14138a8e98391ab03796c2c05e7d,dicarlo.Marques2020_size
 devalois.DeValois1982a,assembly,PropertyAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_devalois_DeValois1982a.nc,8f4fd70e987c3c566b5b6c6bf15ef27637618b2c,dicarlo.Marques2020_orientation
-devalois.DeValois1982b,assembly,PropertyAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_devalois_DeValois1982b.nc,2717936345d223e4c9a9c69cbea3e1b317b30a91,dicarlo.Marques2020_spatial_frequency
+devalois.DeValois1982b,assembly,PropertyAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_devalois_DeValois1982b.nc,611176eefdac09feaa4c07f081784c24067629e1,dicarlo.Marques2020_spatial_frequency
 movshon.FreemanZiemba2013_V1_properties,assembly,PropertyAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_movshon_FreemanZiemba2013_V1_properties.nc,e665522d9a32e6cd6c3ebc61ff65fd3899c8d3e6,movshon.FreemanZiemba2013_properties
 shapley.Ringach2002,assembly,PropertyAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_shapley_Ringach2002.nc,0f3e19140bd9f930109879a38e574471d9576cf5,dicarlo.Marques2020_orientation
 schiller.Schiller1976c,assembly,PropertyAssembly,S3,https://brainio.contrib.s3.amazonaws.com/assy_schiller_Schiller1976c.nc,58daa02ba2680e75dcb11b37eb6085c4afb6576e,dicarlo.Marques2020_spatial_frequency
