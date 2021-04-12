@@ -73,3 +73,11 @@ dicarlo.SanghaviMurty2020THINGS1,assembly,NeuronRecordingAssembly,S3,https://bra
 dicarlo.THINGS2,stimulus_set,StimulusSet,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_THINGS2.csv,86c8beda8f495cd69ed047d3457902dd98e4904c,
 dicarlo.THINGS2,stimulus_set,,S3,https://brainio.dicarlo.s3.amazonaws.com/image_dicarlo_THINGS2.zip,e7918dd10102b67464bc652fdb3ced25ee1fbe7a,
 dicarlo.SanghaviMurty2020THINGS2,assembly,NeuronRecordingAssembly,S3,https://brainio.dicarlo.s3.amazonaws.com/assy_dicarlo_SanghaviMurty2020THINGS2.nc,80962139823cb145e2385c344e3945e99ed97fa2,dicarlo.THINGS2
+dietterich.Hendrycks2019.noise,stimulus_set,StimulusSet,S3,https://brainio-contrib.s3.amazonaws.com/image_dietterich_Hendrycks2019_noise.csv,56f445e058b4d825e7731711c824918812ed2d2d,
+dietterich.Hendrycks2019.noise,stimulus_set,,S3,https://brainio-contrib.s3.amazonaws.com/image_dietterich_Hendrycks2019_noise.zip,e3c46b81bfd8a522cadcd8a4bb0c67bb5ccb4c6a,
+dietterich.Hendrycks2019.blur,stimulus_set,StimulusSet,S3,https://brainio-contrib.s3.amazonaws.com/image_dietterich_Hendrycks2019_blur.csv,e7a537bb2f3f94b9cd3819a529de9f4349e58bd2,
+dietterich.Hendrycks2019.blur,stimulus_set,,S3,https://brainio-contrib.s3.amazonaws.com/image_dietterich_Hendrycks2019_blur.zip,85bac6d7c9b9646b22480f65cf6f1486fcf4b488,
+dietterich.Hendrycks2019.weather,stimulus_set,StimulusSet,S3,https://brainio-contrib.s3.amazonaws.com/image_dietterich_Hendrycks2019_weather.csv,02fa92430be754163ecd06ee9211c1edd8984207,
+dietterich.Hendrycks2019.weather,stimulus_set,,S3,https://brainio-contrib.s3.amazonaws.com/image_dietterich_Hendrycks2019_weather.zip,18ef85343b10a4a326b5fc0758b9ae1da58f7d90,
+dietterich.Hendrycks2019.digital,stimulus_set,StimulusSet,S3,https://brainio-contrib.s3.amazonaws.com/image_dietterich_Hendrycks2019_digital.csv,1e9611b560333989d4673bfd019160a27842f89b,
+dietterich.Hendrycks2019.digital,stimulus_set,,S3,https://brainio-contrib.s3.amazonaws.com/image_dietterich_Hendrycks2019_digital.zip,a10e8d7eabce191d1f8e92983c08b4f0fe0f435d,
