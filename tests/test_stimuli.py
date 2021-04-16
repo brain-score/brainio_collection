@@ -59,7 +59,11 @@ class TestLoadImage:
         'dietterich.Hendrycks2019.noise',
         'dietterich.Hendrycks2019.blur',
         'dietterich.Hendrycks2019.weather',
-        'dietterich.Hendrycks2019.digital'
+        'dietterich.Hendrycks2019.digital',
+        'fei-fei.Deng2009',
+        'aru.Cichy2019',
+        'dicarlo.BashivanKar2019.naturalistic',
+        'dicarlo.BashivanKar2019.synthetic'
 ))
 
 def test_list_stimulus_set(stimulus_set):
@@ -101,3 +105,9 @@ def test_Dietterich_Hendrycks2019_digital():
     stimulus_set = brainio_collection.get_stimulus_set('dietterich.Hendrycks2019.digital')
     assert len(stimulus_set) == 4*5*50000
     assert len(set(stimulus_set['label'])) == 1000
+
+@pytest.mark.private_access
+def test_feifei_Deng2009():
+    stimulus_set = brainio_collection.get_stimulus_set('fei-fei.Deng2009')
+    assert len(stimulus_set) == 50_000
+    assert len(set(stimulus_set['label'])) == 1_000
