@@ -56,9 +56,9 @@ class TestLoadImage:
         'dicarlo.THINGS1',
         'dicarlo.THINGS2',
         'aru.Kuzovkin2018',
-        'dietterich.Hendrycks2019.noise'
-        'dietterich.Hendrycks2019.blur'
-        'dietterich.Hendrycks2019.weather'
+        'dietterich.Hendrycks2019.noise',
+        'dietterich.Hendrycks2019.blur',
+        'dietterich.Hendrycks2019.weather',
         'dietterich.Hendrycks2019.digital'
 ))
 
