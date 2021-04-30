@@ -86,25 +86,25 @@ def test_klab_Zhang2018search():
 def test_Dietterich_Hendrycks2019_noise():
     stimulus_set = brainio_collection.get_stimulus_set('dietterich.Hendrycks2019.noise')
     assert len(stimulus_set) == 3*5*50000
-    assert len(set(stimulus_set['label'])) == 1000
+    assert len(set(stimulus_set['synset'])) == 1000
 
 @pytest.mark.private_access
 def test_Dietterich_Hendrycks2019_blur():
     stimulus_set = brainio_collection.get_stimulus_set('dietterich.Hendrycks2019.blur')
     assert len(stimulus_set) == 4*5*50000
-    assert len(set(stimulus_set['label'])) == 1000
+    assert len(set(stimulus_set['synset'])) == 1000
 
 @pytest.mark.private_access
 def test_Dietterich_Hendrycks2019_weather():
     stimulus_set = brainio_collection.get_stimulus_set('dietterich.Hendrycks2019.weather')
     assert len(stimulus_set) == 4*5*50000
-    assert len(set(stimulus_set['label'])) == 1000
+    assert len(set(stimulus_set['synset'])) == 1000
 
 @pytest.mark.private_access
 def test_Dietterich_Hendrycks2019_digital():
     stimulus_set = brainio_collection.get_stimulus_set('dietterich.Hendrycks2019.digital')
     assert len(stimulus_set) == 4*5*50000
-    assert len(set(stimulus_set['label'])) == 1000
+    assert len(set(stimulus_set['synset'])) == 1000
 
 @pytest.mark.private_access
 def test_feifei_Deng2009():
