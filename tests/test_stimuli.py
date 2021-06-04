@@ -65,7 +65,6 @@ class TestLoadImage:
         'dicarlo.BashivanKar2019.naturalistic',
         'dicarlo.BashivanKar2019.synthetic'
 ))
-
 def test_list_stimulus_set(stimulus_set):
     l = brainio_collection.list_stimulus_sets()
     assert stimulus_set in l
@@ -82,29 +81,30 @@ def test_klab_Zhang2018search():
     assert len(stimulus_set) == 606
     assert len(set(stimulus_set['image_id'])) == 606
 
-@pytest.mark.private_access
-def test_Dietterich_Hendrycks2019_noise():
-    stimulus_set = brainio_collection.get_stimulus_set('dietterich.Hendrycks2019.noise')
-    assert len(stimulus_set) == 3*5*50000
-    assert len(set(stimulus_set['synset'])) == 1000
 
 @pytest.mark.private_access
-def test_Dietterich_Hendrycks2019_blur():
-    stimulus_set = brainio_collection.get_stimulus_set('dietterich.Hendrycks2019.blur')
-    assert len(stimulus_set) == 4*5*50000
-    assert len(set(stimulus_set['synset'])) == 1000
+@pytest.mark.slow
+class TestDietterichHendrycks2019:
+    def test_noise(self):
+        stimulus_set = brainio_collection.get_stimulus_set('dietterich.Hendrycks2019.noise')
+        assert len(stimulus_set) == 3 * 5 * 50000
+        assert len(set(stimulus_set['synset'])) == 1000
 
-@pytest.mark.private_access
-def test_Dietterich_Hendrycks2019_weather():
-    stimulus_set = brainio_collection.get_stimulus_set('dietterich.Hendrycks2019.weather')
-    assert len(stimulus_set) == 4*5*50000
-    assert len(set(stimulus_set['synset'])) == 1000
+    def test_blur(self):
+        stimulus_set = brainio_collection.get_stimulus_set('dietterich.Hendrycks2019.blur')
+        assert len(stimulus_set) == 4 * 5 * 50000
+        assert len(set(stimulus_set['synset'])) == 1000
 
-@pytest.mark.private_access
-def test_Dietterich_Hendrycks2019_digital():
-    stimulus_set = brainio_collection.get_stimulus_set('dietterich.Hendrycks2019.digital')
-    assert len(stimulus_set) == 4*5*50000
-    assert len(set(stimulus_set['synset'])) == 1000
+    def test_weather(self):
+        stimulus_set = brainio_collection.get_stimulus_set('dietterich.Hendrycks2019.weather')
+        assert len(stimulus_set) == 4 * 5 * 50000
+        assert len(set(stimulus_set['synset'])) == 1000
+
+    def test_digital(self):
+        stimulus_set = brainio_collection.get_stimulus_set('dietterich.Hendrycks2019.digital')
+        assert len(stimulus_set) == 4 * 5 * 50000
+        assert len(set(stimulus_set['synset'])) == 1000
+
 
 @pytest.mark.private_access
 def test_feifei_Deng2009():
