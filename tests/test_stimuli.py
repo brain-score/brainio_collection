@@ -118,6 +118,7 @@ def test_feifei_Deng2009():
     assert len(set(stimulus_set['label'])) == 1_000
 
 
+@pytest.mark.private_access
 class TestMarques2020V1Properties:
     @pytest.mark.parametrize('identifier,num_stimuli', [
         ('dicarlo.Marques2020_blank', 1),
