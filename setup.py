@@ -13,7 +13,7 @@ requirements = [
     "boto3",
     "tqdm",
     "netcdf4",
-    "pandas",
+    "pandas<1.3",
     # test_requirements
     "pytest",
     "Pillow",
