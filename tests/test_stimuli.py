@@ -1,7 +1,6 @@
-import os
-
 import imageio
 import numpy as np
+import os
 import pytest
 
 import brainio_collection
@@ -63,7 +62,13 @@ class TestLoadImage:
         'fei-fei.Deng2009',
         'aru.Cichy2019',
         'dicarlo.BashivanKar2019.naturalistic',
-        'dicarlo.BashivanKar2019.synthetic'
+        'dicarlo.BashivanKar2019.synthetic',
+        'dicarlo.Marques2020_blank',
+        'dicarlo.Marques2020_receptive_field',
+        'dicarlo.Marques2020_orientation',
+        'dicarlo.Marques2020_spatial_frequency',
+        'dicarlo.Marques2020_size',
+        'movshon.FreemanZiemba2013_properties',
 ))
 def test_list_stimulus_set(stimulus_set):
     l = brainio_collection.list_stimulus_sets()
@@ -111,3 +116,18 @@ def test_feifei_Deng2009():
     stimulus_set = brainio_collection.get_stimulus_set('fei-fei.Deng2009')
     assert len(stimulus_set) == 50_000
     assert len(set(stimulus_set['label'])) == 1_000
+
+
+@pytest.mark.private_access
+class TestMarques2020V1Properties:
+    @pytest.mark.parametrize('identifier,num_stimuli', [
+        ('dicarlo.Marques2020_blank', 1),
+        ('dicarlo.Marques2020_receptive_field', 3528),
+        ('dicarlo.Marques2020_orientation', 1152),
+        ('dicarlo.Marques2020_spatial_frequency', 2112),
+        ('dicarlo.Marques2020_size', 2304),
+        ('movshon.FreemanZiemba2013_properties', 450),
+    ])
+    def test_num_stimuli(self, identifier, num_stimuli):
+        stimulus_set = brainio_collection.get_stimulus_set(identifier)
+        assert len(stimulus_set) == num_stimuli
